@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Citizen Services Portal</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-blue-900 text-white shadow-md">
+        <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-building-columns text-3xl text-amber-400"></i>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-wide" id="portalTitle">E-Gov Connect</h1>
+                    <p class="text-xs text-blue-200" id="portalSubtitle">Unified Portal for Schemes & Services</p>
+                </div>
+            </div>
+            
+            <!-- Language Switcher & Links -->
+            <div class="flex items-center gap-6 text-sm font-medium">
+                <button onclick="toggleLanguage()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-4 py-1.5 rounded-full font-bold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-language text-lg"></i>
+                    <span id="langBtnText">मराठी</span>
+                </button>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="https://www.india.gov.in" target="_blank" class="hover:text-amber-400 transition" id="navOfficial">Official Portal</a>
+                    <a href="https://web.umang.gov.in" target="_blank" class="hover:text-amber-400 transition">UMANG</a>
+                    <a href="https://www.digilocker.gov.in" target="_blank" class="hover:text-amber-400 transition">DigiLocker</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero / Search Section -->
+    <main class="flex-grow container mx-auto px-6 py-8">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-3" id="heroHeadline">Access Government Schemes & Services</h2>
+            <p class="text-gray-600 mb-6" id="heroText">Search, read official instructions, check your eligibility, and seamlessly redirect to the official government websites.</p>
+            
+            <!-- Search Bar -->
+            <div class="relative shadow-md rounded-lg overflow-hidden">
+                <input type="text" id="searchInput" placeholder="Search for schemes, passports, PAN cards, farming services..." 
+                       class="w-full px-5 py-4 pl-12 text-gray-900 border-none focus:ring-2 focus:ring-blue-500 outline-none">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4.5 text-gray-400 text-lg"></i>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-2 mb-8" id="categoryTabs">
+            <button onclick="filterCategory('all')" class="category-btn active px-4 py-2 rounded-full text-sm font-semibold bg-blue-900 text-white transition" data-cat="all">All Services</button>
+            <button onclick="filterCategory('Identity')" class="category-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Identity">Identity & Docs</button>
+            <button onclick="filterCategory('Finance')" class="category-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Finance">Finance & Tax</button>
+            <button onclick="filterCategory('Transport')" class="category-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Transport">RTO & Transport</button>
+            <button onclick="filterCategory('Healthcare')" class="category-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Healthcare">Healthcare</button>
+            <button onclick="filterCategory('Agriculture')" class="category-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Agriculture">Agriculture</button>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGrid">
+            <!-- Dynamically populated via JS -->
+        </div>
+    </main>
+
+    <!-- Detailed Modal Window -->
+    <div id="infoModal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl max-w-lg w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[85vh]">
+            <div class="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
+                <h3 id="modalTitle" class="text-xl font-bold">Service Details</h3>
+                <button onclick="closeModal()" class="text-white hover:text-amber-400 text-2xl font-bold">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4" id="modalBody">
+                <!-- Modal info loads here -->
+            </div>
+            <div class="p-4 bg-gray-50 border-t flex justify-end gap-3">
+                <button onclick="closeModal()" class="px-4 py-2 rounded-lg border text-gray-700 hover:bg-gray-100" id="modalCloseBtn">Close</button>
+                <a id="modalRedirectBtn" href="#" target="_blank" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium flex items-center gap-2">
+                    <span id="modalRedirectText">Apply on Official Site</span> <i class="fa-solid fa-up-right-from-square text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800 text-center text-sm">
+        <p class="mb-2" id="footerText1">&copy; 2026 E-Gov Connect. All information is routed directly to official government web services.</p>
+        <p class="text-xs" id="footerText2">This is a public service utility interface. Users are advised to double-check information on the official portals.</p>
+    </footer>
+
+    <!-- Core App Logic (JavaScript) -->
+    <script>
+        let currentLang = 'en'; 
+        let currentCategory = 'all';
+
+        const translations = {
+            en: {
+                portalTitle: "E-Gov Connect",
+                portalSubtitle: "Unified Portal for Schemes & Services",
+                navOfficial: "Official Portal",
+                heroHeadline: "Access Government Schemes & Services",
+                heroText: "Search, read official instructions, check your eligibility, and seamlessly redirect to the official government websites.",
+                searchPlaceholder: "Search for schemes, passports, PAN cards, farming services...",
+                catAll: "All Services",
+                catIdentity: "Identity & Docs",
+                catFinance: "Finance & Tax",
+                catTransport: "RTO & Transport",
+                catHealthcare: "Healthcare",
+                catAgriculture: "Agriculture",
+                howToApplyBtn: "How to Apply",
+                websiteBtn: "Website",
+                modalCloseBtn: "Close",
+                modalRedirectText: "Apply on Official Site",
+                aboutServiceHeading: "About the Service",
+                stepsHeading: "Step-by-Step Registration Guide",
+                footerText1: "© 2026 E-Gov Connect. All information is routed directly to official government web services.",
+                footerText2: "This is a public service utility interface. Users are advised to double-check information on original portals.",
+                langBtnText: "मराठी",
+                noResults: "No services found matching your criteria."
+            },
+            mr: {
+                portalTitle: "ई-गव्ह कनेक्ट",
+                portalSubtitle: "शासकीय योजना आणि सेवांचे एकत्रित दालन",
+                navOfficial: "अधिकृत पोर्टल",
+                heroHeadline: "सरकारी योजना आणि सेवा मिळवा",
+                heroText: "योजना शोधा, अधिकृत मार्गदर्शक सूचना वाचा, तुमची पात्रता तपासा आणि थेट अधिकृत सरकारी संकेतस्थळावर जा.",
+                searchPlaceholder: "योजना, पासपोर्ट, पॅन कार्ड, आरटीओ सेवा शोधा...",
+                catAll: "सर्व सेवा",
+                catIdentity: "ओळख आणि कागदपत्रे",
+                catFinance: "वित्त आणि कर",
+                catTransport: "आरटीओ आणि वाहतूक",
+                catHealthcare: "आरोग्य सेवा",
+                catAgriculture: "कृषी योजना",
+                howToApplyBtn: "अर्ज कसा करावा",
+                websiteBtn: "संकेतस्थळ",
+                modalCloseBtn: "बंद करा",
+                modalRedirectText: "अधिकृत साईटवर जा",
+                aboutServiceHeading: "सेवेबद्दल माहिती",
+                stepsHeading: "टप्पा-बाय-टप्पा अर्ज मार्गदर्शक",
+                footerText1: "© २०२६ ई-गव्ह कनेक्ट. सर्व माहिती थेट अधिकृत सरकारी संकेतस्थळांवरून जोडलेली आहे.",
+                footerText2: "हे एक सार्वजनिक सेवा पोर्टल आहे. वापरकर्त्यांनी अधिकृत संकेतस्थळांवर माहितीची शहानिशा करावी.",
+                langBtnText: "English",
+                noResults: "तुमच्या शोधाशी जुळणाऱ्या कोणत्याही सेवा सापडल्या नाहीत."
+            }
+        };
+
+        const servicesData = [
+            {
+                id: "aadhaar",
+                category: "Identity",
+                icon: "fa-id-card",
+                bgImage: "https://images.unsplash.com/photo-1557683316-973673baf926?w=500&auto=format&fit=crop&q=60", 
+                officialUrl: "https://myaadhaar.uidai.gov.in/",
+                en: {
+                    name: "Aadhaar Card Services",
+                    desc: "Unique Identification system for Indian residents. Apply, verify, retrieve, or update biometric and demographic data.",
+                    info: "Managed by UIDAI. Allows citizens to update mobile numbers, change addresses, and download digital copies (e-Aadhaar).",
+                    steps: ["Visit UIDAI's myAadhaar portal.", "Log in using your 12-digit Aadhaar number and OTP.", "Choose 'Update Demographic Data' or click 'Download Aadhaar'.", "Submit required document proof (PDF/JPG) if making updates.", "Pay a nominal fee (approx ₹50) and track status using the URN code."]
+                },
+                mr: {
+                    name: "आधार कार्ड सेवा",
+                    desc: "भारतीय रहिवाशांसाठी अद्वितीय ओळख प्रणाली. बायोमेट्रिक आणि लोकसंख्याशास्त्रीय डेटा मिळवा, सत्यापित करा किंवा अद्यतनित करा.",
+                    info: "UIDAI द्वारे व्यवस्थापित. नागरिकांना मोबाईल नंबर अपडेट करणे, पत्ता बदलणे आणि डिजिटल आधार (e-Aadhaar) डाउनलोड करणे सुलभ करते.",
+                    steps: ["UIDAI च्या अधिकृत 'myAadhaar' पोर्टलला भेट द्या.", "तुमचा १२ अंकी आधार क्रमांक आणि मोबाईलवर आलेला OTP वापरून लॉग इन करा.", "'Update Demographic Data' किंवा 'Download Aadhaar' पर्यायावर क्लिक करा.", "बदलांसाठी आवश्यक कागदपत्रांचा पुरावा (PDF/JPG) अपलोड करा.", "५० रुपये शुल्क भरा आणि मिळालेल्या URN क्रमांकाद्वारे अर्जाची स्थिती ट्रॅक करा."]
+                }
+            },
+            {
+                id: "pan",
+                category: "Finance",
+                icon: "fa-address-card",
+                bgImage: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=500&auto=format&fit=crop&q=60", 
+                officialUrl: "https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html",
+                en: {
+                    name: "PAN Card Application",
+                    desc: "Apply for a Permanent Account Number (PAN) essential for financial transactions, tax filings, and opening bank accounts.",
+                    info: "Issued by the Income Tax Department. You can apply for a new PAN, correct errors, or download an e-PAN digitally.",
+                    steps: ["Go to the Online PAN Application portal.", "Select Application Type as 'New PAN (Form 49A)' or 'Changes/Correction'.", "Fill in personal details, select your mode (e-KYC is paperless via Aadhaar OTP).", "Pay the processing fee (approx ₹107).", "Print out the acknowledgement receipt if offline processing is required."]
+                },
+                mr: {
+                    name: "पॅन कार्ड अर्ज (PAN Card)",
+                    desc: "आर्थिक व्यवहार, कर भरणे आणि बँक खाती उघडण्यासाठी आवश्यक असलेला कायमचा खाते क्रमांक (PAN) मिळवा.",
+                    info: "आयकर विभागाकडून जारी केले जाते. आपण नवीन पॅनसाठी अर्ज करू शकता, त्रुटी दुरुस्त करू शकता किंवा ई-पॅन डाउनलोड करू शकता.",
+                    steps: ["Protean (NSDL) किंवायांच्या पॅन अर्ज पोर्टलला भेट द्या.", "अर्ज प्रकारात 'New PAN (Form 49A)' किंवा 'Changes/Correction' निवडा.", "वैयक्तिक माहिती भरा आणि आधार कार्डच्या OTP द्वारे पेपरलेस e-KYC पर्याय निवडा.", "अर्जाचे शुल्क भरा (भौतिक कार्डसाठी सुमारे १०७ रुपये).", "पायरी पूर्ण करून पावती जतन करा."]
+                }
+            },
+            {
+                id: "digilocker",
+                category: "Identity",
+                icon: "fa-folder-closed",
+                bgImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=500&auto=format&fit=crop&q=60", 
+                officialUrl: "https://www.digilocker.gov.in/",
+                en: {
+                    name: "DigiLocker Portal",
+                    desc: "Store and access digital copies of authentic documents like driving licenses, school marksheets, and identity cards directly on your phone.",
+                    info: "A flagship initiative under Digital India. Issued documents inside DigiLocker are legally on par with original physical documents under the IT Act.",
+                    steps: ["Download the DigiLocker App or visit the web portal.", "Sign up using your Mobile Number linked with Aadhaar.", "Verify your identity with an Aadhaar-linked OTP.", "Search for your document issuers.", "Enter credentials to instantly pull documents into your 'Issued Documents' section."]
+                },
+                mr: {
+                    name: "डिजिलॉकर (DigiLocker)",
+                    desc: "वाहन परवाना, शालेय गुणपत्रिका आणि ओळखपत्र यांसारख्या अधिकृत कागदपत्रांच्या डिजिटल प्रती थेट तुमच्या फोनवर सुरक्षित ठेवा.",
+                    info: "डिजिटल इंडिया उपक्रमाचा एक महत्त्वाचा भाग. माहिती तंत्रज्ञान कायद्यानुसार डिजिलॉकरमधील कागदपत्रे मूळ कागदपत्रांइतकीच वैध मानली जातात.",
+                    steps: ["DigiLocker ॲप डाउनलोड करा किंवा त्यांच्या वेब पोर्टलला भेट द्या.", "तुमच्या आधार कार्डशीリンク असलेला मोबाईल नंबर वापरून साइन अप करा.", "आधार OTP वापरून तुमची ओळख सत्यापित करा.", "कागदपत्र जारी करणाऱ्या संस्थेचे नाव शोधा.", "आवश्यक तपशील टाकून तुमचे कागदपत्र डिजिटल स्वरूपात प्राप्त करा."]
+                }
+            },
+            {
+                id: "rto",
+                category: "Transport",
+                icon: "fa-car",
+                bgImage: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=500&auto=format&fit=crop&q=60", 
+                officialUrl: "https://sarathi.parivahan.gov.in/",
+                en: {
+                    name: "RTO & Driving License",
+                    desc: "Apply for a Learner's License, Permanent Driving License, renew existing licenses, or update RTO vehicle registrations online.",
+                    info: "Operated by MoRTH. Paperless learner's license tests are now available in most states using Aadhaar.",
+                    steps: ["Visit the Sarathi Parivahan portal and select your State.", "Click 'Apply for Learner's License' or 'Apply for Driving License'.", "Fill out applicant details and upload necessary documents.", "Book a slot for your test online or follow the safety tutorial.", "Pay processing fees and track your application status."]
+                },
+                mr: {
+                    name: "आरटीओ आणि ड्रायव्हिंग लायसन्स",
+                    desc: "लर्नर लायसन्स, पक्के ड्रायव्हिंग लायसन्स मिळवणे, लायसन्स नूतनीकरण किंवा आरटीओ वाहन नोंदणीसाठी अर्ज करा.",
+                    info: "रस्ते वाहतूक मंत्रालयाद्वारे संचलित. आधार प्रमाणीकरणाद्वारे बऱ्याच राज्यांमध्ये घरी बसून ऑनलाईन चाचणी देता येते.",
+                    steps: ["सारथी परिवहन पोर्टलला भेट द्या आणि आपले राज्य निवडा.", "'Apply for Learner's License' किंवा 'Apply for Driving License' वर क्लिक करा.", "अर्जदाराची माहिती भरा आणि वयाचा तसेच पत्त्याचा पुरावा अपलोड करा.", "चाचणीसाठी वेळ (slot) बुक करा.", "प्रक्रिया शुल्क भरा आणि तुमच्या परवान्याची प्रगती ट्रॅक करा."]
+                }
+            },
+            {
+                id: "pmkisan",
+                category: "Agriculture",
+                icon: "fa-tractor",
+                bgImage: "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?w=500&auto=format&fit=crop&q=60", 
+                officialUrl: "https://pmkisan.gov.in/",
+                en: {
+                    name: "PM Kisan Samman Nidhi",
+                    desc: "Income support scheme of ₹6,000 per year for all landholding farmers' families across India.",
+                    info: "Provides financial aid in three equal installments directly into bank accounts via DBT (Direct Benefit Transfer).",
+                    steps: ["Go to the PM-Kisan Portal.", "Click on 'New Farmer Registration'.", "Input your Aadhaar Number, select State, and verify with OTP.", "Fill in land ownership details and submit documents.", "The local administration will verify records before disbursements begin."]
+                },
+                mr: {
+                    name: "पीएम किसान सन्मान निधी",
+                    desc: "देशातील सर्व अल्पभूधारक शेतकरी कुटुंबांना प्रतिवर्ष ६,००० रुपयांचे थेट आर्थिक उत्पन्न साहाय्य.",
+                    info: "तीन समान हप्त्यांमध्ये मिळणारी रक्कम थेट बँक खात्यात थेट लाभ हस्तांतरणाद्वारे (DBT) जमा केली जाते.",
+                    steps: ["PM-Kisan च्या अधिकृत पोर्टलला भेट द्या.", "'New Farmer Registration' पर्यायावर क्लिक करा.", "तुमचा आधार क्रमांक टाका, राज्य निवडा आणि OTP द्वारे पडताळणी करा.", "जमिनीची मालकी माहिती भरा आणि कागदपत्रे सादर करा.", "स्थानिक प्रशासकीय पडताळणीनंतर हप्त्याचे पैसे जमा होणे सुरू होईल."]
+                }
+            },
+            {
+                id: "ayushman",
+                category: "Healthcare",
+                icon: "fa-heart-pulse",
+                bgImage: "https://images.unsplash.com/photo-1584515933487-7598215059e1?w=500&auto=format&fit=crop&q=60", 
+                officialUrl: "https://dashboard.pmjay.gov.in/",
+                en: {
+                    name: "Ayushman Bharat (AB-PMJAY)",
+                    desc: "Health insurance cover of up to ₹5 Lakh per family per year for secondary and tertiary care hospitalization.",
+                    info: "World's largest government-funded health assurance scheme. Totally cashless card-based service for registered families.",
+                    steps: ["Open the PMJAY Portal to check eligibility.", "Click 'Am I Eligible' and enter your mobile number.", "Search by Name, Ration Card Number, or Mobile Number.", "If matched, visit a nearby designated Ayushman Mitra at any hospital.", "Get your Ayushman card processed for future hospital admissions."]
+                },
+                mr: {
+                    name: "आयुष्मान भारत योजना (AB-PMJAY)",
+                    desc: "पात्र कुटुंबांना दरवर्षी ५ लाख रुपयांपर्यंतचे मोफत आणि कॅशलेस वैद्यकीय उपचार विमा कवच.",
+                    info: "जगातील सर्वात मोठी पूर्णतः सरकारी अर्थसहाय्यित आरोग्य विमा योजना. नोंदणीकृत रुग्णालयांमध्ये रोख विरहित उपचार उपलब्ध.",
+                    steps: ["पात्रता तपासण्यासाठी PMJAY पोर्टल उघडा.", "'Am I Eligible' वर क्लिक करा आणि तुमचा मोबाईल नंबर टाका.", "नाव, रेशन कार्ड नंबर किंवा मोबाईल क्रमांकावरून पात्रता शोधा.", "नाव यादीत असल्यास, जवळच्या आयुष्मान मित्राला भेटा.", "तुमचे डिजिटल आयुष्मान कार्ड सक्रिय करा आणि मोफत उपचारांचा लाभ घ्या."]
+                }
+            }
+        ];
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'en') ? 'mr' : 'en';
+            renderLanguageStaticTexts();
+            displayServices(servicesData);
+        }
+
+        function renderLanguageStaticTexts() {
+            const data = translations[currentLang];
+            document.getElementById("portalTitle").innerText = data.portalTitle;
+            document.getElementById("portalSubtitle").innerText = data.portalSubtitle;
+            document.getElementById("navOfficial").innerText = data.navOfficial;
+            document.getElementById("heroHeadline").innerText = data.heroHeadline;
+            document.getElementById("heroText").innerText = data.heroText;
+            document.getElementById("searchInput").placeholder = data.searchPlaceholder;
+            document.getElementById("langBtnText").innerText = data.langBtnText;
+            document.getElementById("modalCloseBtn").innerText = data.modalCloseBtn;
+            document.getElementById("modalRedirectText").innerText = data.modalRedirectText;
+            document.getElementById("footerText1").innerText = data.footerText1;
+            document.getElementById("footerText2").innerText = data.footerText2;
+
+            document.querySelectorAll(".category-btn").forEach(btn => {
+                const category = btn.getAttribute("data-cat");
+                if (category === 'all') btn.innerText = data.catAll;
+                if (category === 'Identity') btn.innerText = data.catIdentity;
+                if (category === 'Finance') btn.innerText = data.catFinance;
+                if (category === 'Transport') btn.innerText = data.catTransport;
+                if (category === 'Healthcare') btn.innerText = data.catHealthcare;
+                if (category === 'Agriculture') btn.innerText = data.catAgriculture;
+            });
+        }
+
+        function displayServices(services) {
+            const grid = document.getElementById("servicesGrid");
+            grid.innerHTML = "";
+
+            const filteredServices = services.filter(s => {
+                const details = s[currentLang];
+                const query = document.getElementById("searchInput").value.toLowerCase();
+                const matchesSearch = details.name.toLowerCase().includes(query) || details.desc.toLowerCase().includes(query);
+                const matchesCategory = currentCategory === 'all' || s.category === currentCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            if (filteredServices.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fa-regular fa-folder-open text-5xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500 font-medium">${translations[currentLang].noResults}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredServices.forEach(service => {
+                const details = service[currentLang];
+                const card = document.createElement("div");
+                card.className = "bg-white rounded-xl shadow-sm hover:shadow-md border border-gray-100 overflow-hidden transition duration-300 flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <!-- Image Container with Overlaid Icon -->
+                        <div class="h-32 bg-cover bg-center relative flex items-end p-4" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('${service.bgImage}')">
+                            <span class="p-3 bg-white/95 backdrop-blur-sm text-blue-900 rounded-lg shadow-md absolute -bottom-5 left-4 z-10">
+                                <i class="fa-solid ${service.icon} text-xl w-6 h-6 flex items-center justify-center"></i>
+                            </span>
+                            <span class="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold tracking-wider bg-black/40 text-white backdrop-blur-sm rounded uppercase">
+                                ${translations[currentLang]["cat" + service.category] || service.category}
+                            </span>
+                        </div>
+                        
+                        <!-- Content Body -->
+                        <div class="px-6 pt-8 pb-4">
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">${details.name}</h4>
+                            <p class="text-gray-600 text-sm line-clamp-3">${details.desc}</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom Action Bar -->
+                    <div class="flex justify-between items-center mx-6 pb-4 pt-3 border-t border-gray-100">
+                        <button onclick="openModal('${service.id}')" class="text-blue-900 hover:text-blue-700 font-semibold text-sm flex items-center gap-1">
+                            ${translations[currentLang].howToApplyBtn} <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                        <a href="${service.officialUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-medium text-xs flex items-center gap-1">
+                            ${translations[currentLang].websiteBtn} <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        document.getElementById("searchInput").addEventListener("input", function () {
+            displayServices(servicesData);
+        });
+
+        // Event delegation fallback to update UI correctly on structural changes
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            document.querySelectorAll(".category-btn").forEach(btn => {
+                btn.classList.remove("bg-blue-900", "text-white");
+                btn.classList.add("bg-white", "text-gray-700");
+            });
+
+            const activeBtn = event.currentTarget;
+            activeBtn.classList.remove("bg-white", "text-gray-700");
+            activeBtn.classList.add("bg-blue-900", "text-white");
+
+            displayServices(servicesData);
+        }
+
+        function openModal(id) {
+            const service = servicesData.find(s => s.id === id);
+            if (!service) return;
+
+            const details = service[currentLang];
+            document.getElementById("modalTitle").innerText = details.name;
+            
+            let stepsHtml = "";
+            details.steps.forEach((step, index) => {
+                stepsHtml += `
+                    <div class="flex gap-3 items-start">
+                        <span class="flex items-center justify-center bg-amber-100 text-amber-800 font-bold text-xs rounded-full h-6 w-6 shrink-0 mt-0.5">
+                            ${index + 1}
+                        </span>
+                        <p class="text-sm text-gray-700">${step}</p>
+                    </div>
+                `;
+            });
+
+            document.getElementById("modalBody").innerHTML = `
+                <div>
+                    <h5 class="text-xs uppercase font-bold text-gray-400 tracking-wider mb-1">${translations[currentLang].aboutServiceHeading}</h5>
+                    <p class="text-gray-700 text-sm">${details.info}</p>
+                </div>
+                <hr class="border-gray-100">
+                <div>
+                    <h5 class="text-xs uppercase font-bold text-gray-400 tracking-wider mb-3">${translations[currentLang].stepsHeading}</h5>
+                    <div class="space-y-3">
+                        ${stepsHtml}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("modalRedirectBtn").href = service.officialUrl;
+            
+            const modal = document.getElementById("infoModal");
+            modal.classList.remove("hidden");
+            setTimeout(() => {
+                modal.firstElementChild.classList.remove("scale-95");
+                modal.firstElementChild.classList.add("scale-100");
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("infoModal");
+            modal.firstElementChild.classList.remove("scale-100");
+            modal.firstElementChild.classList.add("scale-95");
+            setTimeout(() => {
+                modal.classList.add("hidden");
+            }, 200);
+        }
+
+        renderLanguageStaticTexts();
+        displayServices(servicesData);
+    </script>
+</body>
+</html>
