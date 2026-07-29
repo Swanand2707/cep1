@@ -3,413 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Gov Connect - Unified Portal for Schemes & Services</title>
-    <style>
-        :root {
-            --primary: #1e3a8a;
-            --primary-light: #3b82f6;
-            --bg-color: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-muted: #4b5563;
-            --border-color: #e5e7eb;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Header Styling */
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-area h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .logo-area p {
-            font-size: 0.8rem;
-            color: #93c5fd;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-eligibility {
-            background-color: #f59e0b;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-eligibility:hover {
-            background-color: #d97706;
-        }
-
-        .lang-select {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .portal-links {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .portal-links span {
-            cursor: pointer;
-            color: #93c5fd;
-        }
-        .portal-links span:hover {
-            text-decoration: underline;
-        }
-
-        /* Category Filter Navigation */
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            padding: 1.5rem 1rem;
-            background: white;
-            border-bottom: 1px solid var(--border-color);
-            flex-wrap: wrap;
-        }
-
-        .cat-btn {
-            background: #f3f4f6;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-
-        .cat-btn.active, .cat-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Main Content Grid */
-        main {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            flex: 1;
-            width: 100%;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .service-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .service-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        }
-
-        .card-header {
-            height: 130px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            padding: 1rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-start;
-        }
-
-        .card-header::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
-        }
-
-        .card-tag {
-            position: relative;
-            z-index: 1;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 0.25rem 0.6rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .card-body {
-            padding: 1.25rem;
-            position: relative;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .service-icon {
-            position: absolute;
-            top: -25px;
-            left: 1.25rem;
-            width: 45px;
-            height: 45px;
-            background: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            font-size: 1.2rem;
-            color: var(--primary);
-            border: 2px solid white;
-        }
-
-        .service-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-main);
-        }
-
-        .service-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-            margin-bottom: 1.5rem;
-            flex: 1;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 0.75rem;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.85rem;
-        }
-
-        .card-footer a {
-            text-decoration: none;
-            font-weight: 600;
-            color: var(--primary-light);
-            display: flex;
-            align-items: center;
-            gap: 0.25krem;
-        }
-
-        .card-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .card-footer .website-link {
-            color: #059669;
-        }
-
-        /* Modal Structure for FAQs */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 1rem;
-        }
-
-        .modal {
-            background: white;
-            width: 100%;
-            max-width: 700px;
-            max-height: 85vh;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .modal-header {
-            padding: 1rem 1.5rem;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-            overflow-y: auto;
-        }
-
-        .faq-item {
-            margin-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.75rem;
-        }
-
-        .faq-q {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .faq-a {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        /* Footer Info */
-        footer {
-            background: #111827;
-            color: #9ca3af;
-            text-align: center;
-            padding: 1.5rem;
-            font-size: 0.8rem;
-            margin-top: auto;
-        }
-
-        footer p {
-            margin-bottom: 0.25rem;
-        }
-    </style>
+    <title>National Citizen Services Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
-    <!-- Header -->
-    <header>
-        <div class="logo-area">
-            <div>
-                <h1>E-Gov Connect</h1>
-                <p>Unified Portal for Schemes & Services</p>
+    <!-- Header Section -->
+    <header class="bg-blue-900 text-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-building-columns text-3xl text-amber-400"></i>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-wide" id="portalTitle">E-Gov Connect</h1>
+                    <p class="text-xs text-blue-200" id="portalSubtitle">Unified Portal for Schemes & Services</p>
+                </div>
             </div>
-        </div>
-        <div class="header-actions">
-            <button class="btn-eligibility">Check Eligibility</button>
-            <select class="lang-select">
-                <option>English</option>
-                <option>Hindi</option>
-            </select>
-            <div class="portal-links">
-                <span>Official Portal</span>
-                <span>UMANG</span>
-                <span>DigiLocker</span>
+            
+            <!-- Language Dropdown & Links -->
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <!-- Language Switcher -->
+                <div class="relative inline-block text-left">
+                    <div class="flex items-center bg-blue-800 rounded-lg px-3 py-1.5 border border-blue-700">
+                        <i class="fa-solid fa-language text-amber-400 text-lg mr-2"></i>
+                        <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-semibold cursor-pointer outline-none">
+                            <option value="en" class="text-gray-900">English</option>
+                            <option value="mr" class="text-gray-900">मराठी</option>
+                            <option value="hi" class="text-gray-900">हिंदी</option>
+                        </select>
+                    </div>
+                </div>
+
+                <nav class="hidden md:flex space-x-4 text-xs font-semibold">
+                    <a href="https://www.india.gov.in" target="_blank" class="hover:text-amber-400 transition" id="navOfficial">Official Portal</a>
+                    <a href="https://web.umang.gov.in" target="_blank" class="hover:text-amber-400 transition">UMANG</a>
+                    <a href="https://www.digilocker.gov.in" target="_blank" class="hover:text-amber-400 transition">DigiLocker</a>
+                </nav>
             </div>
         </div>
     </header>
 
-    <!-- Categories Filter Navigation -->
-    <div class="categories">
-        <button class="cat-btn active">All Services</button>
-        <button class="cat-btn">Identity & Docs</button>
-        <button class="cat-btn">Finance & Tax</button>
-        <button class="cat-btn">RTO & Transport</button>
-        <button class="cat-btn">Healthcare</button>
-        <button class="cat-btn">Agriculture</button>
-    </div>
+    <!-- Main Container -->
+    <main class="flex-grow container mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center max-w-2xl mx-auto mb-8">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-3" id="heroHeadline">Access Government Schemes & Services</h2>
+            <p class="text-gray-600 mb-6 text-sm" id="heroText">Search, read official instructions, check eligibility, and seamlessly redirect to official government portals.</p>
+            
+            <!-- Search Bar -->
+            <div class="relative shadow-md rounded-xl overflow-hidden bg-white border border-gray-200">
+                <input type="text" id="searchInput" placeholder="Search for schemes, passports, PAN cards, farming services..." 
+                       class="w-full px-5 py-4 pl-12 text-gray-900 outline-none text-sm focus:ring-2 focus:ring-blue-500">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-gray-400 text-lg"></i>
+            </div>
+        </div>
 
-    <!-- Main Content -->
-    <main>
-        <div class="services-grid" id="servicesGrid">
-            <!-- Dynamic Injection via Script -->
+        <!-- AI Citizen Helper Card with Smart Auto-Correction -->
+        <div class="max-w-3xl mx-auto mb-10 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl p-6 shadow-xl border border-blue-800">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="p-2.5 bg-amber-500 text-slate-950 rounded-lg font-bold">
+                    <i class="fa-solid fa-robot text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold flex items-center gap-2">
+                        <span id="assistantTitle">E-Gov Smart Assistant</span>
+                        <span class="text-[10px] bg-amber-400 text-slate-950 font-extrabold px-2 py-0.5 rounded-full uppercase">Auto-Correct Enabled</span>
+                    </h3>
+                    <p class="text-xs text-blue-200" id="assistantSubtitle">Ask any question regarding documents, scheme eligibility, or application fees. Auto-fixes typos!</p>
+                </div>
+            </div>
+
+            <form onsubmit="handleAssistantQuery(event)" class="mt-4 flex gap-2">
+                <input type="text" id="assistantInput" placeholder="Ask a question (e.g., How to link adhar with pan? Drving lisence eligibility?)" 
+                       class="flex-1 px-4 py-2.5 rounded-lg text-gray-900 text-sm outline-none focus:ring-2 focus:ring-amber-400">
+                <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-lg text-sm flex items-center gap-2 transition shrink-0">
+                    <span id="askBtnText">Ask</span> <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+            </form>
+
+            <div id="assistantResponse" class="hidden mt-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 text-sm leading-relaxed">
+                <!-- Smart response loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Filter Category Tabs -->
+        <div class="flex flex-wrap justify-center gap-2 mb-8" id="categoryTabs">
+            <button onclick="filterCategory('all')" class="category-btn active px-4 py-2 rounded-full text-xs font-bold bg-blue-900 text-white transition shadow-sm" data-cat="all">All Services</button>
+            <button onclick="filterCategory('Identity')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Identity">Identity & Docs</button>
+            <button onclick="filterCategory('Finance')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Finance">Finance & Tax</button>
+            <button onclick="filterCategory('Transport')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Transport">RTO & Transport</button>
+            <button onclick="filterCategory('Healthcare')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Healthcare">Healthcare</button>
+            <button onclick="filterCategory('Agriculture')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition" data-cat="Agriculture">Agriculture</button>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGrid">
+            <!-- Dynamically populated via JS -->
         </div>
     </main>
 
-    <!-- FAQ Modal Component -->
-    <div class="modal-overlay" id="faqModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="modalTitle">Frequently Asked Questions</h3>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+    <!-- Detailed FAQs Modal Window -->
+    <div id="faqModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[85vh]">
+            <div class="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
+                <h3 id="modalTitle" class="text-lg font-bold">Frequently Asked Questions</h3>
+                <button onclick="closeModal()" class="text-white hover:text-amber-400 text-2xl font-bold">&times;</button>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- FAQs will be injected here -->
+            <div class="p-6 overflow-y-auto space-y-4" id="modalBody">
+                <!-- FAQs loaded dynamically -->
+            </div>
+            <div class="p-4 bg-gray-50 border-t flex justify-between items-center">
+                <span class="text-xs text-gray-500" id="modalFooterNote">Official guidance and details</span>
+                <div class="flex gap-3">
+                    <button onclick="closeModal()" class="px-4 py-2 rounded-lg border text-xs font-bold text-gray-700 hover:bg-gray-100" id="modalCloseBtn">Close</button>
+                    <a id="modalRedirectBtn" href="#" target="_blank" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-2">
+                        <span id="modalRedirectText">Apply on Official Site</span> <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 E-Gov Connect. All Information is routed directly to official government web services.</p>
-        <p>This is a public service utility interface. Users are advised to double-check information on original portals.</p>
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800 text-center text-xs">
+        <p class="mb-2" id="footerText1">&copy; 2026 E-Gov Connect. All information is routed directly to official government web services.</p>
+        <p class="text-gray-500" id="footerText2">This is a public service utility interface. Users are advised to double-check information on the official portals.</p>
     </footer>
 
+    <!-- Core Application Script -->
     <script>
-        // Data Structure containing 10 FAQs for each service with custom background images
+        let currentLang = 'en'; 
+        let currentCategory = 'all';
+
+        const translations = {
+            en: {
+                portalTitle: "E-Gov Connect",
+                portalSubtitle: "Unified Portal for Schemes & Services",
+                navOfficial: "Official Portal",
+                heroHeadline: "Access Government Schemes & Services",
+                heroText: "Search, read official instructions, check eligibility, and seamlessly redirect to official government portals.",
+                searchPlaceholder: "Search for schemes, passports, PAN cards, farming services...",
+                catAll: "All Services",
+                catIdentity: "Identity & Docs",
+                catFinance: "Finance & Tax",
+                catTransport: "RTO & Transport",
+                catHealthcare: "Healthcare",
+                catAgriculture: "Agriculture",
+                howToApplyBtn: "FAQs & Guide",
+                websiteBtn: "Website",
+                modalCloseBtn: "Close",
+                modalRedirectText: "Apply on Official Site",
+                footerText1: "© 2026 E-Gov Connect. All information is routed directly to official government web services.",
+                footerText2: "This is a public service utility interface. Users are advised to double-check information on original portals.",
+                noResults: "No services found matching your criteria.",
+                assistantTitle: "E-Gov Smart Assistant",
+                assistantSubtitle: "Ask questions about document applications, eligibility, and government procedure guidelines.",
+                assistantPlaceholder: "Ask a question (e.g., How to link adhar with pan? Drving lisence eligibility?)",
+                askBtnText: "Ask",
+                correctedMsg: "Showing results for auto-corrected query: ",
+                assistantNotFound: "I couldn't find an exact match for that question. Try asking about Aadhaar update, PAN card, Driving License, Ayushman Card, or PM Kisan."
+            },
+            mr: {
+                portalTitle: "ई-गव्ह कनेक्ट",
+                portalSubtitle: "शासकीय योजना आणि सेवांचे एकत्रित दालन",
+                navOfficial: "अधिकृत पोर्टल",
+                heroHeadline: "सरकारी योजना आणि सेवा मिळवा",
+                heroText: "योजना शोधा, अधिकृत मार्गदर्शक सूचना वाचा, पात्रता तपासा आणि थेट अधिकृत सरकारी संकेतस्थळावर जा.",
+                searchPlaceholder: "योजना, पासपोर्ट, पॅन कार्ड, आरटीओ सेवा शोधा...",
+                catAll: "सर्व सेवा",
+                catIdentity: "ओळख आणि कागदपत्रे",
+                catFinance: "वित्त आणि कर",
+                catTransport: "आरटीओ आणि वाहतूक",
+                catHealthcare: "आरोग्य सेवा",
+                catAgriculture: "कृषी योजना",
+                howToApplyBtn: "प्रश्न आणि उत्तरे",
+                websiteBtn: "संकेतस्थळ",
+                modalCloseBtn: "बंद करा",
+                modalRedirectText: "अधिकृत साईटवर जा",
+                footerText1: "© २०२६ ई-गव्ह कनेक्ट. सर्व माहिती थेट अधिकृत सरकारी संकेतस्थळांवरून जोडलेली आहे.",
+                footerText2: "हे एक सार्वजनिक सेवा पोर्टल आहे. वापरकर्त्यांनी अधिकृत संकेतस्थळांवर माहितीची शहानिशा करावी.",
+                noResults: "तुमच्या शोधाशी जुळणाऱ्या कोणत्याही सेवा सापडल्या नाहीत.",
+                assistantTitle: "ई-गव्ह स्मार्ट सहाय्यक",
+                assistantSubtitle: "कागदपत्र अर्ज प्रक्रिया, पात्रता आणि सरकारी नियमांबद्दल प्रश्न विचारा.",
+                assistantPlaceholder: "प्रश्न विचारा (उदा. आधार आणि पॅन लिंक कसे करावे? ड्रायव्हिंग लायसन्स पात्रता?)",
+                askBtnText: "विचारा",
+                correctedMsg: "आपोआप दुरुस्त केलेल्या शोधाचे निकाल दर्शवत आहे: ",
+                assistantNotFound: "या प्रश्नाचे उत्तर सापडले नाही. कृपया आधार अपडेट, पॅन कार्ड, ड्रायव्हिंग लायसन्स किंवा पीएम किसान बद्दल विचारा."
+            },
+            hi: {
+                portalTitle: "ई-गव कनेक्ट",
+                portalSubtitle: "सरकारी योजनाओं और सेवाओं का एकीकृत पोर्टल",
+                navOfficial: "आधिकारिक पोर्टल",
+                heroHeadline: "सरकारी योजनाओं और सेवाओं का लाभ उठाएं",
+                heroText: "योजनाएं खोजें, आधिकारिक निर्देश पढ़ें, पात्रता जांचें और सीधे आधिकारिक सरकारी वेबसाइटों पर जाएं।",
+                searchPlaceholder: "योजनाएं, पासपोर्ट, पैन कार्ड, आरटीओ सेवाएं खोजें...",
+                catAll: "सभी सेवाएं",
+                catIdentity: "पहचान एवं दस्तावेज",
+                catFinance: "वित्त एवं कर",
+                catTransport: "आरटीओ एवं परिवहन",
+                catHealthcare: "स्वास्थ्य सेवाएं",
+                catAgriculture: "कृषि योजनाएं",
+                howToApplyBtn: "प्रश्न और उत्तर",
+                websiteBtn: "वेबसाइट",
+                modalCloseBtn: "बंद करें",
+                modalRedirectText: "आधिकारिक साइट पर जाएं",
+                footerText1: "© २०२६ ई-गव कनेक्ट। सभी जानकारी सीधे आधिकारिक सरकारी वेब सेवाओं से जुड़ी है।",
+                footerText2: "यह एक जन सेवा पोर्टल है। उपयोगकर्ताओं को आधिकारिक पोर्टलों पर जानकारी की पुष्टि करने की सलाह दी जाती है।",
+                noResults: "आपकी खोज से मेल खाने वाली कोई सेवा नहीं मिली।",
+                assistantTitle: "ई-गव स्मार्ट सहायक",
+                assistantSubtitle: "दस्तावेज आवेदन, पात्रता और सरकारी प्रक्रियाओं के संबंध में कोई भी प्रश्न पूछें।",
+                assistantPlaceholder: "प्रश्न पूछें (जैसे: आधार-पैन लिंक कैसे करें? ड्राइविंग लाइसेंस पात्रता?)",
+                askBtnText: "पूछें",
+                correctedMsg: "स्वचालित रूप से सुधारे गए प्रश्न के परिणाम: ",
+                assistantNotFound: "मुझे उस प्रश्न का सटीक उत्तर नहीं मिला। आधार अपडेट, पैन कार्ड, ड्राइविंग लाइसेंस या पीएम किसान के बारे में पूछने का प्रयास करें।"
+            }
+        };
+
+        // Fuzzy Matching (Levenshtein Distance) for Spelling Auto-correction
+        function getLevenshteinDistance(a, b) {
+            const matrix = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+            for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
+            for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+
+            for (let i = 1; i <= a.length; i++) {
+                for (let j = 1; j <= b.length; j++) {
+                    const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+                    matrix[i][j] = Math.min(
+                        matrix[i - 1][j] + 1,
+                        matrix[i][j - 1] + 1,
+                        matrix[i - 1][j - 1] + cost
+                    );
+                }
+            }
+            return matrix[a.length][b.length];
+        }
+
+        const knowledgeBase = [
+            {
+                canonicalTerm: "PAN-Aadhaar Linking",
+                keywords: ["pan", "link", "aadhaar", "adhar", "aadhare", "penn", "पॅन", "पैन", "आधार"],
+                en: "<strong>PAN-Aadhaar Linking Guide:</strong> Visit the Income Tax e-filing portal (incometax.gov.in). Click on 'Link Aadhaar' under Quick Links, enter your 10-digit PAN and 12-digit Aadhaar number, verify with OTP, and submit your linking request.",
+                mr: "<strong>पॅन-आधार लिंकेज माहिती:</strong> आयकर ई-फायलिंग पोर्टलला (incometax.gov.in) भेट द्या. 'Link Aadhaar' पर्यायावर जा, तुमचा १०-अंकी पॅन आणि १२-अंकी आधार क्रमांक टाका आणि OTP द्वारे पडताळणी पूर्ण करा.",
+                hi: "<strong>पैन-आधार लिंकिंग निर्देश:</strong> आयकर ई-फाइलिंग पोर्टल (incometax.gov.in) पर जाएं। Quick Links के अंतर्गत 'Link Aadhaar' पर क्लिक करें, अपना 10-अंकीय पैन और 12-अंकीय आधार नंबर दर्ज करें और OTP से सत्यापन पूर्ण करें."
+            },
+            {
+                canonicalTerm: "PM Kisan Samman Nidhi",
+                keywords: ["kisan", "pm kisan", "6000", "farmer", "shatkari", "kisaan", "किसान", "शेतकरी"],
+                en: "<strong>PM Kisan Eligibility & Details:</strong> All landholding farmer families across India are eligible to receive ₹6,000 annually in 3 equal installments of ₹2,000 via Direct Benefit Transfer (DBT). Mandatory e-KYC must be completed on pmkisan.gov.in.",
+                mr: "<strong>पीएम किसान पात्रता आणि माहिती:</strong> सर्व पात्र शेतकरी कुटुंबे प्रतिवर्ष ₹६,००० (३ हप्त्यांमध्ये) मिळण्यास पात्र आहेत. pmkisan.gov.in वर ई-केवायसी (e-KYC) करणे अनिवार्य आहे.",
+                hi: "<strong>पीएम किसान पात्रता और विवरण:</strong> सभी भूमिधारक किसान परिवार ₹6,000 वार्षिक सहायता (₹2,000 की 3 किस्तों में) प्राप्त करने के पात्र हैं। pmkisan.gov.in पर e-KYC पूरा करना अनिवार्य है."
+            },
+            {
+                canonicalTerm: "Ayushman Bharat Health Card",
+                keywords: ["ayushman", "ayusman", "5 lakh", "health", "insurance", "आरोग्य", "आयुष्मान", "स्वास्थ्य"],
+                en: "<strong>Ayushman Bharat Coverage:</strong> Provides cash-free health coverage up to ₹5 Lakh per family per year for secondary and tertiary hospital treatments. Check eligibility on dashboard.pmjay.gov.in using your Mobile or Ration Card number.",
+                mr: "<strong>आयुष्मान भारत योजना:</strong> पात्र कुटुंबांना प्रतिवर्ष ₹५ लाखांपर्यंत मोफत रुग्णालय उपचार मिळतात. dashboard.pmjay.gov.in वर तुमच्या मोबाईल किंवा रेशन कार्ड नंबरने पात्रता तपासा.",
+                hi: "<strong>आयुष्मान भारत योजना:</strong> पात्र परिवारों को प्रति वर्ष ₹5 लाख तक का मुफ्त इलाज प्रदान किया जाता है। dashboard.pmjay.gov.in पर अपने मोबाइल या राशन कार्ड नंबर से पात्रता जांचें."
+            },
+            {
+                canonicalTerm: "Driving License & RTO",
+                keywords: ["license", "lisence", "licence", "rto", "driving", "drving", "ड्रायव्हिंग", "लायसन्स", "ड्राइविंग", "लाइसेंस"],
+                en: "<strong>Driving License Application:</strong> Apply for a Learner's License online via Sarathi Parivahan (sarathi.parivahan.gov.in). Aadhaar-authenticated applications allow taking the learner test online from home in most states.",
+                mr: "<strong>ड्रायव्हिंग लायसन्स प्रक्रिया:</strong> तुम्ही 'सारथी परिवहन' (sarathi.parivahan.gov.in) वर ऑनलाइन लर्नर लायसन्ससाठी अर्ज करू शकता. आधार प्रमाणीकरणाद्वारे घरी बसून ऑनलाइन चाचणी देता येते.",
+                hi: "<strong>ड्राइविंग लाइसेंस प्रक्रिया:</strong> आप 'सारथी परिवहन' (sarathi.parivahan.gov.in) पर लर्नर लाइसेंस के लिए ऑनलाइन आवेदन कर सकते हैं। आधार प्रमाणीकरण के माध्यम से घर बैठे ऑनलाइन टेस्ट दिया जा सकता है।"
+            }
+        ];
+
+        // Extended services data with 10 FAQs for each service
         const servicesData = [
             {
                 id: 'aadhaar',
-                title: 'Aadhaar Card Services',
-                category: 'IDENTITY & DOCS',
+                category: 'Identity',
+                icon: 'fa-id-card',
                 bgImage: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=600&auto=format&fit=crop',
-                icon: '🆔',
-                description: 'Unique identification system for Indian residents. Apply, verify, retrieve, or update biometric and demographic data.',
-                website: 'https://uidai.gov.in',
+                officialUrl: 'https://uidai.gov.in',
+                en: {
+                    name: 'Aadhaar Card Services',
+                    desc: 'Unique identification system for Indian residents. Apply, verify, retrieve, or update biometric and demographic data.',
+                },
+                mr: {
+                    name: 'आधार कार्ड सेवा',
+                    desc: 'भारतीय रहिवाशांसाठी अद्वितीय ओळख प्रणाली. बायोमेट्रिक आणि लोकसंख्याशास्त्रीय डेटा अद्यतनित करा किंवा डाउनलोड करा.',
+                },
+                hi: {
+                    name: 'आधार कार्ड सेवाएं',
+                    desc: 'भारतीय निवासियों के लिए विशिष्ट पहचान प्रणाली। जनसांख्यिकीय और बायोमेट्रिक विवरण अपडेट या डाउनलोड करें।',
+                },
                 faqs: [
                     { q: "What is an Aadhaar card?", a: "A 12-digit unique identification number issued by UIDAI to residents of India based on their biometric and demographic data." },
                     { q: "Is Aadhaar mandatory?", a: "It is required for various government subsidies, opening bank accounts, filing taxes, and obtaining a PAN card." },
@@ -425,12 +306,22 @@
             },
             {
                 id: 'pan',
-                title: 'PAN Card Application',
-                category: 'FINANCE & TAX',
+                category: 'Finance',
+                icon: 'fa-address-card',
                 bgImage: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=600&auto=format&fit=crop',
-                icon: '💳',
-                description: 'Apply for a Permanent Account Number (PAN) essential for financial transactions, tax filings, and opening bank accounts.',
-                website: 'https://incometax.gov.in',
+                officialUrl: 'https://incometax.gov.in',
+                en: {
+                    name: 'PAN Card Application',
+                    desc: 'Apply for a Permanent Account Number (PAN) essential for financial transactions, tax filings, and opening bank accounts.',
+                },
+                mr: {
+                    name: 'पॅन कार्ड अर्ज (PAN Card)',
+                    desc: 'आर्थिक व्यवहार, कर भरणे आणि बँक खाती उघडण्यासाठी आवश्यक असलेला कायमचा खाते क्रमांक (PAN) मिळवा.',
+                },
+                hi: {
+                    name: 'पैन कार्ड आवेदन (PAN Card)',
+                    desc: 'वित्तीय लेनदेन, आयकर रिटर्न और बैंक खाता खोलने के लिए आवश्यक स्थायी खाता संख्या (PAN) हेतु आवेदन करें.',
+                },
                 faqs: [
                     { q: "What is a PAN card?", a: "A Permanent Account Number is a 10-digit alphanumeric identifier issued by the Income Tax Department of India." },
                     { q: "Who needs a PAN card?", a: "Anyone earning a taxable income, businesses, companies, and individuals performing high-value financial transactions must have a PAN." },
@@ -446,12 +337,22 @@
             },
             {
                 id: 'digilocker',
-                title: 'DigiLocker Portal',
-                category: 'IDENTITY & DOCS',
+                category: 'Identity',
+                icon: 'fa-folder-closed',
                 bgImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
-                icon: '📁',
-                description: 'Store and access digital copies of authentic documents like driving licenses, marksheets, and identity cards.',
-                website: 'https://digilocker.gov.in',
+                officialUrl: 'https://digilocker.gov.in',
+                en: {
+                    name: 'DigiLocker Portal',
+                    desc: 'Store and access digital copies of authentic documents like driving licenses, marksheets, and identity cards.',
+                },
+                mr: {
+                    name: 'डिजिलॉकर (DigiLocker)',
+                    desc: 'वाहन परवाना, गुणपत्रिका आणि ओळखपत्रे डिजिटल स्वरूपात सुरक्षित ठेवा.',
+                },
+                hi: {
+                    name: 'डिजी लॉकर (DigiLocker)',
+                    desc: 'ड्राइविंग लाइसेंस, अंकपत्र और पहचान पत्र जैसे आधिकारिक दस्तावेजों को डिजिटल रूप से सुरक्षित रखें और एक्सेस करें.',
+                },
                 faqs: [
                     { q: "What is DigiLocker?", a: "A flagship initiative of the Ministry of Electronics and Information Technology (MeitY) providing a secure cloud-based platform for storage, sharing, and verification of documents." },
                     { q: "Are DigiLocker documents legally valid?", a: "Yes, under Rule 9A of the IT Rules, documents in DigiLocker are treated at par with original physical documents." },
@@ -467,12 +368,22 @@
             },
             {
                 id: 'rto',
-                title: 'RTO & Driving License',
-                category: 'RTO & TRANSPORT',
+                category: 'Transport',
+                icon: 'fa-car',
                 bgImage: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=600&auto=format&fit=crop',
-                icon: '🚗',
-                description: 'Apply for Learner\'s License, Permanent Driving License, renewals, or vehicle registration services.',
-                website: 'https://parivahan.gov.in',
+                officialUrl: 'https://parivahan.gov.in',
+                en: {
+                    name: 'RTO & Driving License',
+                    desc: "Apply for Learner's License, Permanent Driving License, renewals, or vehicle registration services.",
+                },
+                mr: {
+                    name: 'आरटीओ आणि ड्रायव्हिंग लायसन्स',
+                    desc: 'लर्नर लायसन्स, पक्के ड्रायव्हिंग लायसन्स, लायसन्स नूतनीकरण किंवा वाहन नोंदणी सेवांसाठी अर्ज करा.',
+                },
+                hi: {
+                    name: 'आरटीओ एवं ड्राइविंग लाइसेंस',
+                    desc: 'लर्नर लाइसेंस, स्थायी ड्राइविंग लाइसेंस, नवीनीकरण या वाहन पंजीकरण सेवाओं के लिए आवेदन करें.',
+                },
                 faqs: [
                     { q: "What is a Learner's License (LL)?", a: "A provisional legal permit that allows you to practice driving on public roads before obtaining a permanent driving license." },
                     { q: "What is the minimum age for a driving license in India?", a: "18 years for gear vehicles and commercial transport; 16 years for non-gear motorcycles up to 50cc with parental consent." },
@@ -488,12 +399,22 @@
             },
             {
                 id: 'pmkisan',
-                title: 'PM Kisan Samman Nidhi',
-                category: 'AGRICULTURE',
+                category: 'Agriculture',
+                icon: 'fa-tractor',
                 bgImage: 'https://images.unsplash.com/photo-1595974482597-4f6c4f7ae008?q=80&w=600&auto=format&fit=crop',
-                icon: '🌾',
-                description: 'Income support scheme of ₹6,000 per year for landholding farmer families across India.',
-                website: 'https://pmkisan.gov.in',
+                officialUrl: 'https://pmkisan.gov.in',
+                en: {
+                    name: 'PM Kisan Samman Nidhi',
+                    desc: 'Income support scheme of ₹6,000 per year for landholding farmer families across India.',
+                },
+                mr: {
+                    name: 'पीएम किसान सन्मान निधी',
+                    desc: 'शेतकरी कुटुंबांना प्रतिवर्ष ₹६,००० चे थेट आर्थिक उत्पन्न साहाय्य.',
+                },
+                hi: {
+                    name: 'पीएम किसान सम्मान निधि',
+                    desc: 'देश भर के किसान परिवारों के लिए ₹6,000 प्रति वर्ष की आय सहायता योजना.',
+                },
                 faqs: [
                     { q: "What is the PM-Kisan scheme?", a: "A central sector scheme providing income support of ₹6,000 per year in three equal installments of ₹2,000 directly to eligible farmer families." },
                     { q: "Who is eligible for PM-Kisan?", a: "All landholding farmer families having cultivable land in their names are eligible, subject to certain exclusion criteria." },
@@ -509,12 +430,22 @@
             },
             {
                 id: 'ayushman',
-                title: 'Ayushman Bharat (AB-PMJAY)',
-                category: 'HEALTHCARE',
+                category: 'Healthcare',
+                icon: 'fa-heart-pulse',
                 bgImage: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=600&auto=format&fit=crop',
-                icon: '🏥',
-                description: 'Health insurance cover of up to ₹5 Lakh per family per year for hospitalization.',
-                website: 'https://pmjay.gov.in',
+                officialUrl: 'https://pmjay.gov.in',
+                en: {
+                    name: 'Ayushman Bharat (AB-PMJAY)',
+                    desc: 'Health insurance cover of up to ₹5 Lakh per family per year for hospitalization.',
+                },
+                mr: {
+                    name: 'आयुष्मान भारत योजना (AB-PMJAY)',
+                    desc: 'पात्र कुटुंबांना दरवर्षी ₹५ लाख रुपयांपर्यंतचे मोफत वैद्यकीय उपचार विमा कवच.',
+                },
+                hi: {
+                    name: 'आयुष्मान भारत योजना (AB-PMJAY)',
+                    desc: 'पात्र परिवारों को प्रति वर्ष ₹5 लाख तक का मुफ्त स्वास्थ्य बीमा कवर.',
+                },
                 faqs: [
                     { q: "What is Ayushman Bharat PM-JAY?", a: "Pradhan Mantri Jan Arogya Yojana is the world's largest health insurance scheme providing health cover of up to ₹5 Lakh per family per year for secondary and tertiary care hospitalization." },
                     { q: "Who is eligible for AB-PMJAY?", a: "Eligibility is automatically determined based on the Socio-Economic Caste Census (SECC) database for rural and urban categories without any cap on family size." },
@@ -530,69 +461,206 @@
             }
         ];
 
-        // Render Cards Function
-        function renderServices(filter = 'All Services') {
-            const grid = document.getElementById('servicesGrid');
-            grid.innerHTML = '';
+        function changeLanguage(lang) {
+            currentLang = lang;
+            renderLanguageStaticTexts();
+            displayServices(servicesData);
+        }
 
-            const filtered = filter === 'All Services' 
-                ? servicesData 
-                : servicesData.filter(s => s.category.toLowerCase() === filter.toLowerCase());
+        function renderLanguageStaticTexts() {
+            const data = translations[currentLang];
+            document.getElementById("portalTitle").innerText = data.portalTitle;
+            document.getElementById("portalSubtitle").innerText = data.portalSubtitle;
+            document.getElementById("navOfficial").innerText = data.navOfficial;
+            document.getElementById("heroHeadline").innerText = data.heroHeadline;
+            document.getElementById("heroText").innerText = data.heroText;
+            document.getElementById("searchInput").placeholder = data.searchPlaceholder;
+            document.getElementById("modalCloseBtn").innerText = data.modalCloseBtn;
+            document.getElementById("modalRedirectText").innerText = data.modalRedirectText;
+            document.getElementById("footerText1").innerText = data.footerText1;
+            document.getElementById("footerText2").innerText = data.footerText2;
 
-            filtered.forEach(service => {
-                const card = document.createElement('div');
-                card.className = 'service-card';
-                card.innerHTML = `
-                    <div class="card-header" style="background-image: url('${service.bgImage}')">
-                        <span class="card-tag">${service.category}</span>
+            document.getElementById("assistantTitle").innerText = data.assistantTitle;
+            document.getElementById("assistantSubtitle").innerText = data.assistantSubtitle;
+            document.getElementById("assistantInput").placeholder = data.assistantPlaceholder;
+            document.getElementById("askBtnText").innerText = data.askBtnText;
+
+            document.querySelectorAll(".category-btn").forEach(btn => {
+                const category = btn.getAttribute("data-cat");
+                if (category === 'all') btn.innerText = data.catAll;
+                if (category === 'Identity') btn.innerText = data.catIdentity;
+                if (category === 'Finance') btn.innerText = data.catFinance;
+                if (category === 'Transport') btn.innerText = data.catTransport;
+                if (category === 'Healthcare') btn.innerText = data.catHealthcare;
+                if (category === 'Agriculture') btn.innerText = data.catAgriculture;
+            });
+        }
+
+        function displayServices(services) {
+            const grid = document.getElementById("servicesGrid");
+            grid.innerHTML = "";
+
+            const filteredServices = services.filter(s => {
+                const details = s[currentLang];
+                const query = document.getElementById("searchInput").value.toLowerCase();
+                const matchesSearch = details.name.toLowerCase().includes(query) || details.desc.toLowerCase().includes(query);
+                const matchesCategory = currentCategory === 'all' || s.category === currentCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            if (filteredServices.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fa-regular fa-folder-open text-5xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500 font-medium text-sm">${translations[currentLang].noResults}</p>
                     </div>
-                    <div class="card-body">
-                        <div class="service-icon">${service.icon}</div>
-                        <h3 class="service-title">${service.title}</h3>
-                        <p class="service-desc">${service.description}</p>
-                        <div class="card-footer">
-                            <a href="#" onclick="openModal('${service.id}'); return false;">How to Apply &rarr;</a>
-                            <a href="${service.website}" target="_blank" class="website-link">Website &#8599;</a>
+                `;
+                return;
+            }
+
+            filteredServices.forEach(service => {
+                const details = service[currentLang];
+                const card = document.createElement("div");
+                card.className = "bg-white rounded-2xl shadow-sm hover:shadow-md border border-gray-200 overflow-hidden transition duration-300 flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="h-32 bg-cover bg-center relative flex items-end p-4" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7)), url('${service.bgImage}')">
+                            <span class="p-3 bg-white text-blue-900 rounded-xl shadow-md absolute -bottom-5 left-4 z-10">
+                                <i class="fa-solid ${service.icon} text-xl w-6 h-6 flex items-center justify-center"></i>
+                            </span>
+                            <span class="absolute top-3 right-3 px-2.5 py-1 text-[10px] font-bold tracking-wider bg-black/50 text-white backdrop-blur-md rounded-md uppercase">
+                                ${translations[currentLang]["cat" + service.category] || service.category}
+                            </span>
                         </div>
+                        
+                        <div class="px-6 pt-8 pb-4">
+                            <h4 class="text-base font-bold text-gray-900 mb-1.5">${details.name}</h4>
+                            <p class="text-gray-600 text-xs leading-relaxed line-clamp-3">${details.desc}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mx-6 pb-4 pt-3 border-t border-gray-100">
+                        <button onclick="openModal('${service.id}')" class="text-blue-900 hover:text-blue-700 font-bold text-xs flex items-center gap-1.5">
+                            ${translations[currentLang].howToApplyBtn} <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                        <a href="${service.officialUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-bold text-xs flex items-center gap-1.5">
+                            ${translations[currentLang].websiteBtn} <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                        </a>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // Filter Button Event Listeners
-        document.querySelectorAll('.cat-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                renderServices(e.target.textContent);
-            });
+        // Fuzzy search & auto-correction engine for assistant queries
+        function handleAssistantQuery(event) {
+            event.preventDefault();
+            const inputEl = document.getElementById("assistantInput");
+            const responseEl = document.getElementById("assistantResponse");
+            const rawQuery = inputEl.value.trim();
+
+            if (!rawQuery) return;
+
+            const userWords = rawQuery.toLowerCase().split(/\s+/);
+            let matchedEntry = null;
+            let bestDistance = Infinity;
+            let isAutoCorrected = false;
+            let matchedTerm = "";
+
+            // 1. Direct Keyword Match
+            for (let entry of knowledgeBase) {
+                if (entry.keywords.some(kw => rawQuery.toLowerCase().includes(kw))) {
+                    matchedEntry = entry;
+                    matchedTerm = entry.canonicalTerm;
+                    break;
+                }
+            }
+
+            // 2. Levenshtein Distance Fuzzy Match if direct match fails
+            if (!matchedEntry) {
+                for (let entry of knowledgeBase) {
+                    for (let kw of entry.keywords) {
+                        for (let word of userWords) {
+                            if (word.length < 3) continue;
+                            const dist = getLevenshteinDistance(word, kw);
+                            if (dist <= 2 && dist < bestDistance) {
+                                bestDistance = dist;
+                                matchedEntry = entry;
+                                matchedTerm = entry.canonicalTerm;
+                                isAutoCorrected = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            responseEl.classList.remove("hidden");
+            if (matchedEntry) {
+                let badge = isAutoCorrected 
+                    ? `<div class="mb-2 text-xs font-bold text-amber-300 flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> ${translations[currentLang].correctedMsg} <u>${matchedTerm}</u></div>`
+                    : '';
+                responseEl.innerHTML = badge + matchedEntry[currentLang];
+            } else {
+                responseEl.innerHTML = translations[currentLang].assistantNotFound;
+            }
+        }
+
+        document.getElementById("searchInput").addEventListener("input", function () {
+            displayServices(servicesData);
         });
 
-        // Modal Controls
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            document.querySelectorAll(".category-btn").forEach(btn => {
+                btn.classList.remove("bg-blue-900", "text-white");
+                btn.classList.add("bg-white", "text-gray-700");
+            });
+
+            const activeBtn = event.currentTarget;
+            activeBtn.classList.remove("bg-white", "text-gray-700");
+            activeBtn.classList.add("bg-blue-900", "text-white");
+
+            displayServices(servicesData);
+        }
+
+        // Open Modal with 10 FAQs
         function openModal(serviceId) {
             const service = servicesData.find(s => s.id === serviceId);
             if (!service) return;
 
-            document.getElementById('modalTitle').textContent = `${service.title} - FAQs`;
+            const details = service[currentLang];
+            document.getElementById('modalTitle').textContent = `${details.name} - FAQs`;
             const body = document.getElementById('modalBody');
             body.innerHTML = '';
 
             service.faqs.forEach((faq, index) => {
                 const item = document.createElement('div');
-                item.className = 'faq-item';
+                item.className = 'mb-4 border-b border-gray-100 pb-3';
                 item.innerHTML = `
-                    <div class="faq-q">Q${index + 1}: ${faq.q}</div>
-                    <div class="faq-a">${faq.a}</div>
+                    <div class="font-semibold text-xs text-blue-900 mb-1">Q${index + 1}: ${faq.q}</div>
+                    <div class="text-xs text-gray-600 leading-relaxed">${faq.a}</div>
                 `;
                 body.appendChild(item);
             });
 
-            document.getElementById('faqModal').style.display = 'flex';
+            document.getElementById('modalRedirectBtn').href = service.officialUrl;
+
+            const modal = document.getElementById("faqModal");
+            modal.classList.remove("hidden");
+            setTimeout(() => {
+                modal.firstElementChild.classList.remove("scale-95");
+                modal.firstElementChild.classList.add("scale-100");
+            }, 10);
         }
 
         function closeModal() {
-            document.getElementById('faqModal').style.display = 'none';
+            const modal = document.getElementById("faqModal");
+            modal.firstElementChild.classList.remove("scale-100");
+            modal.firstElementChild.classList.add("scale-95");
+            setTimeout(() => {
+                modal.classList.add("hidden");
+            }, 150);
         }
 
         // Close modal on background click
@@ -603,8 +671,9 @@
             }
         }
 
-        // Initial render
-        renderServices();
+        // Initialize default UI rendering
+        renderLanguageStaticTexts();
+        displayServices(servicesData);
     </script>
 </body>
 </html>
