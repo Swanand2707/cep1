@@ -1,867 +1,610 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>National Citizen Services Portal - E-Gov Connect</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
-            }
+    <title>E-Gov Connect - Unified Portal for Schemes & Services</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --border-color: #e5e7eb;
         }
-    </script>
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo-area p {
+            font-size: 0.8rem;
+            color: #93c5fd;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-eligibility {
+            background-color: #f59e0b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-eligibility:hover {
+            background-color: #d97706;
+        }
+
+        .lang-select {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .portal-links {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .portal-links span {
+            cursor: pointer;
+            color: #93c5fd;
+        }
+        .portal-links span:hover {
+            text-decoration: underline;
+        }
+
+        /* Category Filter Navigation */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem 1rem;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            background: #f3f4f6;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Content Grid */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            height: 130px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            padding: 1rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+        }
+
+        .card-tag {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-icon {
+            position: absolute;
+            top: -25px;
+            left: 1.25rem;
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 1.2rem;
+            color: var(--primary);
+            border: 2px solid white;
+        }
+
+        .service-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .service-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+
+        .card-footer a {
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 0.25krem;
+        }
+
+        .card-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .card-footer .website-link {
+            color: #059669;
+        }
+
+        /* Modal Structure for FAQs */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal {
+            background: white;
+            width: 100%;
+            max-width: 700px;
+            max-height: 85vh;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            padding: 1rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .faq-q {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .faq-a {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Footer Info */
+        footer {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin-bottom: 0.25rem;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 dark:bg-slate-950 text-gray-800 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-300">
+<body>
 
-    <!-- Emergency / Notification Ticker Banner -->
-    <div class="bg-amber-500 text-slate-950 text-xs font-bold py-2 px-4 flex justify-between items-center shadow-inner overflow-hidden">
-        <div class="flex items-center gap-2 truncate">
-            <span class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded uppercase tracking-wider text-[10px]">Alert</span>
-            <span id="tickerText">Important Notice: Keep your documents verified on DigiLocker and update contact details regularly on official portals.</span>
-        </div>
-        <button onclick="this.parentElement.style.display='none'" class="text-slate-950 hover:text-white font-bold px-2">&times;</button>
-    </div>
-
-    <!-- Header Section -->
-    <header class="bg-blue-900 dark:bg-slate-900 text-white shadow-md sticky top-0 z-40 transition-colors">
-        <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center space-x-3">
-                <i class="fa-solid fa-building-columns text-3xl text-amber-400"></i>
-                <div>
-                    <h1 class="text-2xl font-bold tracking-wide" id="portalTitle">E-Gov Connect</h1>
-                    <p class="text-xs text-blue-200 dark:text-slate-400" id="portalSubtitle">Unified Portal for Schemes & Services</p>
-                </div>
+    <!-- Header -->
+    <header>
+        <div class="logo-area">
+            <div>
+                <h1>E-Gov Connect</h1>
+                <p>Unified Portal for Schemes & Services</p>
             </div>
-            
-            <!-- Controls & Links -->
-            <div class="flex items-center gap-3 text-sm font-medium flex-wrap justify-center">
-                <!-- Eligibility Checker Button -->
-                <button onclick="openEligibilityModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="eligibilityBtnText">Check Eligibility</span>
-                </button>
-
-                <!-- Language Dropdown -->
-                <div class="relative inline-block text-left">
-                    <div class="flex items-center bg-blue-800 dark:bg-slate-800 rounded-lg px-3 py-1.5 border border-blue-700 dark:border-slate-700">
-                        <i class="fa-solid fa-language text-amber-400 text-lg mr-2"></i>
-                        <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-semibold cursor-pointer outline-none">
-                            <option value="en" class="text-gray-900">English</option>
-                            <option value="mr" class="text-gray-900">मराठी</option>
-                            <option value="hi" class="text-gray-900">हिंदी</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Dark Mode Toggle -->
-                <button onclick="toggleDarkMode()" class="p-2 bg-blue-800 dark:bg-slate-800 rounded-lg hover:bg-blue-700 dark:hover:bg-slate-700 transition" title="Toggle Dark Mode">
-                    <i id="themeIcon" class="fa-solid fa-moon text-amber-400"></i>
-                </button>
-
-                <nav class="hidden lg:flex space-x-4 text-xs font-semibold">
-                    <a href="https://www.india.gov.in" target="_blank" class="hover:text-amber-400 transition" id="navOfficial">Official Portal</a>
-                    <a href="https://web.umang.gov.in" target="_blank" class="hover:text-amber-400 transition">UMANG</a>
-                    <a href="https://www.digilocker.gov.in" target="_blank" class="hover:text-amber-400 transition">DigiLocker</a>
-                </nav>
+        </div>
+        <div class="header-actions">
+            <button class="btn-eligibility">Check Eligibility</button>
+            <select class="lang-select">
+                <option>English</option>
+                <option>Hindi</option>
+            </select>
+            <div class="portal-links">
+                <span>Official Portal</span>
+                <span>UMANG</span>
+                <span>DigiLocker</span>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="flex-grow container mx-auto px-6 py-8">
-        <!-- Hero Section -->
-        <div class="text-center max-w-2xl mx-auto mb-8">
-            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3" id="heroHeadline">Access Government Schemes & Services</h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-6 text-sm" id="heroText">Search, read official instructions, check eligibility, and seamlessly redirect to official government portals.</p>
-            
-            <!-- Search Bar with Voice Dictation -->
-            <div class="relative shadow-md rounded-xl overflow-hidden bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 flex items-center">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 text-gray-400 text-lg"></i>
-                <input type="text" id="searchInput" placeholder="Search for schemes, passports, PAN cards, farming services..." 
-                       class="w-full px-5 py-4 pl-12 pr-12 text-gray-900 dark:text-white bg-transparent outline-none text-sm">
-                <button onclick="startVoiceSearch('searchInput')" class="absolute right-4 text-gray-400 hover:text-amber-500 transition text-lg" title="Search with Voice">
-                    <i class="fa-solid fa-microphone"></i>
-                </button>
-            </div>
-        </div>
+    <!-- Categories Filter Navigation -->
+    <div class="categories">
+        <button class="cat-btn active">All Services</button>
+        <button class="cat-btn">Identity & Docs</button>
+        <button class="cat-btn">Finance & Tax</button>
+        <button class="cat-btn">RTO & Transport</button>
+        <button class="cat-btn">Healthcare</button>
+        <button class="cat-btn">Agriculture</button>
+    </div>
 
-        <!-- AI Citizen Helper Card with Voice & Quick Chips -->
-        <div class="max-w-3xl mx-auto mb-10 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl p-6 shadow-xl border border-blue-800">
-            <div class="flex items-center gap-3 mb-3">
-                <div class="p-2.5 bg-amber-500 text-slate-950 rounded-lg font-bold">
-                    <i class="fa-solid fa-robot text-xl"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold flex items-center gap-2">
-                        <span id="assistantTitle">E-Gov Smart Assistant</span>
-                        <span class="text-[10px] bg-amber-400 text-slate-950 font-extrabold px-2 py-0.5 rounded-full uppercase">Bilingual & Voice-Enabled</span>
-                    </h3>
-                    <p class="text-xs text-blue-200" id="assistantSubtitle">Ask questions or use voice. Automatically corrects typos and returns complete guide details!</p>
-                </div>
-            </div>
-
-            <form onsubmit="handleAssistantQuery(event)" class="mt-4 flex gap-2 relative">
-                <input type="text" id="assistantInput" placeholder="Ask (e.g., aadhar update kase karave?, driving license eligibility?)" 
-                       class="flex-1 px-4 py-2.5 pr-12 rounded-lg text-gray-900 text-sm outline-none focus:ring-2 focus:ring-amber-400">
-                <button type="button" onclick="startVoiceSearch('assistantInput')" class="absolute right-24 top-2 text-gray-500 hover:text-amber-600 transition text-base px-2 py-1" title="Speak Query">
-                    <i class="fa-solid fa-microphone"></i>
-                </button>
-                <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-lg text-sm flex items-center gap-2 transition shrink-0">
-                    <span id="askBtnText">Ask</span> <i class="fa-solid fa-paper-plane text-xs"></i>
-                </button>
-            </form>
-
-            <!-- Quick Prompt Chips -->
-            <div class="mt-3 flex flex-wrap gap-2 text-xs">
-                <span class="text-blue-300 self-center font-medium">Try asking:</span>
-                <button type="button" onclick="setAssistantPrompt('PAN Aadhaar link')" class="bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-full transition">PAN-Aadhaar Link</button>
-                <button type="button" onclick="setAssistantPrompt('PM Kisan 6000')" class="bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-full transition">PM Kisan Details</button>
-                <button type="button" onclick="setAssistantPrompt('Driving license documents')" class="bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-full transition">Driving License</button>
-                <button type="button" onclick="setAssistantPrompt('Ayushman card 5 lakh')" class="bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-full transition">Ayushman Health Card</button>
-            </div>
-
-            <div id="assistantResponse" class="hidden mt-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 text-sm leading-relaxed max-h-60 overflow-y-auto">
-                <!-- Smart response loaded dynamically -->
-            </div>
-        </div>
-
-        <!-- Filter Category Tabs -->
-        <div class="flex flex-wrap justify-center gap-2 mb-8" id="categoryTabs">
-            <button onclick="filterCategory('all')" class="category-btn active px-4 py-2 rounded-full text-xs font-bold bg-blue-900 text-white transition shadow-sm flex items-center gap-1.5" data-cat="all"><i class="fa-solid fa-border-all"></i> <span id="catAllText">All Services</span></button>
-            <button onclick="filterCategory('Identity')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 shadow-sm transition flex items-center gap-1.5" data-cat="Identity"><i class="fa-solid fa-id-card text-blue-600"></i> <span id="catIdentityText">Identity & Docs</span></button>
-            <button onclick="filterCategory('Finance')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 shadow-sm transition flex items-center gap-1.5" data-cat="Finance"><i class="fa-solid fa-wallet text-emerald-600"></i> <span id="catFinanceText">Finance & Tax</span></button>
-            <button onclick="filterCategory('Transport')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 shadow-sm transition flex items-center gap-1.5" data-cat="Transport"><i class="fa-solid fa-car text-amber-600"></i> <span id="catTransportText">RTO & Transport</span></button>
-            <button onclick="filterCategory('Healthcare')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 shadow-sm transition flex items-center gap-1.5" data-cat="Healthcare"><i class="fa-solid fa-heart-pulse text-rose-600"></i> <span id="catHealthcareText">Healthcare</span></button>
-            <button onclick="filterCategory('Agriculture')" class="category-btn px-4 py-2 rounded-full text-xs font-bold bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 shadow-sm transition flex items-center gap-1.5" data-cat="Agriculture"><i class="fa-solid fa-tractor text-lime-700"></i> <span id="catAgricultureText">Agriculture</span></button>
-        </div>
-
-        <!-- Services Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGrid">
-            <!-- Dynamically populated via JS -->
+    <!-- Main Content -->
+    <main>
+        <div class="services-grid" id="servicesGrid">
+            <!-- Dynamic Injection via Script -->
         </div>
     </main>
 
-    <!-- Detailed Modal Window -->
-    <div id="infoModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-100 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[85vh]">
-            <div class="bg-blue-900 dark:bg-slate-800 text-white px-6 py-4 flex justify-between items-center">
-                <h3 id="modalTitle" class="text-lg font-bold">Service Details</h3>
-                <button onclick="closeModal()" class="text-white hover:text-amber-400 text-2xl font-bold">&times;</button>
+    <!-- FAQ Modal Component -->
+    <div class="modal-overlay" id="faqModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Frequently Asked Questions</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
-            <div class="p-6 overflow-y-auto space-y-5" id="modalBody">
-                <!-- Modal info loads here -->
-            </div>
-            <div class="p-4 bg-gray-50 dark:bg-slate-800 border-t dark:border-slate-700 flex justify-between items-center gap-3">
-                <button onclick="downloadPDFGuide()" class="text-xs font-bold text-blue-700 dark:text-blue-400 hover:underline flex items-center gap-1">
-                    <i class="fa-solid fa-file-arrow-down"></i> Save Guide
-                </button>
-                <div class="flex gap-2">
-                    <button onclick="closeModal()" class="px-4 py-2 rounded-lg border dark:border-slate-600 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" id="modalCloseBtn">Close</button>
-                    <a id="modalRedirectBtn" href="#" target="_blank" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-2">
-                        <span id="modalRedirectText">Apply on Official Site</span> <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Eligibility Wizard Modal -->
-    <div id="eligibilityModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-100 rounded-2xl max-w-md w-full overflow-hidden shadow-2xl p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold flex items-center gap-2 text-blue-900 dark:text-blue-400">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Scheme Eligibility Finder
-                </h3>
-                <button onclick="closeEligibilityModal()" class="text-gray-500 hover:text-gray-800 dark:hover:text-white text-xl font-bold">&times;</button>
-            </div>
-            <div class="space-y-4 text-sm">
-                <div>
-                    <label class="block text-xs font-bold mb-1">Your Age:</label>
-                    <input type="number" id="eligAge" placeholder="e.g. 25" class="w-full px-3 py-2 border dark:border-slate-700 rounded-lg bg-transparent text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold mb-1">Occupation:</label>
-                    <select id="eligOcc" class="w-full px-3 py-2 border dark:border-slate-700 rounded-lg bg-transparent text-sm">
-                        <option value="farmer" class="text-gray-900">Farmer / Agriculture</option>
-                        <option value="salaried" class="text-gray-900">Salaried / Employed</option>
-                        <option value="student" class="text-gray-900">Student</option>
-                        <option value="general" class="text-gray-900">General Citizen</option>
-                    </select>
-                </div>
-                <button onclick="runEligibilityCheck()" class="w-full py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-bold rounded-lg text-xs transition">Find Matching Schemes</button>
-                <div id="eligibilityResults" class="mt-4 p-3 bg-blue-50 dark:bg-slate-800 rounded-xl text-xs space-y-2 hidden">
-                    <!-- Results populated dynamically -->
-                </div>
+            <div class="modal-body" id="modalBody">
+                <!-- FAQs will be injected here -->
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800 text-center text-xs">
-        <p class="mb-2" id="footerText1">&copy; 2026 E-Gov Connect. All information is routed directly to official government web services.</p>
-        <p class="text-gray-500" id="footerText2">This is a public service utility interface. Users are advised to double-check information on the official portals.</p>
+    <footer>
+        <p>&copy; 2026 E-Gov Connect. All Information is routed directly to official government web services.</p>
+        <p>This is a public service utility interface. Users are advised to double-check information on original portals.</p>
     </footer>
 
-    <!-- Core Application Script -->
     <script>
-        let currentLang = 'en'; 
-        let currentCategory = 'all';
-        let activeServiceForPDF = null;
-
-        const translations = {
-            en: {
-                portalTitle: "E-Gov Connect",
-                portalSubtitle: "Unified Portal for Schemes & Services",
-                navOfficial: "Official Portal",
-                heroHeadline: "Access Government Schemes & Services",
-                heroText: "Search, read official instructions, check eligibility, and seamlessly redirect to official government portals.",
-                searchPlaceholder: "Search for schemes, passports, PAN cards, farming services...",
-                catAll: "All Services",
-                catIdentity: "Identity & Docs",
-                catFinance: "Finance & Tax",
-                catTransport: "RTO & Transport",
-                catHealthcare: "Healthcare",
-                catAgriculture: "Agriculture",
-                howToApplyBtn: "How to Apply",
-                websiteBtn: "Website",
-                modalCloseBtn: "Close",
-                modalRedirectText: "Apply on Official Site",
-                aboutServiceHeading: "About the Service",
-                stepsHeading: "Step-by-Step Registration Guide",
-                faqHeading: "Frequently Asked Question (FAQ)",
-                checklistHeading: "Required Documents Checklist",
-                footerText1: "© 2026 E-Gov Connect. All information is routed directly to official government web services.",
-                footerText2: "This is a public service utility interface. Users are advised to double-check information on original portals.",
-                noResults: "No services found matching your criteria.",
-                assistantTitle: "E-Gov Smart Assistant",
-                assistantSubtitle: "Ask questions about document applications, eligibility, and government procedures.",
-                assistantPlaceholder: "Ask (e.g., aadhar update kase karave?, driving license eligibility?)",
-                askBtnText: "Ask",
-                correctedMsg: "Showing auto-corrected query results for: ",
-                assistantNotFound: "I couldn't find an exact match for that question. Try asking about Aadhaar update, PAN card, Driving License, Ayushman Card, or PM Kisan.",
-                eligibilityBtnText: "Check Eligibility"
-            },
-            mr: {
-                portalTitle: "ई-गव्ह कनेक्ट",
-                portalSubtitle: "शासकीय योजना आणि सेवांचे एकत्रित दालन",
-                navOfficial: "अधिकृत पोर्टल",
-                heroHeadline: "सरकारी योजना आणि सेवा मिळवा",
-                heroText: "योजना शोधा, अधिकृत मार्गदर्शक सूचना वाचा, पात्रता तपासा आणि थेट अधिकृत सरकारी संकेतस्थळावर जा.",
-                searchPlaceholder: "योजना, पासपोर्ट, पॅन कार्ड, आरटीओ सेवा शोधा...",
-                catAll: "सर्व सेवा",
-                catIdentity: "ओळख आणि कागदपत्रे",
-                catFinance: "वित्त आणि कर",
-                catTransport: "आरटीओ आणि वाहतूक",
-                catHealthcare: "आरोग्य सेवा",
-                catAgriculture: "कृषी योजना",
-                howToApplyBtn: "अर्ज कसा करावा",
-                websiteBtn: "संकेतस्थळ",
-                modalCloseBtn: "बंद करा",
-                modalRedirectText: "अधिकृत साईटवर जा",
-                aboutServiceHeading: "सेवेबद्दल माहिती",
-                stepsHeading: "टप्पा-बाय-टप्पा अर्ज मार्गदर्शक",
-                faqHeading: "सतत विचारले जाणारे प्रश्न (FAQ)",
-                checklistHeading: "आवश्यक कागदपत्रांची यादी",
-                footerText1: "© २०२६ ई-गव्ह कनेक्ट. सर्व माहिती थेट अधिकृत सरकारी संकेतस्थळांवरून जोडलेली आहे.",
-                footerText2: "हे एक सार्वजनिक सेवा पोर्टल आहे. वापरकर्त्यांनी अधिकृत संकेतस्थळांवर माहितीची शहानिशा करावी.",
-                noResults: "तुमच्या शोधाशी जुळणाऱ्या कोणत्याही सेवा सापडल्या नाहीत.",
-                assistantTitle: "ई-गव्ह स्मार्ट सहाय्यक",
-                assistantSubtitle: "इंग्रजी किंवा मराठीत (इंग्रजी लिपीतही) प्रश्न विचारा. आपोआप योग्य माहिती दर्शवली जाईल.",
-                assistantPlaceholder: "प्रश्न विचारा (उदा. aadhar update kase karave?, driving license eligibility?)",
-                askBtnText: "विचारा",
-                correctedMsg: "आपोआप दुरुस्त केलेल्या शोधाचे निकाल दर्शवत आहे: ",
-                assistantNotFound: "या प्रश्नाचे उत्तर सापडले नाही. कृपया आधार अपडेट, पॅन कार्ड, ड्रायव्हिंग लायसन्स किंवा पीएम किसान बद्दल विचारा.",
-                eligibilityBtnText: "पात्रता तपासा"
-            },
-            hi: {
-                portalTitle: "ई-गव कनेक्ट",
-                portalSubtitle: "सरकारी योजनाओं और सेवाओं का एकीकृत पोर्टल",
-                navOfficial: "आधिकारिक पोर्टल",
-                heroHeadline: "सरकारी योजनाओं और सेवाओं का लाभ उठाएं",
-                heroText: "योजनाएं खोजें, आधिकारिक निर्देश पढ़ें, पात्रता जांचें और सीधे आधिकारिक सरकारी वेबसाइटों पर जाएं।",
-                searchPlaceholder: "योजनाएं, पासपोर्ट, पैन कार्ड, आरटीओ सेवाएं खोजें...",
-                catAll: "सभी सेवाएं",
-                catIdentity: "पहचान एवं दस्तावेज",
-                catFinance: "वित्त एवं कर",
-                catTransport: "आरटीओ एवं परिवहन",
-                catHealthcare: "स्वास्थ्य सेवाएं",
-                catAgriculture: "कृषि योजनाएं",
-                howToApplyBtn: "आवेदन कैसे करें",
-                websiteBtn: "वेबसाइट",
-                modalCloseBtn: "बंद करें",
-                modalRedirectText: "आधिकारिक साइट पर जाएं",
-                aboutServiceHeading: "सेवा के बारे में जानकारी",
-                stepsHeading: "चरण-दर-चरण आवेदन गाइड",
-                faqHeading: "अक्सर पूछे जाने वाले प्रश्न (FAQ)",
-                checklistHeading: "आवश्यक दस्तावेजों की चेकलिस्ट",
-                footerText1: "© २०२६ ई-गव कनेक्ट। सभी जानकारी सीधे आधिकारिक सरकारी वेब सेवाओं से जुड़ी है।",
-                footerText2: "यह एक जन सेवा पोर्टल है। उपयोगकर्ताओं को आधिकारिक पोर्टलों पर जानकारी की पुष्टि करने की सलाह दी जाती है।",
-                noResults: "आपकी खोज से मेल खाने वाली कोई सेवा नहीं मिली।",
-                assistantTitle: "ई-गव स्मार्ट सहायक",
-                assistantSubtitle: "दस्तावेज आवेदन, पात्रता और सरकारी प्रक्रियाओं के संबंध में कोई भी प्रश्न पूछें।",
-                assistantPlaceholder: "प्रश्न पूछें (जैसे: aadhar update kase karave?, driving license eligibility?)",
-                askBtnText: "पूछें",
-                correctedMsg: "स्वचालित रूप से सुधारे गए प्रश्न के परिणाम: ",
-                assistantNotFound: "मुझे उस प्रश्न का सटीक उत्तर नहीं मिला। आधार अपडेट, पैन कार्ड, ड्राइविंग लाइसेंस या पीएम किसान के बारे में पूछने का प्रयास करें।",
-                eligibilityBtnText: "पात्रता जांचें"
-            }
-        };
-
-        function toggleDarkMode() {
-            const html = document.documentElement;
-            const icon = document.getElementById("themeIcon");
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                icon.className = "fa-solid fa-moon text-amber-400";
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.classList.add('dark');
-                icon.className = "fa-solid fa-sun text-amber-400";
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        // Check saved theme
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.add('dark');
-            document.getElementById("themeIcon").className = "fa-solid fa-sun text-amber-400";
-        }
-
-        // Voice Search & Dictation Support
-        function startVoiceSearch(inputId) {
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                alert("Speech recognition is not supported in this browser. Please use Chrome or Edge.");
-                return;
-            }
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const recognition = new SpeechRecognition();
-            recognition.lang = currentLang === 'mr' ? 'mr-IN' : (currentLang === 'hi' ? 'hi-IN' : 'en-US');
-            recognition.start();
-
-            recognition.onresult = function(event) {
-                const speechToText = event.results[0][0].transcript;
-                document.getElementById(inputId).value = speechToText;
-                if(inputId === 'searchInput') displayServices(servicesData);
-            };
-        }
-
-        function setAssistantPrompt(text) {
-            document.getElementById("assistantInput").value = text;
-        }
-
-        function getLevenshteinDistance(a, b) {
-            const matrix = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
-            for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
-            for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
-
-            for (let i = 1; i <= a.length; i++) {
-                for (let j = 1; j <= b.length; j++) {
-                    const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-                    matrix[i][j] = Math.min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j - 1] + cost);
-                }
-            }
-            return matrix[a.length][b.length];
-        }
-
-        const knowledgeBase = [
-            {
-                canonicalTerm: "PAN-Aadhaar Linking",
-                keywords: ["pan", "link", "aadhaar", "adhar", "aadhare", "penn", "पॅन", "पैन", "आधार", "aadhar link kase karave"],
-                en: "<strong>PAN-Aadhaar Linking Guide:</strong> Visit the Income Tax e-filing portal (incometax.gov.in). Click on 'Link Aadhaar' under Quick Links, enter your 10-digit PAN and 12-digit Aadhaar number, verify with OTP, and submit your linking request.",
-                mr: "<strong>पॅन-आधार लिंकेज माहिती:</strong> आयकर ई-फायलिंग पोर्टलला (incometax.gov.in) भेट द्या. 'Link Aadhaar' पर्यायावर जा, तुमचा १०-अंकी पॅन आणि १२-अंकी आधार क्रमांक टाका आणि OTP द्वारे पडताळणी पूर्ण करा.",
-                hi: "<strong>पैन-आधार लिंकिंग निर्देश:</strong> आयकर ई-फाइलिंग पोर्टल (incometax.gov.in) पर जाएं। Quick Links के अंतर्गत 'Link Aadhaar' पर क्लिक करें, अपना 10-अंकीय पैन और 12-अंकीय आधार नंबर दर्ज करें और OTP से सत्यापन पूर्ण करें।"
-            },
-            {
-                canonicalTerm: "PM Kisan Samman Nidhi",
-                keywords: ["kisan", "pm kisan", "6000", "farmer", "shatkari", "kisaan", "किसान", "शेतकरी"],
-                en: "<strong>PM Kisan Eligibility & Details:</strong> All landholding farmer families across India are eligible to receive ₹6,000 annually in 3 equal installments of ₹2,000 via Direct Benefit Transfer (DBT). Mandatory e-KYC must be completed on pmkisan.gov.in.",
-                mr: "<strong>पीएम किसान पात्रता आणि माहिती:</strong> सर्व पात्र शेतकरी कुटुंबे प्रतिवर्ष ₹६,००० (३ हप्त्यांमध्ये) मिळण्यास पात्र आहेत. pmkisan.gov.in वर ई-केवायसी (e-KYC) करणे अनिवार्य आहे.",
-                hi: "<strong>पीएम किसान पात्रता और विवरण:</strong> सभी भूमिधारक किसान परिवार ₹6,000 वार्षिक सहायता प्राप्त करने के पात्र हैं। pmkisan.gov.in पर e-KYC पूरा करना अनिवार्य है।"
-            },
-            {
-                canonicalTerm: "Ayushman Bharat Health Card",
-                keywords: ["ayushman", "ayusman", "5 lakh", "health", "insurance", "आरोग्य", "आयुष्मान", "स्वास्थ्य"],
-                en: "<strong>Ayushman Bharat Coverage:</strong> Provides cash-free health coverage up to ₹5 Lakh per family per year for secondary and tertiary hospital treatments. Check eligibility on dashboard.pmjay.gov.in using your Mobile or Ration Card number.",
-                mr: "<strong>आयुष्मान भारत योजना:</strong> पात्र कुटुंबांना प्रतिवर्ष ₹५ लाखांपर्यंत मोफत रुग्णालय उपचार मिळतात. dashboard.pmjay.gov.in वर तुमच्या मोबाईल किंवा रेशन कार्ड नंबरने पात्रता तपासा.",
-                hi: "<strong>आयुष्मान भारत योजना:</strong> पात्र परिवारों को प्रति वर्ष ₹5 लाख तक का मुफ्त इलाज प्रदान किया जाता है। dashboard.pmjay.gov.in पर अपने मोबाइल या राशन कार्ड नंबर से पात्रता जांचें।"
-            },
-            {
-                canonicalTerm: "Driving License & RTO",
-                keywords: ["license", "lisence", "licence", "rto", "driving", "drving", "ड्रायव्हिंग", "लायसन्स", "ड्राइविंग", "लाइसेंस"],
-                en: "<strong>Driving License Instructions & Required Documents:</strong> <br>1. **Eligibility:** Must be 16+ for gearless motorcycles and 18+ for light motor vehicles.<br>2. **Required Documents:** Age Proof (Birth Certificate/School Leaving), Address Proof (Aadhaar/Utility Bill), Passport-size photographs.<br>3. **Process:** Apply online via Sarathi Parivahan, take the online learner test, and schedule a test at your local RTO.",
-                mr: "<strong>ड्रायव्हिंग लायसन्स सूचना आणि आवश्यक कागदपत्रे:</strong> <br>1. **पात्रता:** गिअर नसलेल्या दुचाकीसाठी १६ वर्षे आणि चारचाकीसाठी १८ वर्षे वयोमर्यादा.<br>2. **आवश्यक कागदपत्रे:** वयाचा दाखला, पत्त्याचा पुरावा (आधार कार्ड/वीज बिल).<br>3. **प्रक्रिया:** सारथी परिवहन पोर्टलवरून ऑनलाइन अर्ज करा.",
-                hi: "<strong>ड्राइविंग लाइसेंस निर्देश और आवश्यक दस्तावेज:</strong> <br>1. **पात्रता:** गियरलेस दोपहिया वाहन के लिए 16 वर्ष और चार पहिया वाहन के लिए 18 वर्ष आयु।<br>2. **आवश्यक दस्तावेज:** आयु प्रमाण, पता प्रमाण।<br>3. **प्रक्रिया:** सारथी परिवहन पोर्टल के माध्यम से ऑनलाइन आवेदन करें।"
-            }
-        ];
-
+        // Data Structure containing 10 FAQs for each service with custom background images
         const servicesData = [
             {
-                id: "aadhaar",
-                category: "Identity",
-                icon: "fa-id-card",
-                bgImage: "https://images.unsplash.com/photo-1557683316-973673baf926?w=500&auto=format&fit=crop&q=60", 
-                officialUrl: "https://myaadhaar.uidai.gov.in/",
-                checklist: ["Proof of Identity (PAN / Voter ID)", "Proof of Address (Utility Bill / Ration Card)", "Registered Mobile Number for OTP"],
-                faq: {
-                    en: "<strong>Q: Can I update my Aadhaar details online?</strong><br>A: Yes, demographic details can be updated online via the myAadhaar portal using registered mobile OTP.",
-                    mr: "<strong>प्र: मी माझ्या आधारमधील माहिती ऑनलाइन बदलू शकतो का?</strong><br>उ: होय, myAadhaar पोर्टलवरून तुम्ही नाव किंवा पत्ता बदलू शकता.",
-                    hi: "<strong>प्र: क्या मैं अपने आधार विवरण को ऑनलाइन अपडेट कर सकता हूँ?</strong><br>उ: हाँ, myAadhaar पोर्टल के माध्यम से जनसांख्यिकी विवरण ऑनलाइन अपडेट किए जा सकते हैं।"
-                },
-                en: {
-                    name: "Aadhaar Card Services",
-                    desc: "Unique Identification system for Indian residents. Apply, verify, retrieve, or update biometric and demographic data.",
-                    info: "Managed by UIDAI. Allows citizens to update mobile numbers, change addresses, and download digital copies (e-Aadhaar).",
-                    steps: ["Visit UIDAI's myAadhaar portal.", "Log in using your 12-digit number and OTP.", "Choose 'Update Demographic Data' or click 'Download Aadhaar'.", "Submit required document proof and pay nominal fee."]
-                },
-                mr: {
-                    name: "आधार कार्ड सेवा",
-                    desc: "भारतीय रहिवाशांसाठी अद्वितीय ओळख प्रणाली. बायोमेट्रिक आणि लोकसंख्याशास्त्रीय डेटा अद्यतनित करा किंवा डाउनलोड करा.",
-                    info: "UIDAI द्वारे व्यवस्थापित. नागरिकांना मोबाईल नंबर अपडेट करणे आणि डिजिटल आधार डाउनलोड करणे सुलभ करते.",
-                    steps: ["UIDAI च्या 'myAadhaar' पोर्टलला भेट द्या.", "आधार क्रमांक आणि OTP वापरून लॉग इन करा.", "'Download Aadhaar' वर क्लिक करा.", "शुल्क भरून आधार डाउनलोड करा."]
-                },
-                hi: {
-                    name: "आधार कार्ड सेवाएं",
-                    desc: "भारतीय निवासियों के लिए विशिष्ट पहचान प्रणाली। जनसांख्यिकीय और बायोमेट्रिक विवरण अपडेट या डाउनलोड करें।",
-                    info: "UIDAI द्वारा संचालित। नागरिक मोबाइल नंबर, पता अपडेट कर सकते हैं और डिजिटल ई-आधार डाउनलोड कर सकते हैं।",
-                    steps: ["UIDAI के myAadhaar पोर्टल पर जाएं।", "OTP का उपयोग करके लॉगिन करें।", "'Download Aadhaar' चुनें।", "शुल्क भुगतान कर डिजिटल कॉपी प्राप्त करें।"]
-                }
+                id: 'aadhaar',
+                title: 'Aadhaar Card Services',
+                category: 'IDENTITY & DOCS',
+                bgImage: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=600&auto=format&fit=crop',
+                icon: '🆔',
+                description: 'Unique identification system for Indian residents. Apply, verify, retrieve, or update biometric and demographic data.',
+                website: 'https://uidai.gov.in',
+                faqs: [
+                    { q: "What is an Aadhaar card?", a: "A 12-digit unique identification number issued by UIDAI to residents of India based on their biometric and demographic data." },
+                    { q: "Is Aadhaar mandatory?", a: "It is required for various government subsidies, opening bank accounts, filing taxes, and obtaining a PAN card." },
+                    { q: "How can I update my address in Aadhaar online?", a: "You can update it via the UIDAI Self-Service Update Portal by submitting valid Proof of Address (PoA) documents." },
+                    { q: "What documents are required for a new Aadhaar enrollment?", a: "Proof of Identity (PoI), Proof of Address (PoA), Date of Birth (DoB) proof, and Proof of Relationship (PoR) if applicable." },
+                    { q: "How can I retrieve a lost Aadhaar number or enrollment ID?", a: "You can retrieve it online through the UIDAI official website using your registered mobile number or email." },
+                    { q: "Can I lock my biometrics for security?", a: "Yes, UIDAI provides a biometric locking feature via their portal or mAadhaar app to secure your data." },
+                    { q: "What is mAadhaar?", a: "An official mobile application developed by UIDAI to carry an electronic version of your Aadhaar card anywhere." },
+                    { q: "How long does a typical Aadhaar update take?", a: "Most updates are processed within 7 to 10 working days." },
+                    { q: "Is a child's Aadhaar biometric mandatory?", a: "Children under 5 years old have a 'Bal Aadhaar' which requires no biometrics; mandatory biometric updates are needed at ages 5 and 15." },
+                    { q: "How can I check the status of my Aadhaar update request?", a: "You can track it online using the 14-digit Update Request Number (URN) provided on your acknowledgement slip." }
+                ]
             },
             {
-                id: "pan",
-                category: "Finance",
-                icon: "fa-address-card",
-                bgImage: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=500&auto=format&fit=crop&q=60", 
-                officialUrl: "https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html",
-                checklist: ["Aadhaar Card", "Passport size photograph", "Valid Mobile Number & Email ID"],
-                faq: {
-                    en: "<strong>Q: Is Aadhaar mandatory for a PAN card?</strong><br>A: Yes, quoting and linking Aadhaar with PAN is mandatory for filing income tax returns.",
-                    mr: "<strong>प्र: पॅन कार्डसाठी आधार अनिवार्य आहे का?</strong><br>उ: होय, आयकर रिटर्न भरण्यासाठी पॅन कार्डला आधार नंबर जोडणे अनिवार्य आहे.",
-                    hi: "<strong>प्र: क्या पैन कार्ड के लिए आधार अनिवार्य है?</strong><br>उ: हाँ, आयकर रिटर्न दाखिल करने के लिए पैन के साथ आधार को लिंक करना अनिवार्य है।"
-                },
-                en: {
-                    name: "PAN Card Application",
-                    desc: "Apply for a Permanent Account Number (PAN) essential for financial transactions, tax filings, and opening bank accounts.",
-                    info: "Issued by the Income Tax Department. You can apply for a new PAN card, correct details, or download an e-PAN digitally.",
-                    steps: ["Go to Online PAN Application portal.", "Select Application Type as 'New PAN (Form 49A)'.", "Fill in personal details and select paperless e-KYC via Aadhaar.", "Pay processing fee and save acknowledgement receipt."]
-                },
-                mr: {
-                    name: "पॅन कार्ड अर्ज (PAN Card)",
-                    desc: "आर्थिक व्यवहार, कर भरणे आणि बँक खाती उघडण्यासाठी आवश्यक असलेला कायमचा खाते क्रमांक (PAN) मिळवा.",
-                    info: "आयकर विभागाकडून जारी केले जाते. आपण नवीन पॅनसाठी अर्ज करू शकता.",
-                    steps: ["पॅन अर्ज पोर्टलला भेट द्या.", "अर्ज प्रकारात 'New PAN (Form 49A)' निवडा.", "आधार OTP द्वारे पेपरलेस e-KYC पर्याय निवडा.", "अर्जाचे शुल्क भरा."]
-                },
-                hi: {
-                    name: "पैन कार्ड आवेदन (PAN Card)",
-                    desc: "वित्तीय लेनदेन, आयकर रिटर्न और बैंक खाता खोलने के लिए आवश्यक स्थायी खाता संख्या (PAN) हेतु आवेदन करें।",
-                    info: "आयकर विभाग द्वारा जारी। नए पैन कार्ड, विवरण सुधार या ई-पैन डाउनलोड के लिए आवेदन किया जा सकता है।",
-                    steps: ["ऑनलाइन पैन आवेदन पोर्टल पर जाएं।", "'New PAN (Form 49A)' चुनें।", "आधार OTP के माध्यम से पेपरलेस e-KYC विकल्प चुनें।", "शुल्क का भुगतान करें।"]
-                }
+                id: 'pan',
+                title: 'PAN Card Application',
+                category: 'FINANCE & TAX',
+                bgImage: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=600&auto=format&fit=crop',
+                icon: '💳',
+                description: 'Apply for a Permanent Account Number (PAN) essential for financial transactions, tax filings, and opening bank accounts.',
+                website: 'https://incometax.gov.in',
+                faqs: [
+                    { q: "What is a PAN card?", a: "A Permanent Account Number is a 10-digit alphanumeric identifier issued by the Income Tax Department of India." },
+                    { q: "Who needs a PAN card?", a: "Anyone earning a taxable income, businesses, companies, and individuals performing high-value financial transactions must have a PAN." },
+                    { q: "What is the difference between Form 49A and Form 49AA?", a: "Form 49A is for Indian citizens, while Form 49AA is for foreign citizens/entities." },
+                    { q: "Can I have multiple PAN cards?", a: "No, holding more than one PAN card is illegal under Section 272B of the Income Tax Act and attracts a penalty." },
+                    { q: "How can I link my PAN with Aadhaar?", a: "You can link them online through the Income Tax e-filing portal by paying the applicable fee." },
+                    { q: "What documents are accepted as proof of identity for PAN?", a: "Voter ID, Passport, Driving License, or Aadhaar Card." },
+                    { q: "How long is a PAN card valid?", a: "A PAN card has lifetime validity and does not expire." },
+                    { q: "Can I get an e-PAN if my physical card is lost?", a: "Yes, you can download a digital e-PAN instantly through designated portals like NSDL or UTIITSL for a nominal fee." },
+                    { q: "How do I update my name or date of birth on my PAN card?", a: "You can submit a request for changes or correction in PAN data through the Protean (NSDL) or UTIITSL portals." },
+                    { q: "Is it mandatory to quote PAN for cash transactions?", a: "Yes, quoting PAN is mandatory for specific transactions exceeding specified monetary limits (e.g., cash deposits, purchase of property or vehicles)." }
+                ]
             },
             {
-                id: "digilocker",
-                category: "Identity",
-                icon: "fa-folder-closed",
-                bgImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=500&auto=format&fit=crop&q=60", 
-                officialUrl: "https://www.digilocker.gov.in/",
-                checklist: ["Aadhaar Number", "Mobile number linked with Aadhaar"],
-                faq: {
-                    en: "<strong>Q: Are documents stored in DigiLocker legally valid?</strong><br>A: Yes, under Section 6A of the IT Act, documents in DigiLocker are treated at par with original physical documents.",
-                    mr: "<strong>प्र: डिजिलॉकरमध्ये ठेवली कागदपत्रे कायदेशीर दृष्ट्या वैध असतात का?</strong><br>उ: होय, माहिती तंत्रज्ञान कायद्यानुसार डिजिलॉकरमधील कागदपत्रे मूळ कागदपत्रांइतकीच वैध आहेत.",
-                    hi: "<strong>प्र: क्या DigiLocker में सहेजे गए दस्तावेज कानूनी रूप से वैध हैं?</strong><br>उ: हाँ, आईटी अधिनियम की धारा 6A के तहत ये मूल भौतिक दस्तावेजों के बराबर मान्य हैं।"
-                },
-                en: {
-                    name: "DigiLocker Portal",
-                    desc: "Store and access digital copies of authentic documents like driving licenses, marksheets, and identity cards.",
-                    info: "A flagship initiative under Digital India. Issued documents in DigiLocker are legally at par with physical documents under IT Act.",
-                    steps: ["Download DigiLocker App or open website.", "Sign up using Mobile Number linked with Aadhaar.", "Verify identity with OTP and fetch documents."]
-                },
-                mr: {
-                    name: "डिजिलॉकर (DigiLocker)",
-                    desc: "वाहन परवाना, गुणपत्रिका आणि ओळखपत्रे डिजिटल स्वरूपात सुरक्षित ठेवा.",
-                    info: "माहिती तंत्रज्ञान कायद्यानुसार डिजिलॉकरमधील कागदपत्रे मूळ कागदपत्रांइतकीच वैध मानली जातात.",
-                    steps: ["DigiLocker ॲप डाउनलोड करा.", "आधारशी लिंक असलेला मोबाईल नंबर वापरून साइन अप करा.", "OTP द्वारे ओळख सत्यापित करा."]
-                },
-                hi: {
-                    name: "डिजी लॉकर (DigiLocker)",
-                    desc: "ड्राइविंग लाइसेंस, अंकपत्र और पहचान पत्र जैसे आधिकारिक दस्तावेजों को डिजिटल रूप से सुरक्षित रखें और एक्सेस करें।",
-                    info: "डिजिटल इंडिया के तहत एक प्रमुख पहल। डिजी लॉकर में जारी दस्तावेज कानूनी रूप से मूल दस्तावेजों के बराबर हैं।",
-                    steps: ["DigiLocker ऐप डाउनलोड करें।", "आधार से जुड़े मोबाइल नंबर से साइन अप करें।", "OTP से पहचान सत्यापित करें।"]
-                }
+                id: 'digilocker',
+                title: 'DigiLocker Portal',
+                category: 'IDENTITY & DOCS',
+                bgImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
+                icon: '📁',
+                description: 'Store and access digital copies of authentic documents like driving licenses, marksheets, and identity cards.',
+                website: 'https://digilocker.gov.in',
+                faqs: [
+                    { q: "What is DigiLocker?", a: "A flagship initiative of the Ministry of Electronics and Information Technology (MeitY) providing a secure cloud-based platform for storage, sharing, and verification of documents." },
+                    { q: "Are DigiLocker documents legally valid?", a: "Yes, under Rule 9A of the IT Rules, documents in DigiLocker are treated at par with original physical documents." },
+                    { q: "How do I create a DigiLocker account?", a: "You can sign up using your mobile number linked to your Aadhaar card and setting a 6-digit security PIN." },
+                    { q: "What documents can I store in DigiLocker?", a: "Academic marksheets, driving licenses, vehicle registration certificates (RC), PAN cards, and other partner-issued documents." },
+                    { q: "Is DigiLocker free to use?", a: "Yes, registering and using basic storage on DigiLocker is completely free for Indian citizens." },
+                    { q: "How do I fetch my documents from issuers?", a: "You can link issuing organizations and pull documents directly using your identity details." },
+                    { q: "Can I upload my own scanned documents?", a: "Yes, you get dedicated space to upload and store scanned copies of your personal documents." },
+                    { q: "How secure is my data in DigiLocker?", a: "It uses 256-bit SSL encryption and OTP-based authentication to ensure complete data privacy." },
+                    { q: "Can I share my DigiLocker documents with others?", a: "Yes, you can share secure URIs or download verified PDF copies directly from the app/website." },
+                    { q: "What should I do if I forget my DigiLocker security PIN?", a: "You can easily reset your PIN using the Aadhaar OTP verification method linked to your account." }
+                ]
             },
             {
-                id: "rto",
-                category: "Transport",
-                icon: "fa-car",
-                bgImage: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=500&auto=format&fit=crop&q=60", 
-                officialUrl: "https://sarathi.parivahan.gov.in/",
-                checklist: ["Age Proof (Birth Certificate / School Leaving)", "Address Proof (Aadhaar / Voter ID)", "Medical Certificate Form 1A (if applicable)"],
-                faq: {
-                    en: "<strong>Q: Can I take the learner license test from home?</strong><br>A: Yes, using Aadhaar authentication, you can take the learner's license test online from your home.",
-                    mr: "<strong>प्र: मी घरूनच लर्नर लायसन्सची टेस्ट देऊ शकतो का?</strong><br>उ: होय, आधार प्रमाणीकरणाच्या मदतीने तुम्ही घरबसल्या ऑनलाइन चाचणी देऊ शकता.",
-                    hi: "<strong>प्र: क्या मैं घर बैठे लर्नर लाइसेंस का टेस्ट दे सकता हूँ?</strong><br>उ: हाँ, आधार प्रमाणीकरण का उपयोग करके आप घर से ही ऑनलाइन टेस्ट दे सकते हैं।"
-                },
-                en: {
-                    name: "RTO & Driving License",
-                    desc: "Apply for Learner's License, Permanent Driving License, renewals, or vehicle registration services.",
-                    info: "Operated by MoRTH. Paperless learner's license tests are available online using Aadhaar authentication.",
-                    steps: ["Visit Sarathi Parivahan portal.", "Click 'Apply for Learner's License'.", "Fill details and upload address proof.", "Complete online test and pay fees."]
-                },
-                mr: {
-                    name: "आरटीओ आणि ड्रायव्हिंग लायसन्स",
-                    desc: "लर्नर लायसन्स, पक्के ड्रायव्हिंग लायसन्स, लायसन्स नूतनीकरण किंवा वाहन नोंदणी सेवांसाठी अर्ज करा.",
-                    info: "रस्ते वाहतूक मंत्रालयाद्वारे संचलित. आधार प्रमाणीकरणाद्वारे घरी बसून ऑनलाइन चाचणी देता येते.",
-                    steps: ["सारथी परिवहन पोर्टलवर जा.", "'Apply for Learner's License' वर क्लिक करा.", "माहिती भरा आणि कागदपत्रे अपलोड करा."]
-                },
-                hi: {
-                    name: "आरटीओ एवं ड्राइविंग लाइसेंस",
-                    desc: "लर्नर लाइसेंस, स्थायी ड्राइविंग लाइसेंस, नवीनीकरण या वाहन पंजीकरण सेवाओं के लिए आवेदन करें।",
-                    info: "सड़क परिवहन मंत्रालय द्वारा संचालित। आधार प्रमाणीकरण का उपयोग करके ऑनलाइन टेस्ट दिया जा सकता है।",
-                    steps: ["सारथी परिवहन पोर्टल पर जाएं।", "'Apply for Learner's License' पर क्लिक करें।", "विवरण भरें और दस्तावेज अपलोड करें।"]
-                }
+                id: 'rto',
+                title: 'RTO & Driving License',
+                category: 'RTO & TRANSPORT',
+                bgImage: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=600&auto=format&fit=crop',
+                icon: '🚗',
+                description: 'Apply for Learner\'s License, Permanent Driving License, renewals, or vehicle registration services.',
+                website: 'https://parivahan.gov.in',
+                faqs: [
+                    { q: "What is a Learner's License (LL)?", a: "A provisional legal permit that allows you to practice driving on public roads before obtaining a permanent driving license." },
+                    { q: "What is the minimum age for a driving license in India?", a: "18 years for gear vehicles and commercial transport; 16 years for non-gear motorcycles up to 50cc with parental consent." },
+                    { q: "How can I apply for a driving license?", a: "You must first obtain a Learner's License, hold it for at least 30 days, and then book a slot for a driving test via the Sarathi Parivahan portal." },
+                    { q: "What documents are needed for vehicle registration (RC)?", a: "Sales invoice, manufacturer certificate, valid insurance, address proof, and pollution under control (PUC) certificate." },
+                    { q: "Can I apply for an International Driving Permit (IDP) online?", a: "Yes, you can apply through the Parivahan Sewa portal by submitting your valid driving license, passport, and visa details." },
+                    { q: "How can I check the status of my DL application?", a: "Visit the Sarathi portal, select your state, and enter your application number and date of birth." },
+                    { q: "What is the validity period of a permanent driving license?", a: "For non-commercial vehicles, it is generally valid until the holder turns 40 years old, or for 20 years from the date of issue, whichever is earlier." },
+                    { q: "How do I renew an expired driving license?", a: "You can apply for renewal online or offline within 1 year of its expiration date without a re-test." },
+                    { q: "Is a digital copy of the RC and DL valid on DigiLocker or mParivahan?", a: "Yes, traffic authorities accept digital documents presented via DigiLocker or the official mParivahan app." },
+                    { q: "How do I transfer vehicle ownership (RC transfer)?", a: "Submit Form 29 and 30 along with the original RC, insurance, PUC, and NOC from the financier to your local RTO." }
+                ]
             },
             {
-                id: "pmkisan",
-                category: "Agriculture",
-                icon: "fa-tractor",
-                bgImage: "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?w=500&auto=format&fit=crop&q=60", 
-                officialUrl: "https://pmkisan.gov.in/",
-                checklist: ["Land Ownership Documents (Satbara / 7/12 extract)", "Aadhaar Card", "Bank Account Passbook linked with Aadhaar"],
-                faq: {
-                    en: "<strong>Q: What is the annual financial support provided under PM Kisan?</strong><br>A: Eligible farmer families receive ₹6,000 per year in three installments of ₹2,000 each.",
-                    mr: "<strong>प्र: पीएम किसान योजनेअंतर्गत किती आर्थिक मदत मिळते?</strong><br>उ: पात्र शेतकरी कुटुंबांना दरवर्षी ₹६,००० चा लाभ प्रत्येकी ₹२,००० च्या ३ हप्त्यांमध्ये मिळतो.",
-                    hi: "<strong>प्र: पीएम किसान योजना के तहत कितनी वार्षिक सहायता दी जाती है?</strong><br>उ: पात्र किसान परिवारों को प्रति वर्ष ₹6,000 की राशि ₹2,000 की तीन किस्तों में दी जाती है।"
-                },
-                en: {
-                    name: "PM Kisan Samman Nidhi",
-                    desc: "Income support scheme of ₹6,000 per year for landholding farmer families across India.",
-                    info: "Provides direct financial aid in three equal installments directly into bank accounts via Direct Benefit Transfer (DBT).",
-                    steps: ["Go to PM-Kisan Portal.", "Click 'New Farmer Registration'.", "Input Aadhaar Number and verify with OTP.", "Fill land details and submit."]
-                },
-                mr: {
-                    name: "पीएम किसान सन्मान निधी",
-                    desc: "शेतकरी कुटुंबांना प्रतिवर्ष ₹६,००० चे थेट आर्थिक उत्पन्न साहाय्य.",
-                    info: "तीन समान हप्त्यांमध्ये मिळणारी रक्कम थेट बँक खात्यात (DBT) जमा केली जाते.",
-                    steps: ["PM-Kisan पोर्टलला भेट द्या.", "'New Farmer Registration' वर क्लिक करा.", "आधार क्रमांक टाका आणि OTP ने सत्यापित करा."]
-                },
-                hi: {
-                    name: "पीएम किसान सम्मान निधि",
-                    desc: "देश भर के किसान परिवारों के लिए ₹6,000 प्रति वर्ष की आय सहायता योजना।",
-                    info: "डीबीटी (DBT) के माध्यम से तीन समान किस्तों में राशि सीधे बैंक खाते में हस्तांतरित की जाती है।",
-                    steps: ["PM-Kisan पोर्टल पर जाएं।", "'New Farmer Registration' पर क्लिक करें।", "आधार नंबर दर्ज करें और OTP से सत्यापित करें।"]
-                }
+                id: 'pmkisan',
+                title: 'PM Kisan Samman Nidhi',
+                category: 'AGRICULTURE',
+                bgImage: 'https://images.unsplash.com/photo-1595974482597-4f6c4f7ae008?q=80&w=600&auto=format&fit=crop',
+                icon: '🌾',
+                description: 'Income support scheme of ₹6,000 per year for landholding farmer families across India.',
+                website: 'https://pmkisan.gov.in',
+                faqs: [
+                    { q: "What is the PM-Kisan scheme?", a: "A central sector scheme providing income support of ₹6,000 per year in three equal installments of ₹2,000 directly to eligible farmer families." },
+                    { q: "Who is eligible for PM-Kisan?", a: "All landholding farmer families having cultivable land in their names are eligible, subject to certain exclusion criteria." },
+                    { q: "Who is excluded from the PM-Kisan scheme?", a: "Institutional landholders, high-income earners, income tax payers, government employees, and professional practitioners." },
+                    { q: "How can a farmer register for PM-Kisan?", a: "Farmers can self-register online through the PM-Kisan portal, via Common Service Centres (CSCs), or through local agriculture officials." },
+                    { q: "Is Aadhaar mandatory for PM-Kisan?", a: "Yes, Aadhaar seeding and authentication are mandatory for registration and receiving installment payments." },
+                    { q: "How can I check my installment status?", a: "You can check your beneficiary status on the official PM-Kisan portal using your Aadhaar number, account number, or mobile number." },
+                    { q: "What is e-KYC for PM-Kisan and how is it done?", a: "e-KYC is mandatory to continue receiving benefits and can be completed instantly using OTP-based Aadhaar authentication online." },
+                    { q: "Can husband and wife both receive PM-Kisan benefits?", a: "No, the benefit is restricted to per family unit (husband, wife, and minor children)." },
+                    { q: "What should I do if my installment payment fails?", a: "Check your bank details, ensure Aadhaar is seeded with your bank account, and update incorrect details on the portal." },
+                    { q: "Is there a helpline number for PM-Kisan queries?", a: "Yes, farmers can reach out via the dedicated PM-Kisan helpline number (155261 / 011-24300606) or email support." }
+                ]
             },
             {
-                id: "ayushman",
-                category: "Healthcare",
-                icon: "fa-heart-pulse",
-                bgImage: "https://images.unsplash.com/photo-1584515933487-7598215059e1?w=500&auto=format&fit=crop&q=60", 
-                officialUrl: "https://dashboard.pmjay.gov.in/",
-                checklist: ["Ration Card or Family ID", "Aadhaar Card for all family members", "Registered Mobile Number"],
-                faq: {
-                    en: "<strong>Q: What is the maximum insurance cover per family in Ayushman Bharat?</strong><br>A: Up to ₹5 Lakh per family per year for secondary and tertiary hospital care.",
-                    mr: "<strong>प्र: आयुष्मान भारत योजनेअंतर्गत कमाल विमा संरक्षण किती आहे?</strong><br>उ: पात्र कुटुंबांना प्रतिवर्ष ₹५ लाखांपर्यंत उपचारासाठी विमा संरक्षण मिळते.",
-                    hi: "<strong>प्र: आयुष्मान भारत योजना के तहत प्रति परिवार अधिकतम बीमा कवर कितना है?</strong><br>उ: अस्पताल में भर्ती होने पर प्रति परिवार प्रति वर्ष ₹5 लाख तक का कवर।"
-                },
-                en: {
-                    name: "Ayushman Bharat (AB-PMJAY)",
-                    desc: "Health insurance cover of up to ₹5 Lakh per family per year for hospitalization.",
-                    info: "World's largest government-funded health assurance scheme. Totally cashless card-based service.",
-                    steps: ["Open PMJAY Portal to check eligibility.", "Click 'Am I Eligible' and enter mobile number.", "Search by Name or Ration Card and generate card."]
-                },
-                mr: {
-                    name: "आयुष्मान भारत योजना (AB-PMJAY)",
-                    desc: "पात्र कुटुंबांना दरवर्षी ₹५ लाख रुपयांपर्यंतचे मोफत वैद्यकीय उपचार विमा कवच.",
-                    info: "पूर्णतः सरकारी अर्थसहाय्यित आरोग्य विमा योजना. नोंदणीकृत रुग्णालयांमध्ये रोख विरहित (Cashless) उपचार.",
-                    steps: ["पात्रता तपासण्यासाठी PMJAY पोर्टल उघडा.", "'Am I Eligible' वर क्लिक करा.", "नाव किंवा रेशन कार्ड नंबरने शोधा."]
-                },
-                hi: {
-                    name: "आयुष्मान भारत योजना (AB-PMJAY)",
-                    desc: "पात्र परिवारों को प्रति वर्ष ₹5 लाख तक का मुफ्त स्वास्थ्य बीमा कवर।",
-                    info: "कैशलेस और पेपरलेस स्वास्थ्य सुरक्षा योजना। सूचीबद्ध अस्पतालों में मुफ्त उपचार उपलब्ध।",
-                    steps: ["PMJAY पोर्टल खोलें और पात्रता जांचें।", "'Am I Eligible' पर क्लिक करें।", "नाम या राशन कार्ड नंबर द्वारा खोजें।"]
-                }
+                id: 'ayushman',
+                title: 'Ayushman Bharat (AB-PMJAY)',
+                category: 'HEALTHCARE',
+                bgImage: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=600&auto=format&fit=crop',
+                icon: '🏥',
+                description: 'Health insurance cover of up to ₹5 Lakh per family per year for hospitalization.',
+                website: 'https://pmjay.gov.in',
+                faqs: [
+                    { q: "What is Ayushman Bharat PM-JAY?", a: "Pradhan Mantri Jan Arogya Yojana is the world's largest health insurance scheme providing health cover of up to ₹5 Lakh per family per year for secondary and tertiary care hospitalization." },
+                    { q: "Who is eligible for AB-PMJAY?", a: "Eligibility is automatically determined based on the Socio-Economic Caste Census (SECC) database for rural and urban categories without any cap on family size." },
+                    { q: "Is there any cost to enroll in AB-PMJAY?", a: "No, the scheme is completely cashless and paperless for eligible beneficiaries at empaneled hospitals." },
+                    { q: "How can I check if my name is on the beneficiary list?", a: "You can check your eligibility online at the PMJAY portal or by calling the toll-free helpline number 14555." },
+                    { q: "What is an Ayushman Card?", a: "A unique identification card issued to verified beneficiaries to avail cashless treatment at any empaneled hospital across India." },
+                    { q: "Are pre-existing diseases covered under the scheme?", a: "Yes, all pre-existing conditions are covered from day one of hospitalization under the approved treatment packages." },
+                    { q: "Which hospitals are empaneled under AB-PMJAY?", a: "Both public and private hospitals that meet specific criteria are empaneled across the country. You can find the list on the portal." },
+                    { q: "What documents are required at the hospital for admission?", a: "Your Ayushman Card and a valid government-issued photo ID proof (like Aadhaar or Voter ID)." },
+                    { q: "Does the scheme cover outpatient (OPD) expenses?", a: "PM-JAY primarily covers inpatient hospitalization expenses and specified day-care procedures, along with pre and post-hospitalization costs." },
+                    { q: "How can I make a grievance or complaint regarding the scheme?", a: "You can register your complaints online through the National Grievance Redressal Portal or by contacting the state health agency helpline." }
+                ]
             }
         ];
 
-        function changeLanguage(lang) {
-            currentLang = lang;
-            renderLanguageStaticTexts();
-            displayServices(servicesData);
-        }
+        // Render Cards Function
+        function renderServices(filter = 'All Services') {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '';
 
-        function renderLanguageStaticTexts() {
-            const data = translations[currentLang];
-            document.getElementById("portalTitle").innerText = data.portalTitle;
-            document.getElementById("portalSubtitle").innerText = data.portalSubtitle;
-            document.getElementById("navOfficial").innerText = data.navOfficial;
-            document.getElementById("heroHeadline").innerText = data.heroHeadline;
-            document.getElementById("heroText").innerText = data.heroText;
-            document.getElementById("searchInput").placeholder = data.searchPlaceholder;
-            document.getElementById("modalCloseBtn").innerText = data.modalCloseBtn;
-            document.getElementById("modalRedirectText").innerText = data.modalRedirectText;
-            document.getElementById("footerText1").innerText = data.footerText1;
-            document.getElementById("footerText2").innerText = data.footerText2;
-            document.getElementById("eligibilityBtnText").innerText = data.eligibilityBtnText;
+            const filtered = filter === 'All Services' 
+                ? servicesData 
+                : servicesData.filter(s => s.category.toLowerCase() === filter.toLowerCase());
 
-            document.getElementById("assistantTitle").innerText = data.assistantTitle;
-            document.getElementById("assistantSubtitle").innerText = data.assistantSubtitle;
-            document.getElementById("assistantInput").placeholder = data.assistantPlaceholder;
-            document.getElementById("askBtnText").innerText = data.askBtnText;
-
-            document.getElementById("catAllText").innerText = data.catAll;
-            document.getElementById("catIdentityText").innerText = data.catIdentity;
-            document.getElementById("catFinanceText").innerText = data.catFinance;
-            document.getElementById("catTransportText").innerText = data.catTransport;
-            document.getElementById("catHealthcareText").innerText = data.catHealthcare;
-            document.getElementById("catAgricultureText").innerText = data.catAgriculture;
-        }
-
-        function displayServices(services) {
-            const grid = document.getElementById("servicesGrid");
-            grid.innerHTML = "";
-
-            const filteredServices = services.filter(s => {
-                const details = s[currentLang];
-                const query = document.getElementById("searchInput").value.toLowerCase();
-                const matchesSearch = details.name.toLowerCase().includes(query) || details.desc.toLowerCase().includes(query);
-                const matchesCategory = currentCategory === 'all' || s.category === currentCategory;
-                return matchesSearch && matchesCategory;
-            });
-
-            if (filteredServices.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12">
-                        <i class="fa-regular fa-folder-open text-5xl text-gray-300 mb-4"></i>
-                        <p class="text-gray-500 font-medium text-sm">${translations[currentLang].noResults}</p>
-                    </div>
-                `;
-                return;
-            }
-
-            filteredServices.forEach(service => {
-                const details = service[currentLang];
-                const card = document.createElement("div");
-                card.className = "bg-white dark:bg-slate-900 rounded-2xl shadow-sm hover:shadow-md border border-gray-200 dark:border-slate-800 overflow-hidden transition duration-300 flex flex-col justify-between";
+            filtered.forEach(service => {
+                const card = document.createElement('div');
+                card.className = 'service-card';
                 card.innerHTML = `
-                    <div>
-                        <div class="h-32 bg-cover bg-center relative flex items-end p-4" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7)), url('${service.bgImage}')">
-                            <span class="p-3 bg-white dark:bg-slate-800 text-blue-900 dark:text-amber-400 rounded-xl shadow-md absolute -bottom-5 left-4 z-10">
-                                <i class="fa-solid ${service.icon} text-xl w-6 h-6 flex items-center justify-center"></i>
-                            </span>
-                            <span class="absolute top-3 right-3 px-2.5 py-1 text-[10px] font-bold tracking-wider bg-black/50 text-white backdrop-blur-md rounded-md uppercase">
-                                ${translations[currentLang]["cat" + service.category] || service.category}
-                            </span>
-                        </div>
-                        
-                        <div class="px-6 pt-8 pb-4">
-                            <h4 class="text-base font-bold text-gray-900 dark:text-white mb-1.5">${details.name}</h4>
-                            <p class="text-gray-600 dark:text-gray-300 text-xs leading-relaxed line-clamp-3">${details.desc}</p>
-                        </div>
+                    <div class="card-header" style="background-image: url('${service.bgImage}')">
+                        <span class="card-tag">${service.category}</span>
                     </div>
-                    
-                    <div class="flex justify-between items-center mx-6 pb-4 pt-3 border-t border-gray-100 dark:border-slate-800">
-                        <button onclick="openModal('${service.id}')" class="text-blue-900 dark:text-blue-400 hover:text-blue-700 font-bold text-xs flex items-center gap-1.5">
-                            ${translations[currentLang].howToApplyBtn} <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                        </button>
-                        <a href="${service.officialUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 font-bold text-xs flex items-center gap-1.5">
-                            ${translations[currentLang].websiteBtn} <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
-                        </a>
+                    <div class="card-body">
+                        <div class="service-icon">${service.icon}</div>
+                        <h3 class="service-title">${service.title}</h3>
+                        <p class="service-desc">${service.description}</p>
+                        <div class="card-footer">
+                            <a href="#" onclick="openModal('${service.id}'); return false;">How to Apply &rarr;</a>
+                            <a href="${service.website}" target="_blank" class="website-link">Website &#8599;</a>
+                        </div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        function handleAssistantQuery(event) {
-            event.preventDefault();
-            const inputEl = document.getElementById("assistantInput");
-            const responseEl = document.getElementById("assistantResponse");
-            const rawQuery = inputEl.value.trim();
-
-            if (!rawQuery) return;
-
-            const userWords = rawQuery.toLowerCase().split(/\s+/);
-            let matchedEntry = null;
-            let bestDistance = Infinity;
-            let isAutoCorrected = false;
-            let matchedTerm = "";
-
-            for (let entry of knowledgeBase) {
-                if (entry.keywords.some(kw => rawQuery.toLowerCase().includes(kw))) {
-                    matchedEntry = entry;
-                    matchedTerm = entry.canonicalTerm;
-                    break;
-                }
-            }
-
-            if (!matchedEntry) {
-                for (let entry of knowledgeBase) {
-                    for (let kw of entry.keywords) {
-                        for (let word of userWords) {
-                            if (word.length < 3) continue;
-                            const dist = getLevenshteinDistance(word, kw);
-                            if (dist <= 2 && dist < bestDistance) {
-                                bestDistance = dist;
-                                matchedEntry = entry;
-                                matchedTerm = entry.canonicalTerm;
-                                isAutoCorrected = true;
-                            }
-                        }
-                    }
-                }
-            }
-
-            responseEl.classList.remove("hidden");
-            if (matchedEntry) {
-                let badge = isAutoCorrected 
-                    ? `<div class="mb-2 text-xs font-bold text-amber-300 flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> ${translations[currentLang].correctedMsg} <u>${matchedTerm}</u></div>`
-                    : '';
-                responseEl.innerHTML = badge + matchedEntry[currentLang];
-            } else {
-                responseEl.innerHTML = translations[currentLang].assistantNotFound;
-            }
-        }
-
-        document.getElementById("searchInput").addEventListener("input", function () {
-            displayServices(servicesData);
+        // Filter Button Event Listeners
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                renderServices(e.target.textContent);
+            });
         });
 
-        function filterCategory(category) {
-            currentCategory = category;
-            document.querySelectorAll(".category-btn").forEach(btn => {
-                btn.classList.remove("bg-blue-950", "text-white", "bg-blue-900");
-                btn.classList.add("bg-white", "dark:bg-slate-900", "text-gray-700", "dark:text-gray-300");
-            });
-
-            const activeBtn = event.currentTarget;
-            activeBtn.classList.remove("bg-white", "dark:bg-slate-900", "text-gray-700", "dark:text-gray-300");
-            activeBtn.classList.add("bg-blue-900", "text-white");
-
-            displayServices(servicesData);
-        }
-
-        function openModal(id) {
-            const service = servicesData.find(s => s.id === id);
+        // Modal Controls
+        function openModal(serviceId) {
+            const service = servicesData.find(s => s.id === serviceId);
             if (!service) return;
-            activeServiceForPDF = service;
 
-            const details = service[currentLang];
-            document.getElementById("modalTitle").innerText = details.name;
-            
-            let stepsHtml = "";
-            details.steps.forEach((step, index) => {
-                stepsHtml += `
-                    <div class="flex gap-3 items-start">
-                        <span class="flex items-center justify-center bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-400 font-bold text-xs rounded-full h-5 w-5 shrink-0 mt-0.5">
-                            ${index + 1}
-                        </span>
-                        <p class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">${step}</p>
-                    </div>
+            document.getElementById('modalTitle').textContent = `${service.title} - FAQs`;
+            const body = document.getElementById('modalBody');
+            body.innerHTML = '';
+
+            service.faqs.forEach((faq, index) => {
+                const item = document.createElement('div');
+                item.className = 'faq-item';
+                item.innerHTML = `
+                    <div class="faq-q">Q${index + 1}: ${faq.q}</div>
+                    <div class="faq-a">${faq.a}</div>
                 `;
+                body.appendChild(item);
             });
 
-            let checklistHtml = "";
-            if(service.checklist) {
-                service.checklist.forEach(item => {
-                    checklistHtml += `
-                        <label class="flex items-center gap-2 text-xs text-gray-700 dark:text-gray-300 cursor-pointer">
-                            <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500"> ${item}
-                        </label>
-                    `;
-                });
-            }
-
-            document.getElementById("modalBody").innerHTML = `
-                <div>
-                    <h5 class="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-1">${translations[currentLang].aboutServiceHeading}</h5>
-                    <p class="text-gray-700 dark:text-gray-300 text-xs leading-relaxed">${details.info}</p>
-                </div>
-                <hr class="border-gray-100 dark:border-slate-800">
-                <div>
-                    <h5 class="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-3">${translations[currentLang].checklistHeading}</h5>
-                    <div class="p-3 bg-gray-50 dark:bg-slate-800 rounded-xl space-y-2">
-                        ${checklistHtml}
-                    </div>
-                </div>
-                <hr class="border-gray-100 dark:border-slate-800">
-                <div>
-                    <h5 class="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-3">${translations[currentLang].faqHeading}</h5>
-                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 rounded-xl text-xs text-blue-900 dark:text-blue-300">
-                        ${service.faq[currentLang]}
-                    </div>
-                </div>
-                <hr class="border-gray-100 dark:border-slate-800">
-                <div>
-                    <h5 class="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-3">${translations[currentLang].stepsHeading}</h5>
-                    <div class="space-y-3">
-                        ${stepsHtml}
-                    </div>
-                </div>
-            `;
-
-            document.getElementById("modalRedirectBtn").href = service.officialUrl;
-            
-            const modal = document.getElementById("infoModal");
-            modal.classList.remove("hidden");
-            setTimeout(() => {
-                modal.firstElementChild.classList.remove("scale-95");
-                modal.firstElementChild.classList.add("scale-100");
-            }, 10);
+            document.getElementById('faqModal').style.display = 'flex';
         }
 
         function closeModal() {
-            const modal = document.getElementById("infoModal");
-            modal.firstElementChild.classList.remove("scale-100");
-            modal.firstElementChild.classList.add("scale-95");
-            setTimeout(() => {
-                modal.classList.add("hidden");
-            }, 150);
+            document.getElementById('faqModal').style.display = 'none';
         }
 
-        function openEligibilityModal() {
-            document.getElementById("eligibilityModal").classList.remove("hidden");
-        }
-        function closeEligibilityModal() {
-            document.getElementById("eligibilityModal").classList.add("hidden");
-        }
-
-        function runEligibilityCheck() {
-            const age = parseInt(document.getElementById("eligAge").value);
-            const occ = document.getElementById("eligOcc").value;
-            const resEl = document.getElementById("eligibilityResults");
-            resEl.classList.remove("hidden");
-
-            let matches = [];
-            if (occ === 'farmer') matches.push("• PM Kisan Samman Nidhi (₹6,000/yr)");
-            if (age >= 18) matches.push("• Driving License & RTO Services", "• PAN Card & DigiLocker");
-            if (age >= 16) matches.push("• Learner License");
-            matches.push("• Ayushman Bharat Health Insurance (Universal Check)");
-
-            resEl.innerHTML = `<strong class="text-blue-900 dark:text-blue-400 block mb-1">Recommended Schemes for You:</strong>` + matches.join("<br>");
+        // Close modal on background click
+        window.onclick = function(event) {
+            const modal = document.getElementById('faqModal');
+            if (event.target === modal) {
+                closeModal();
+            }
         }
 
-        function downloadPDFGuide() {
-            if(!activeServiceForPDF) return;
-            const details = activeServiceForPDF[currentLang];
-            let textContent = `${details.name}\n\nABOUT:\n${details.info}\n\nSTEPS:\n` + details.steps.join("\n");
-            let blob = new Blob([textContent], { type: 'text/plain' });
-            let link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = `${activeServiceForPDF.id}-guide.txt`;
-            link.click();
-        }
-
-        renderLanguageStaticTexts();
-        displayServices(servicesData);
+        // Initial render
+        renderServices();
     </script>
 </body>
 </html>
