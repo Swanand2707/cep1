@@ -104,31 +104,32 @@
         </div>
     </main>
 
-    <!-- Detailed Service Modal Window (Includes Steps, Document Checklist & FAQs) -->
+    <!-- Detailed Service Modal Window (Takes 80% Screen Width & Height with Dynamic Upper Sub-Tabs) -->
     <div id="faqModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[85vh]">
-            <div class="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
-                <h3 id="modalTitle" class="text-lg font-bold">Service Details & Application Guide</h3>
-                <button onclick="closeModal()" class="text-white hover:text-amber-400 text-2xl font-bold">&times;</button>
+        <div class="bg-white rounded-2xl w-11/12 md:w-4/5 max-w-6xl h-[85vh] overflow-hidden shadow-2xl transform transition-transform duration-300 flex flex-col">
+            <div class="bg-blue-900 text-white px-8 py-5 flex justify-between items-center shrink-0">
+                <h3 id="modalTitle" class="text-2xl font-bold">Service Details & Application Guide</h3>
+                <button onclick="closeModal()" class="text-white hover:text-amber-400 text-3xl font-bold cursor-pointer">&times;</button>
             </div>
             
-            <!-- Modal Navigation Sub-tabs -->
-            <div class="flex border-b border-gray-200 bg-gray-50 px-6 pt-2 gap-4">
-                <button onclick="switchModalTab('steps')" id="tabBtnSteps" class="pb-2 text-xs font-bold border-b-2 border-blue-900 text-blue-900 transition">Steps to Apply</button>
-                <button onclick="switchModalTab('docs')" id="tabBtnDocs" class="pb-2 text-xs font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition">Document Checklist</button>
-                <button onclick="switchModalTab('faqs')" id="tabBtnFaqs" class="pb-2 text-xs font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition">FAQs</button>
+            <!-- Modal Navigation Sub-tabs (Includes Online Update) -->
+            <div class="flex border-b border-gray-200 bg-gray-50 px-8 pt-3 gap-6 overflow-x-auto shrink-0" id="modalTabContainer">
+                <button onclick="switchModalTab('steps')" id="tabBtnSteps" class="pb-3 text-lg font-bold border-b-2 border-blue-900 text-blue-900 transition whitespace-nowrap">Steps to Apply</button>
+                <button onclick="switchModalTab('update')" id="tabBtnUpdate" class="pb-3 text-lg font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition whitespace-nowrap hidden">Online Update</button>
+                <button onclick="switchModalTab('docs')" id="tabBtnDocs" class="pb-3 text-lg font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition whitespace-nowrap">Document Checklist</button>
+                <button onclick="switchModalTab('faqs')" id="tabBtnFaqs" class="pb-3 text-lg font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition whitespace-nowrap">FAQs</button>
             </div>
 
-            <div class="p-6 overflow-y-auto space-y-4 flex-grow" id="modalBody">
+            <div class="p-8 overflow-y-auto space-y-6 flex-grow" id="modalBody">
                 <!-- Content loaded dynamically based on tab -->
             </div>
 
-            <div class="p-4 bg-gray-50 border-t flex justify-between items-center">
-                <span class="text-xs text-gray-500" id="modalFooterNote">Official guidance and details</span>
-                <div class="flex gap-3">
-                    <button onclick="closeModal()" class="px-4 py-2 rounded-lg border text-xs font-bold text-gray-700 hover:bg-gray-100" id="modalCloseBtn">Close</button>
-                    <a id="modalRedirectBtn" href="#" target="_blank" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-2">
-                        <span id="modalRedirectText">Apply on Official Site</span> <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+            <div class="p-5 bg-gray-50 border-t flex justify-between items-center shrink-0">
+                <span class="text-sm font-medium text-gray-500" id="modalFooterNote">Official guidance and details</span>
+                <div class="flex gap-4">
+                    <button onclick="closeModal()" class="px-6 py-2.5 rounded-lg border text-sm font-bold text-gray-700 hover:bg-gray-100 cursor-pointer" id="modalCloseBtn">Close</button>
+                    <a id="modalRedirectBtn" href="#" target="_blank" class="px-6 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold flex items-center gap-2">
+                        <span id="modalRedirectText">Apply on Official Site</span> <i class="fa-solid fa-up-right-from-square text-xs"></i>
                     </a>
                 </div>
             </div>
@@ -175,7 +176,8 @@
                 askBtnText: "Ask",
                 correctedMsg: "Showing results for auto-corrected query: ",
                 assistantNotFound: "I couldn't find an exact match for that question. Try asking about Aadhaar update steps, PAN card documents, Driving License, or PM Kisan.",
-                tabSteps: "Steps to Apply",
+                tabSteps: "Steps to Apply (New)",
+                tabUpdate: "Online Update",
                 tabDocs: "Document Checklist",
                 tabFaqs: "FAQs",
                 docChecklistHeader: "Checklist of required documents for verification:"
@@ -206,7 +208,8 @@
                 askBtnText: "विचारा",
                 correctedMsg: "आपोआप दुरुस्त केलेल्या शोधाचे निकाल दर्शवत आहे: ",
                 assistantNotFound: "या प्रश्नाचे उत्तर सापडले नाही. कृपया आधार अपडेट पायऱ्या, पॅन कार्ड कागदपत्रे किंवा पीएम किसान बद्दल विचारा.",
-                tabSteps: "अर्ज करण्याची प्रक्रिया",
+                tabSteps: "नवीन नोंदणी प्रक्रिया",
+                tabUpdate: "ऑनलाइन अपडेट प्रक्रिया",
                 tabDocs: "आवश्यक कागदपत्रे",
                 tabFaqs: "प्रश्न आणि उत्तरे",
                 docChecklistHeader: "सत्यापनासाठी आवश्यक कागदपत्रांची यादी:"
@@ -237,7 +240,8 @@
                 askBtnText: "पूछें",
                 correctedMsg: "स्वचालित रूप से सुधारे गए प्रश्न के परिणाम: ",
                 assistantNotFound: "मुझे उस प्रश्न का सटीक उत्तर नहीं मिला। आधार अपडेट, पैन कार्ड दस्तावेज या पीएम किसान के बारे में पूछने का प्रयास करें।",
-                tabSteps: "आवेदन के चरण",
+                tabSteps: "नया नामांकन चरण",
+                tabUpdate: "ऑनलाइन अपडेट",
                 tabDocs: "दस्तावेज़ चेकलिस्ट",
                 tabFaqs: "प्रश्न और उत्तर",
                 docChecklistHeader: "सत्यापन के लिए आवश्यक दस्तावेजों की सूची:"
@@ -294,7 +298,7 @@
             }
         ];
 
-        // Extended services data with steps, document checklist checkboxes, and FAQs
+        // Extended services data with steps, document checklist checkboxes, localized FAQs, and dedicated Online Update steps
         const servicesData = [
             {
                 id: 'aadhaar',
@@ -304,13 +308,20 @@
                 officialUrl: 'https://uidai.gov.in',
                 en: {
                     name: 'Aadhaar Card Services',
-                    desc: 'Unique identification system for Indian residents. Apply, verify, retrieve, or update biometric and demographic data.',
+                    desc: 'Unique identification system for Indian residents. Apply for new enrollment or update address/documents online.',
                     steps: [
                         "Locate your nearest Aadhaar Seva Kendra or Permanent Enrollment Centre.",
-                        "Fill out the Aadhaar Enrolment/Correction Form available at the centre or online.",
+                        "Fill out the Aadhaar Enrolment Form available at the centre or online.",
                         "Submit required supporting documents (Identity, Address & DOB proof).",
-                        "Provide biometric data (fingerprints, iris scan, and photograph).",
+                        "Provide biometric data (fingerprints, iris scan, and photograph) at the center.",
                         "Collect the Acknowledgement Slip containing your 14-digit Update Request Number (URN) to track status."
+                    ],
+                    updateSteps: [
+                        "Visit the official UIDAI myAadhaar portal (myaadhaar.uidai.gov.in) and click 'Login'.",
+                        "Enter your details and complete the OTP verification sent to your registered mobile number.",
+                        "Select 'Address Update' or 'Document Update' from the user services dashboard.",
+                        "Enter your updated details and upload clear scanned copies of valid supporting documents (PoA/PoI).",
+                        "Pay the ₹50 processing fee online and note down the 14-digit Service Request Number (SRN) to track approval."
                     ],
                     documents: [
                         "Proof of Identity (PoI): Voter ID, PAN Card, or Passport",
@@ -321,13 +332,20 @@
                 },
                 mr: {
                     name: 'आधार कार्ड सेवा',
-                    desc: 'भारतीय रहिवाशांसाठी अद्वितीय ओळख प्रणाली. बायोमेट्रिक आणि लोकसंख्याशास्त्रीय डेटा अद्यतनित करा किंवा डाउनलोड करा.',
+                    desc: 'भारतीय रहिवाशांसाठी अद्वितीय ओळख प्रणाली. नवीन नोंदणी किंवा पत्ता आणि कागदपत्रे ऑनलाइन अद्यतनित करा.',
                     steps: [
                         "जवळच्या आधार सेवा केंद्राला भेट द्या.",
-                        "आधार नोंदणी किंवा सुधारणा अर्ज भरा.",
+                        "आधार नोंदणी अर्ज भरा.",
                         "ओळख आणि पत्त्याचे आवश्यक कागदपत्रे जमा करा.",
-                        "बायोमेट्रिक डेटा (फिंगरप्रिंट, डोळ्यांची स्कॅन आणि फोटो) द्या.",
-                        "भविष्यातील ट्रॅकिंगसाठी पावती (Acknowledgement Slip) सांभाळून ठेवा."
+                        "केंद्रावर बायोमेट्रिक डेटा (फिंगरप्रिंट, डोळ्यांची स्कॅन आणि फोटो) द्या.",
+                        "भविष्यातील ट्रॅकिंगसाठी पावती सांभाळून ठेवा."
+                    ],
+                    updateSteps: [
+                        "myaadhaar.uidai.gov.in या अधिकृत पोर्टलला भेट द्या आणि 'Login' वर क्लिक करा.",
+                        "माहिती प्रविष्ट करा आणि नोंदणीकृत मोबाईलवर आलेला OTP टाकून लॉगिन करा.",
+                        "डॅशबोर्डवरून 'Address Update' (किंवा 'Document Update') निवडा.",
+                        "नवीन माहिती प्रविष्ट करा आणि आवश्यक पुराव्याची स्कॅन केलेली प्रत (PDF/JPEG) अपलोड करा.",
+                        "₹५० शुल्क भरून सबमिट करा आणि १४-अंकी सर्व्हिस रिक्वेस्ट नंबर (SRN) सांभाळून ठेवा."
                     ],
                     documents: [
                         "ओळख पुरावा: मतदार ओळखपत्र, पॅन कार्ड किंवा पासपोर्ट",
@@ -337,13 +355,20 @@
                 },
                 hi: {
                     name: 'आधार कार्ड सेवाएं',
-                    desc: 'भारतीय निवासियों के लिए विशिष्ट पहचान प्रणाली। जनसांख्यिकीय और बायोमेट्रिक विवरण अपडेट या डाउनलोड करें।',
+                    desc: 'भारतीय निवासियों के लिए विशिष्ट पहचान प्रणाली। नए नामांकन या ऑनलाइन पता/दस्तावेज़ अपडेट के लिए आवेदन करें।',
                     steps: [
                         "अपने निकटतम आधार सेवा केंद्र या नामांकन केंद्र पर जाएं।",
-                        "आधार नामांकन/सुधार फॉर्म भरें।",
+                        "आधार नामांकन फॉर्म भरें।",
                         "आवश्यक सहायक दस्तावेज (पहचान, पता और जन्मतिथि प्रमाण) जमा करें।",
-                        "बायोमेट्रिक डेटा (फिंगरप्रिंट, आईरिस स्कैन और फोटो) दें।",
+                        "केंद्र पर बायोमेट्रिक डेटा (फिंगरप्रिंट, आईरिस स्कैन और फोटो) दें।",
                         "स्थिति ट्रैक करने के लिए 14-अंकीय URN पर्ची प्राप्त करें।"
+                    ],
+                    updateSteps: [
+                        "myaadhaar.uidai.gov.in पोर्टल पर जाएं और 'Login' पर क्लिक करें।",
+                        "विवरण दर्ज करें और पंजीकृत मोबाइल नंबर पर आए OTP से लॉगिन करें।",
+                        "डैशबोर्ड से 'Address Update' (या 'Document Update') चुनें।",
+                        "नया विवरण भरें और वैध प्रमाण पत्र की स्कैन कॉपी (PDF/JPEG) अपलोड करें।",
+                        "₹50 शुल्क का भुगतान करें और स्थिति ट्रैक करने के लिए 14-अंकीय SRN सहेजें।"
                     ],
                     documents: [
                         "पहचान प्रमाण: वोटर आईडी, पैन कार्ड या पासपोर्ट",
@@ -351,18 +376,26 @@
                         "जन्मततिथि प्रमाण: जन्म प्रमाण पत्र या स्कूल सर्टिफिकेट"
                     ]
                 },
-                faqs: [
-                    { q: "What is an Aadhaar card?", a: "A 12-digit unique identification number issued by UIDAI to residents of India based on their biometric and demographic data." },
-                    { q: "Is Aadhaar mandatory?", a: "It is required for various government subsidies, opening bank accounts, filing taxes, and obtaining a PAN card." },
-                    { q: "How can I update my address in Aadhaar online?", a: "You can update it via the UIDAI Self-Service Update Portal by submitting valid Proof of Address (PoA) documents." },
-                    { q: "What documents are required for a new Aadhaar enrollment?", a: "Proof of Identity (PoI), Proof of Address (PoA), Date of Birth (DoB) proof, and Proof of Relationship (PoR) if applicable." },
-                    { q: "How can I retrieve a lost Aadhaar number or enrollment ID?", a: "You can retrieve it online through the UIDAI official website using your registered mobile number or email." },
-                    { q: "Can I lock my biometrics for security?", a: "Yes, UIDAI provides a biometric locking feature via their portal or mAadhaar app to secure your data." },
-                    { q: "What is mAadhaar?", a: "An official mobile application developed by UIDAI to carry an electronic version of your Aadhaar card anywhere." },
-                    { q: "How long does a typical Aadhaar update take?", a: "Most updates are processed within 7 to 10 working days." },
-                    { q: "Is a child's Aadhaar biometric mandatory?", a: "Children under 5 years old have a 'Bal Aadhaar' which requires no biometrics; mandatory biometric updates are needed at ages 5 and 15." },
-                    { q: "How can I check the status of my Aadhaar update request?", a: "You can track it online using the 14-digit Update Request Number (URN) provided on your acknowledgement slip." }
-                ]
+                faqs: {
+                    en: [
+                        { q: "Can I update my Aadhaar address completely online?", a: "Yes, address updates can be completed fully online via the myAadhaar portal using OTP authentication and uploading address proof." },
+                        { q: "Is Aadhaar card mandatory?", a: "It is required for various government subsidies, opening bank accounts, filing taxes, and obtaining a PAN card." },
+                        { q: "What documents are required for a new Aadhaar enrollment?", a: "Proof of Identity (PoI), Proof of Address (PoA), Date of Birth (DoB) proof, and Proof of Relationship (PoR) if applicable." },
+                        { q: "How can I retrieve a lost Aadhaar number?", a: "You can retrieve it online through the UIDAI official website using your registered mobile number or email." }
+                    ],
+                    mr: [
+                        { q: "मी आधारमधील पत्ता पूर्णपणे ऑनलाइन अपडेट करू शकतो का?", a: "होय, पत्ता बदल myAadhaar पोर्टलवर OTP आणि पत्त्याच्या पुराव्याची प्रत अपलोड करून पूर्णपणे ऑनलाइन करता येतो." },
+                        { q: "आधार अनिवार्य आहे का?", a: "सरकारी अनुदाने, बँक खाते उघडणे, कर भरणे आणि पॅन कार्ड मिळवण्यासाठी हे आवश्यक आहे." },
+                        { q: "नवीन आधार नोंदणीसाठी कोणती कागदपत्रे आवश्यक आहेत?", a: "ओळख पुरावा, पत्ता पुरावा, जन्मतारीख पुरावा आणि नातेसंबंधाचा पुरावा." },
+                        { q: "गमावलेला आधार क्रमांक कसा मिळवावा?", a: "तुम्ही तुमच्या नोंदणीकृत मोबाईल नंबर किंवा ईमेलचा वापर करून UIDAI च्या अधिकृत वेबसाइटवरून ऑनलाइन पुनर्प्राप्त करू शकता." }
+                    ],
+                    hi: [
+                        { q: "क्या मैं आधार में अपना पता पूरी तरह से ऑनलाइन अपडेट कर सकता हूं?", a: "हां, myAadhaar पोर्टल के माध्यम से OTP सत्यापन और पता प्रमाण पत्र अपलोड करके पता अपडेट पूरी तरह से ऑनलाइन किया जा सकता है।" },
+                        { q: "क्या आधार अनिवार्य है?", a: "यह विभिन्न सरकारी सब्सिडी, बैंक खाता खोलने, टैक्स दाखिल करने और पैन कार्ड प्राप्त करने के लिए आवश्यक है।" },
+                        { q: "नए आधार नामांकन के लिए किन दस्तावेजों की आवश्यकता होती है?", a: "पहचान प्रमाण, पता प्रमाण, जन्मतिथि प्रमाण और यदि लागू हो तो संबंध प्रमाण।" },
+                        { q: "खोया हुआ आधार नंबर ऑनलाइन कैसे प्राप्त करें?", a: "आप अपने पंजीकृत मोबाइल नंबर या ईमेल का उपयोग करके UIDAI की आधिकारिक वेबसाइट से इसे पुनः प्राप्त कर सकते हैं।" }
+                    ]
+                }
             },
             {
                 id: 'pan',
@@ -417,18 +450,26 @@
                         "जन्मततिथि प्रमाण: जन्म प्रमाण पत्र या स्कूल सर्टिफिकेट"
                     ]
                 },
-                faqs: [
-                    { q: "What is a PAN card?", a: "A Permanent Account Number is a 10-digit alphanumeric identifier issued by the Income Tax Department of India." },
-                    { q: "Who needs a PAN card?", a: "Anyone earning a taxable income, businesses, companies, and individuals performing high-value financial transactions must have a PAN." },
-                    { q: "What is the difference between Form 49A and Form 49AA?", a: "Form 49A is for Indian citizens, while Form 49AA is for foreign citizens/entities." },
-                    { q: "Can I have multiple PAN cards?", a: "No, holding more than one PAN card is illegal under Section 272B of the Income Tax Act and attracts a penalty." },
-                    { q: "How can I link my PAN with Aadhaar?", a: "You can link them online through the Income Tax e-filing portal by paying the applicable fee." },
-                    { q: "What documents are accepted as proof of identity for PAN?", a: "Voter ID, Passport, Driving License, or Aadhaar Card." },
-                    { q: "How long is a PAN card valid?", a: "A PAN card has lifetime validity and does not expire." },
-                    { q: "Can I get an e-PAN if my physical card is lost?", a: "Yes, you can download a digital e-PAN instantly through designated portals like NSDL or UTIITSL for a nominal fee." },
-                    { q: "How do I update my name or date of birth on my PAN card?", a: "You can submit a request for changes or correction in PAN data through the Protean (NSDL) or UTIITSL portals." },
-                    { q: "Is it mandatory to quote PAN for cash transactions?", a: "Yes, quoting PAN is mandatory for specific transactions exceeding specified monetary limits (e.g., cash deposits, purchase of property or vehicles)." }
-                ]
+                faqs: {
+                    en: [
+                        { q: "What is a PAN card?", a: "A Permanent Account Number is a 10-digit alphanumeric identifier issued by the Income Tax Department of India." },
+                        { q: "Who needs a PAN card?", a: "Anyone earning a taxable income, businesses, companies, and individuals performing high-value financial transactions must have a PAN." },
+                        { q: "How can I link my PAN with Aadhaar?", a: "You can link them online through the Income Tax e-filing portal by paying the applicable fee." },
+                        { q: "How long is a PAN card valid?", a: "A PAN card has lifetime validity and does not expire." }
+                    ],
+                    mr: [
+                        { q: "पॅन कार्ड म्हणजे काय?", a: "कायमस्वरूपी खाते क्रमांक हा भारत सरकारच्या प्राप्तिकर विभागाद्वारे जारी केलेला १०-अंकी अल्फान्यूमेरिक आयडेंटिफायर आहे." },
+                        { q: "पॅन कार्ड कोणाला आवश्यक आहे?", a: "करपात्र उत्पन्न मिळवणारी कोणतीही व्यक्ती, व्यावसायिक आणि उच्च मूल्याचे आर्थिक व्यवहार करणाऱ्या प्रत्येकाला पॅन आवश्यक आहे." },
+                        { q: "मी पॅन आधारशी कसे लिंक करू शकतो?", a: "तुम्ही लागू शुल्क भरून इन्कम टॅक्स ई-फायलिंग पोर्टलद्वारे ते ऑनलाइन लिंक करू शकता." },
+                        { q: "पॅन कार्ड किती काळासाठी वैध असते?", a: "पॅन कार्ड आजीवन वैध असते आणि ते कालबाह्य होत नाही." }
+                    ],
+                    hi: [
+                        { q: "पैन कार्ड क्या है?", a: "स्थायी खाता संख्या भारत के आयकर विभाग द्वारा जारी 10-अंकीय अल्फान्यूमेरिक पहचानकर्ता है।" },
+                        { q: "पैन कार्ड की आवश्यकता किसे है?", a: "कर योग्य आय अर्जित करने वाले किसी भी व्यक्ति, व्यवसाय और उच्च मूल्य के वित्तीय लेनदेन करने वाले व्यक्तियों के पास पैन होना अनिवार्य है।" },
+                        { q: "मैं अपने पैन को आधार से कैसे लिंक कर सकता हूं?", a: "आप आयकर ई-फाइलिंग पोर्टल के माध्यम से लागू शुल्क का भुगतान करके उन्हें ऑनलाइन लिंक कर सकते हैं।" },
+                        { q: "पैन कार्ड कितने समय के लिए वैध है?", a: "पैन कार्ड की वैधता जीवन भर होती है और यह एक्सपायर नहीं होता है।" }
+                    ]
+                }
             },
             {
                 id: 'digilocker',
@@ -479,18 +520,23 @@
                         "दस्तावेज़ प्राप्त करने के लिए संबंधित बोर्ड या आरटीओ विवरण"
                     ]
                 },
-                faqs: [
-                    { q: "What is DigiLocker?", a: "A flagship initiative of the Ministry of Electronics and Information Technology (MeitY) providing a secure cloud-based platform for storage, sharing, and verification of documents." },
-                    { q: "Are DigiLocker documents legally valid?", a: "Yes, under Rule 9A of the IT Rules, documents in DigiLocker are treated at par with original physical documents." },
-                    { q: "How do I create a DigiLocker account?", a: "You can sign up using your mobile number linked to your Aadhaar card and setting a 6-digit security PIN." },
-                    { q: "What documents can I store in DigiLocker?", a: "Academic marksheets, driving licenses, vehicle registration certificates (RC), PAN cards, and other partner-issued documents." },
-                    { q: "Is DigiLocker free to use?", a: "Yes, registering and using basic storage on DigiLocker is completely free for Indian citizens." },
-                    { q: "How do I fetch my documents from issuers?", a: "You can link issuing organizations and pull documents directly using your identity details." },
-                    { q: "Can I upload my own scanned documents?", a: "Yes, you get dedicated space to upload and store scanned copies of your personal documents." },
-                    { q: "How secure is my data in DigiLocker?", a: "It uses 256-bit SSL encryption and OTP-based authentication to ensure complete data privacy." },
-                    { q: "Can I share my DigiLocker documents with others?", a: "Yes, you can share secure URIs or download verified PDF copies directly from the app/website." },
-                    { q: "What should I do if I forget my DigiLocker security PIN?", a: "You can easily reset your PIN using the Aadhaar OTP verification method linked to your account." }
-                ]
+                faqs: {
+                    en: [
+                        { q: "What is DigiLocker?", a: "A platform providing a secure cloud-based storage and verification system for documents." },
+                        { q: "Are DigiLocker documents legally valid?", a: "Yes, under Rule 9A of the IT Rules, documents in DigiLocker are treated at par with original physical documents." },
+                        { q: "Is DigiLocker free to use?", a: "Yes, registering and using basic storage on DigiLocker is completely free for Indian citizens." }
+                    ],
+                    mr: [
+                        { q: "डिजिलॉकर म्हणजे काय?", a: "दस्तऐवजांच्या साठवणुकीसाठी आणि पडताळणीसाठी सुरक्षित क्लाउड-आधारित प्लॅटफॉर्म." },
+                        { q: "डिजिलॉकरमधील दस्तऐवज कायदेशीररित्या वैध आहेत का?", a: "होय, IT नियमांच्या नियम 9A अंतर्गत, डिजिलॉकरमधील दस्तऐवज मूळ भौतिक दस्तऐवजांच्या समान मानले जातात." },
+                        { q: "डिजिलॉकर वापरणे मोफत आहे का?", a: "होय, भारतीय नागरिकांसाठी नोंदणी आणि मूळ स्टोरेज वापरणे पूर्णपणे मोफत आहे." }
+                    ],
+                    hi: [
+                        { q: "डिजीलाकर क्या है?", a: "दस्तावेजों के भंडारण और सत्यापन के लिए एक सुरक्षित क्लाउड-आधारित प्लेटफॉर्म।" },
+                        { q: "क्या डिजीलाकर दस्तावेज कानूनी रूप से मान्य हैं?", a: "हां, आईटी नियमों के नियम 9A के तहत, डिजीलाकर में दस्तावेजों को मूल भौतिक दस्तावेजों के बराबर माना जाता है।" },
+                        { q: "क्या डिजीलाकर का उपयोग मुफ्त है?", a: "हां, भारतीय नागरिकों के लिए डिजीलाकर पर पंजीकरण और बुनियादी भंडारण का उपयोग पूरी तरह से मुफ्त है।" }
+                    ]
+                }
             },
             {
                 id: 'rto',
@@ -547,24 +593,29 @@
                         "पासपोर्ट साइज फोटोग्राफ"
                     ]
                 },
-                faqs: [
-                    { q: "What is a Learner's License (LL)?", a: "A provisional legal permit that allows you to practice driving on public roads before obtaining a permanent driving license." },
-                    { q: "What is the minimum age for a driving license in India?", a: "18 years for gear vehicles and commercial transport; 16 years for non-gear motorcycles up to 50cc with parental consent." },
-                    { q: "How can I apply for a driving license?", a: "You must first obtain a Learner's License, hold it for at least 30 days, and then book a slot for a driving test via the Sarathi Parivahan portal." },
-                    { q: "What documents are needed for vehicle registration (RC)?", a: "Sales invoice, manufacturer certificate, valid insurance, address proof, and pollution under control (PUC) certificate." },
-                    { q: "Can I apply for an International Driving Permit (IDP) online?", a: "Yes, you can apply through the Parivahan Sewa portal by submitting your valid driving license, passport, and visa details." },
-                    { q: "How can I check the status of my DL application?", a: "Visit the Sarathi portal, select your state, and enter your application number and date of birth." },
-                    { q: "What is the validity period of a permanent driving license?", a: "For non-commercial vehicles, it is generally valid until the holder turns 40 years old, or for 20 years from the date of issue, whichever is earlier." },
-                    { q: "How do I renew an expired driving license?", a: "You can apply for renewal online or offline within 1 year of its expiration date without a re-test." },
-                    { q: "Is a digital copy of the RC and DL valid on DigiLocker or mParivahan?", a: "Yes, traffic authorities accept digital documents presented via DigiLocker or the official mParivahan app." },
-                    { q: "How do I transfer vehicle ownership (RC transfer)?", a: "Submit Form 29 and 30 along with the original RC, insurance, PUC, and NOC from the financier to your local RTO." }
-                ]
+                faqs: {
+                    en: [
+                        { q: "What is a Learner's License (LL)?", a: "A provisional legal permit that allows you to practice driving on public roads before obtaining a permanent driving license." },
+                        { q: "What is the minimum age for a driving license in India?", a: "18 years for gear vehicles and commercial transport; 16 years for non-gear motorcycles up to 50cc with parental consent." },
+                        { q: "How do I renew an expired driving license?", a: "You can apply for renewal online via the Sarathi Parivahan portal within 1 year of expiration." }
+                    ],
+                    mr: [
+                        { q: "लर्नर लायसन्स म्हणजे काय?", a: "पक्के ड्रायव्हिंग लायसन्स मिळवण्यापूर्वी सार्वजनिक रस्त्यावर गाडी चालवण्याचा सराव करण्याची तात्पुरती परवानगी." },
+                        { q: "भारतात ड्रायव्हिंग लायसन्ससाठी किमान वय किती आहे?", a: "गियर वाहनांसाठी १८ वर्षे आणि पालक परवानगीसह ५०सीसी पर्यंतच्या गियर नसलेल्या दुचाकींसाठी १६ वर्षे." },
+                        { q: "मुदत संपलेले लायसन्स नूतनीकरण कसे करावे?", a: "तुम्ही सारथी पोर्टलद्वारे मुदत संपल्यापासून १ वर्षाच्या आत ऑनलाइन अर्ज करू शकता." }
+                    ],
+                    hi: [
+                        { q: "लर्नर लाइसेंस क्या है?", a: "स्थायी ड्राइविंग लाइसेंस प्राप्त करने से पहले आपको सार्वजनिक सड़कों पर वाहन चलाने का अभ्यास करने की अनुमति देने वाला अनंतिम परमिट।" },
+                        { q: "भारत में ड्राइविंग लाइसेंस के लिए न्यूनतम आयु क्या है?", a: "गियर वाले वाहनों के लिए 18 वर्ष और माता-पिता की सहमति से 50cc तक की बिना गियर वाली मोटरसाइकिल के लिए 16 वर्ष।" },
+                        { q: "समाप्त हो चुके ड्राइविंग लाइसेंस का नवीनीकरण कैसे करें?", a: "आप सारथी पोर्टल के माध्यम से समाप्ति के 1 वर्ष के भीतर ऑनलाइन नवीनीकरण आवेदन कर सकते हैं।" }
+                    ]
+                }
             },
             {
                 id: 'pmkisan',
                 category: 'Agriculture',
                 icon: 'fa-tractor',
-                bgImage: 'https://images.unsplash.com/photo-1595974482597-4f6c4f7ae008?q=80&w=600&auto=format&fit=crop',
+                bgImage: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600&auto=format&fit=crop',
                 officialUrl: 'https://pmkisan.gov.in',
                 en: {
                     name: 'PM Kisan Samman Nidhi',
@@ -613,18 +664,26 @@
                         "आधार से जुड़ी बैंक पासबुक"
                     ]
                 },
-                faqs: [
-                    { q: "What is the PM-Kisan scheme?", a: "A central sector scheme providing income support of ₹6,000 per year in three equal installments of ₹2,000 directly to eligible farmer families." },
-                    { q: "Who is eligible for PM-Kisan?", a: "All landholding farmer families having cultivable land in their names are eligible, subject to certain exclusion criteria." },
-                    { q: "Who is excluded from the PM-Kisan scheme?", a: "Institutional landholders, high-income earners, income tax payers, government employees, and professional practitioners." },
-                    { q: "How can a farmer register for PM-Kisan?", a: "Farmers can self-register online through the PM-Kisan portal, via Common Service Centres (CSCs), or through local agriculture officials." },
-                    { q: "Is Aadhaar mandatory for PM-Kisan?", a: "Yes, Aadhaar seeding and authentication are mandatory for registration and receiving installment payments." },
-                    { q: "How can I check my installment status?", a: "You can check your beneficiary status on the official PM-Kisan portal using your Aadhaar number, account number, or mobile number." },
-                    { q: "What is e-KYC for PM-Kisan and how is it done?", a: "e-KYC is mandatory to continue receiving benefits and can be completed instantly using OTP-based Aadhaar authentication online." },
-                    { q: "Can husband and wife both receive PM-Kisan benefits?", a: "No, the benefit is restricted to per family unit (husband, wife, and minor children)." },
-                    { q: "What should I do if my installment payment fails?", a: "Check your bank details, ensure Aadhaar is seeded with your bank account, and update incorrect details on the portal." },
-                    { q: "Is there a helpline number for PM-Kisan queries?", a: "Yes, farmers can reach out via the dedicated PM-Kisan helpline number (155261 / 011-24300606) or email support." }
-                ]
+                faqs: {
+                    en: [
+                        { q: "What is the PM-Kisan scheme?", a: "A central sector scheme providing income support of ₹6,000 per year in three equal installments of ₹2,000 directly to eligible farmer families." },
+                        { q: "Who is eligible for PM-Kisan?", a: "All landholding farmer families having cultivable land in their names are eligible, subject to certain exclusion criteria." },
+                        { q: "How can a farmer register for PM-Kisan?", a: "Farmers can self-register online through the PM-Kisan portal, via CSCs, or through local agriculture officials." },
+                        { q: "Is Aadhaar mandatory for PM-Kisan?", a: "Yes, Aadhaar seeding and authentication are mandatory for registration and receiving installment payments." }
+                    ],
+                    mr: [
+                        { q: "पीएम-किसान योजना काय आहे?", a: "पात्र शेतकरी कुटुंबांना थेट ₹२,००० च्या तीन समान हप्त्यांमध्ये दरवर्षी ₹६,००० चे उत्पन्न सहाय्य देणारी केंद्र सरकारची योजना." },
+                        { q: "पीएम-किसानसाठी कोण पात्र आहे?", a: "काही वगळण्याचे निकष वगळता, ज्यांच्या नावावर लागवडीयोग्य जमीन आहे अशी सर्व शेतकरी कुटुंबे पात्र आहेत." },
+                        { q: "शेतकरी पीएम-किसानसाठी नोंदणी कशी करू शकतात?", a: "शेतकरी पीएम-किसान पोर्टलवरून ऑनलाइन, सीएससी केंद्रांमार्फत किंवा स्थानिक कृषी अधिकाऱ्यांद्वारे नोंदणी करू शकतात." },
+                        { q: "पीएम-किसानसाठी आधार अनिवार्य आहे का?", a: "होय, नोंदणी आणि हप्त्यांचे पैसे मिळवण्यासाठी आधार लिंक असणे अनिवार्य आहे." }
+                    ],
+                    hi: [
+                        { q: "पीएम-किसान योजना क्या है?", a: "पात्र किसान परिवारों को सीधे ₹2,000 की तीन समान किश्तों में प्रति वर्ष ₹6,000 की आय सहायता प्रदान करने वाली केंद्रीय योजना।" },
+                        { q: "पीएम-किसान के लिए कौन पात्र है?", a: "कुछ अपवर्जन मानदंडों के अधीन, जिनके नाम पर कृषि योग्य भूमि है, वे सभी भूमिधारक किसान परिवार पात्र हैं।" },
+                        { q: "किसान पीएम-किसान के लिए पंजीकरण कैसे कर सकते हैं?", a: "किसान पीएम-किसान पोर्टल के माध्यम से ऑनलाइन, सीएससी के माध्यम से या स्थानीय कृषि अधिकारियों के माध्यम से पंजीकरण कर सकते हैं।" },
+                        { q: "क्या पीएम-किसान के लिए आधार अनिवार्य है?", a: "हां, पंजीकरण और किश्त भुगतान प्राप्त करने के लिए आधार सीडिंग और प्रमाणीकरण अनिवार्य है।" }
+                    ]
+                }
             },
             {
                 id: 'ayushman',
@@ -678,18 +737,23 @@
                         "मोबाइल नंबर"
                     ]
                 },
-                faqs: [
-                    { q: "What is Ayushman Bharat PM-JAY?", a: "Pradhan Mantri Jan Arogya Yojana is the world's largest health insurance scheme providing health cover of up to ₹5 Lakh per family per year for secondary and tertiary care hospitalization." },
-                    { q: "Who is eligible for AB-PMJAY?", a: "Eligibility is automatically determined based on the Socio-Economic Caste Census (SECC) database for rural and urban categories without any cap on family size." },
-                    { q: "Is there any cost to enroll in AB-PMJAY?", a: "No, the scheme is completely cashless and paperless for eligible beneficiaries at empaneled hospitals." },
-                    { q: "How can I check if my name is on the beneficiary list?", a: "You can check your eligibility online at the PMJAY portal or by calling the toll-free helpline number 14555." },
-                    { q: "What is an Ayushman Card?", a: "A unique identification card issued to verified beneficiaries to avail cashless treatment at any empaneled hospital across India." },
-                    { q: "Are pre-existing diseases covered under the scheme?", a: "Yes, all pre-existing conditions are covered from day one of hospitalization under the approved treatment packages." },
-                    { q: "Which hospitals are empaneled under AB-PMJAY?", a: "Both public and private hospitals that meet specific criteria are empaneled across the country. You can find the list on the portal." },
-                    { q: "What documents are required at the hospital for admission?", a: "Your Ayushman Card and a valid government-issued photo ID proof (like Aadhaar or Voter ID)." },
-                    { q: "Does the scheme cover outpatient (OPD) expenses?", a: "PM-JAY primarily covers inpatient hospitalization expenses and specified day-care procedures, along with pre and post-hospitalization costs." },
-                    { q: "How can I make a grievance or complaint regarding the scheme?", a: "You can register your complaints online through the National Grievance Redressal Portal or by contacting the state health agency helpline." }
-                ]
+                faqs: {
+                    en: [
+                        { q: "What is Ayushman Bharat PM-JAY?", a: "A health insurance scheme providing health cover of up to ₹5 Lakh per family per year for hospitalization." },
+                        { q: "How can I check if my name is on the beneficiary list?", a: "You can check your eligibility online at the PMJAY portal or by calling the toll-free number 14555." },
+                        { q: "What is an Ayushman Card?", a: "A card issued to verified beneficiaries to avail cashless treatment at empaneled hospitals." }
+                    ],
+                    mr: [
+                        { q: "आयुष्मान भारत PM-JAY काय आहे?", a: "कुटुंबाला रुग्णालयात दाखल करण्यासाठी दरवर्षी ₹५ लाखांपर्यंतचे आरोग्य विमा संरक्षण देणारी योजना." },
+                        { q: "लाभार्थी यादीत माझे नाव आहे का हे मी कसे तपासू शकतो?", a: "तुम्ही तुमची पात्रता PMJAY पोर्टलवर ऑनलाइन किंवा १४५५५ या टोल-फ्री क्रमांकावर कॉल करून तपासू शकता." },
+                        { q: "आयुष्मान कार्ड म्हणजे काय?", a: "सूचीबद्ध रुग्णालयांमध्ये मोफत उपचारांचा लाभ घेण्यासाठी सत्यापित लाभार्थ्यांना दिलेले ओळखपत्र." }
+                    ],
+                    hi: [
+                        { q: "आयुष्मान भारत PM-JAY क्या है?", a: "अस्पताल में भर्ती होने के लिए प्रति परिवार प्रति वर्ष ₹5 लाख तक का स्वास्थ्य कवर प्रदान करने वाली योजना।" },
+                        { q: "मैं कैसे जांच सकता हूं कि मेरा नाम लाभार्थी सूची में है या नहीं?", a: "आप PMJAY पोर्टल पर ऑनलाइन या टोल-फ्री नंबर 14555 पर कॉल करके अपनी पात्रता की जांच कर सकते हैं।" },
+                        { q: "आयुष्मान कार्ड क्या है?", a: "संबद्ध अस्पतालों में कैशलेस उपचार का लाभ उठाने के लिए सत्यापित लाभार्थियों को जारी किया जाने वाला कार्ड।" }
+                    ]
+                }
             }
         ];
 
@@ -721,6 +785,7 @@
             document.getElementById("askBtnText").innerText = data.askBtnText;
 
             document.getElementById("tabBtnSteps").innerText = data.tabSteps;
+            document.getElementById("tabBtnUpdate").innerText = data.tabUpdate;
             document.getElementById("tabBtnDocs").innerText = data.tabDocs;
             document.getElementById("tabBtnFaqs").innerText = data.tabFaqs;
 
@@ -868,12 +933,14 @@
             activeModalTabName = tabName;
             
             const btnSteps = document.getElementById("tabBtnSteps");
+            const btnUpdate = document.getElementById("tabBtnUpdate");
             const btnDocs = document.getElementById("tabBtnDocs");
             const btnFaqs = document.getElementById("tabBtnFaqs");
 
-            btnSteps.className = "pb-2 text-xs font-bold border-b-2 transition " + (tabName === 'steps' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
-            btnDocs.className = "pb-2 text-xs font-bold border-b-2 transition " + (tabName === 'docs' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
-            btnFaqs.className = "pb-2 text-xs font-bold border-b-2 transition " + (tabName === 'faqs' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
+            btnSteps.className = "pb-3 text-lg font-bold border-b-2 transition whitespace-nowrap " + (tabName === 'steps' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
+            btnUpdate.className = "pb-3 text-lg font-bold border-b-2 transition whitespace-nowrap " + (tabName === 'update' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
+            btnDocs.className = "pb-3 text-lg font-bold border-b-2 transition whitespace-nowrap " + (tabName === 'docs' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
+            btnFaqs.className = "pb-3 text-lg font-bold border-b-2 transition whitespace-nowrap " + (tabName === 'faqs' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
 
             renderModalContent();
         }
@@ -886,29 +953,40 @@
 
             if (activeModalTabName === 'steps') {
                 const list = document.createElement('ol');
-                list.className = 'space-y-3';
+                list.className = 'space-y-4';
                 details.steps.forEach((step, index) => {
                     const li = document.createElement('li');
-                    li.className = 'flex gap-3 text-xs text-gray-700 bg-blue-50/50 p-3 rounded-xl border border-blue-100';
+                    li.className = 'flex gap-4 text-base text-gray-800 bg-blue-50/50 p-4 rounded-xl border border-blue-100';
                     li.innerHTML = `<span class="font-bold text-blue-900 shrink-0">Step ${index + 1}:</span> <span>${step}</span>`;
                     list.appendChild(li);
                 });
                 body.appendChild(list);
             } 
+            else if (activeModalTabName === 'update' && details.updateSteps) {
+                const list = document.createElement('ol');
+                list.className = 'space-y-4';
+                details.updateSteps.forEach((step, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'flex gap-4 text-base text-gray-800 bg-emerald-50/60 p-4 rounded-xl border border-emerald-100';
+                    li.innerHTML = `<span class="font-bold text-emerald-900 shrink-0">Step ${index + 1}:</span> <span>${step}</span>`;
+                    list.appendChild(li);
+                });
+                body.appendChild(list);
+            }
             else if (activeModalTabName === 'docs') {
                 const headerNote = document.createElement('p');
-                headerNote.className = 'text-xs font-bold text-gray-800 mb-3';
+                headerNote.className = 'text-base font-bold text-gray-800 mb-4';
                 headerNote.innerText = translations[currentLang].docChecklistHeader;
                 body.appendChild(headerNote);
 
                 const list = document.createElement('div');
-                list.className = 'space-y-2.5';
+                list.className = 'space-y-3';
                 details.documents.forEach((doc, index) => {
                     const label = document.createElement('label');
-                    label.className = 'flex items-center gap-3 p-3 bg-gray-50 hover:bg-gray-100/80 rounded-xl border border-gray-200 cursor-pointer transition';
+                    label.className = 'flex items-center gap-4 p-4 bg-gray-50 hover:bg-gray-100/80 rounded-xl border border-gray-200 cursor-pointer transition';
                     label.innerHTML = `
-                        <input type="checkbox" class="w-4 h-4 text-blue-900 rounded border-gray-300 focus:ring-blue-500">
-                        <span class="text-xs font-medium text-gray-800">${doc}</span>
+                        <input type="checkbox" class="w-5 h-5 text-blue-900 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="text-base font-medium text-gray-800">${doc}</span>
                     `;
                     list.appendChild(label);
                 });
@@ -916,15 +994,16 @@
             } 
             else if (activeModalTabName === 'faqs') {
                 const list = document.createElement('div');
-                list.className = 'space-y-4';
-                activeModalService.faqs.forEach((faq, index) => {
+                list.className = 'space-y-5';
+                const faqsList = activeModalService.faqs[currentLang] || activeModalService.faqs['en'];
+                faqsList.forEach((faq, index) => {
                     const item = document.createElement('div');
-                    item.className = 'bg-gray-50 p-4 rounded-xl border border-gray-200';
+                    item.className = 'bg-gray-50 p-5 rounded-xl border border-gray-200';
                     item.innerHTML = `
-                        <h5 class="text-xs font-bold text-blue-900 mb-1 flex items-center gap-2">
-                            <i class="fa-solid fa-circle-question text-amber-500"></i> ${faq.q}
+                        <h5 class="text-base font-bold text-blue-900 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-question text-amber-500 text-lg"></i> ${faq.q}
                         </h5>
-                        <p class="text-xs text-gray-600 leading-relaxed pl-5">${faq.a}</p>
+                        <p class="text-sm text-gray-700 leading-relaxed pl-7">${faq.a}</p>
                     `;
                     list.appendChild(item);
                 });
@@ -942,6 +1021,14 @@
             document.getElementById('modalTitle').innerText = details.name;
             document.getElementById('modalRedirectBtn').href = activeModalService.officialUrl;
             
+            // Show/hide Online Update sub-tab depending on service support
+            const btnUpdate = document.getElementById('tabBtnUpdate');
+            if (activeModalService.en.updateSteps) {
+                btnUpdate.classList.remove('hidden');
+            } else {
+                btnUpdate.classList.add('hidden');
+            }
+
             // Reset to default 'steps' tab on open
             activeModalTabName = 'steps';
             switchModalTab('steps');
@@ -973,3 +1060,4 @@
     </script>
 </body>
 </html>
+
