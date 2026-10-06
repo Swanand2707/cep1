@@ -50,7 +50,7 @@
         <!-- Hero Section -->
         <div class="text-center max-w-2xl mx-auto mb-8">
             <h2 class="text-3xl font-extrabold text-gray-900 mb-3" id="heroHeadline">Access Government Schemes & Services</h2>
-            <p class="text-gray-600 mb-6 text-sm" id="heroText">Search, read official instructions, check step-by-step applications, verify document checklists, and seamlessly redirect to official portals.</p>
+            <p class="text-gray-600 mb-6 text-sm" id="heroText">Search, read official instructions, check step-by-step applications, verify document checklists, and seamlessly redirect to official government portals.</p>
             
             <!-- Search Bar -->
             <div class="relative shadow-md rounded-xl overflow-hidden bg-white border border-gray-200">
@@ -104,7 +104,7 @@
         </div>
     </main>
 
-    <!-- Detailed Service Modal Window (Takes 80% Screen Width & Height with Dynamic Upper Sub-Tabs) -->
+    <!-- Detailed Service Modal Window -->
     <div id="faqModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-2xl w-11/12 md:w-4/5 max-w-6xl h-[85vh] overflow-hidden shadow-2xl transform transition-transform duration-300 flex flex-col">
             <div class="bg-blue-900 text-white px-8 py-5 flex justify-between items-center shrink-0">
@@ -112,7 +112,7 @@
                 <button onclick="closeModal()" class="text-white hover:text-amber-400 text-3xl font-bold cursor-pointer">&times;</button>
             </div>
             
-            <!-- Modal Navigation Sub-tabs (Includes Online Update) -->
+            <!-- Modal Navigation Sub-tabs -->
             <div class="flex border-b border-gray-200 bg-gray-50 px-8 pt-3 gap-6 overflow-x-auto shrink-0" id="modalTabContainer">
                 <button onclick="switchModalTab('steps')" id="tabBtnSteps" class="pb-3 text-lg font-bold border-b-2 border-blue-900 text-blue-900 transition whitespace-nowrap">Steps to Apply</button>
                 <button onclick="switchModalTab('update')" id="tabBtnUpdate" class="pb-3 text-lg font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition whitespace-nowrap hidden">Online Update</button>
@@ -298,7 +298,7 @@
             }
         ];
 
-        // Extended services data with steps, document checklist checkboxes, localized FAQs, and dedicated Online Update steps
+        // Extended services data with updated FAQs in English, Marathi, and Hindi
         const servicesData = [
             {
                 id: 'aadhaar',
@@ -378,26 +378,40 @@
                 },
                 faqs: {
                     en: [
-                        { q: "Can I update my Aadhaar address completely online?", a: "Yes, address updates can be completed fully online via the myAadhaar portal using OTP authentication and uploading address proof." },
-                        { q: "Is Aadhaar card mandatory?", a: "It is required for various government subsidies, opening bank accounts, filing taxes, and obtaining a PAN card." },
-                        { q: "What documents are required for a new Aadhaar enrollment?", a: "Proof of Identity (PoI), Proof of Address (PoA), Date of Birth (DoB) proof, and Proof of Relationship (PoR) if applicable." },
-                        { q: "How can I retrieve a lost Aadhaar number?", a: "You can retrieve it online through the UIDAI official website using your registered mobile number or email." }
-                        { q: "How can I download my Aadhaar card online?", a:"You can download your e-Aadhaar from the official UIDAI website using your Aadhaar number, enrolment ID, or VID and OTP verification." }
-                        { q: "Can I change my mobile number linked with Aadhaar?", a:"Yes, you can update your registered mobile number by visiting an Aadhaar enrolment or update centre." }
-                        { q: "How can I update my name in Aadhaar?", a:"You can request a name update at an Aadhaar centre by providing the required supporting document." }
-                        { q: "How can I update my date of birth in Aadhaar?", a:"You can request a date-of-birth correction at an Aadhaar centre with a valid date-of-birth document." }
+                        { q: "1. How can I download my Aadhaar card online?", a: "You can download your e-Aadhaar from the official UIDAI website using your Aadhaar number, enrolment ID, or VID and OTP verification." },
+                        { q: "2. Can I change my mobile number linked with Aadhaar?", a: "Yes, you can update your registered mobile number by visiting an Aadhaar enrolment or update centre." },
+                        { q: "3. How can I update my name in Aadhaar?", a: "You can request a name update at an Aadhaar centre by providing the required supporting document." },
+                        { q: "4. How can I update my date of birth in Aadhaar?", a: "You can request a date-of-birth correction at an Aadhaar centre with a valid date-of-birth document." },
+                        { q: "5. How can I check my Aadhaar update status?", a: "You can check the status of your Aadhaar update request online using the update/enrolment details provided to you." },
+                        { q: "6. What should I do if my Aadhaar is lost?", a: "You can retrieve your Aadhaar number online and download a new e-Aadhaar." },
+                        { q: "7. Can I use e-Aadhaar instead of a physical Aadhaar card?", a: "Yes, e-Aadhaar is a digitally signed electronic copy and can be used as an Aadhaar document." },
+                        { q: "8. What is VID in Aadhaar?", a: "VID, or Virtual ID, is a temporary 16-digit number that can be used instead of sharing your Aadhaar number for certain authentication services." },
+                        { q: "9. Can I get an Aadhaar card for a child?", a: "Yes, children can be enrolled for Aadhaar, with procedures and documents depending on the child's age." },
+                        { q: "10. How can I protect my Aadhaar information?", a: "Avoid sharing your Aadhaar details unnecessarily and use UIDAI's available authentication and security features when required." }
                     ],
                     mr: [
-                        { q: "मी आधारमधील पत्ता पूर्णपणे ऑनलाइन अपडेट करू शकतो का?", a: "होय, पत्ता बदल myAadhaar पोर्टलवर OTP आणि पत्त्याच्या पुराव्याची प्रत अपलोड करून पूर्णपणे ऑनलाइन करता येतो." },
-                        { q: "आधार अनिवार्य आहे का?", a: "सरकारी अनुदाने, बँक खाते उघडणे, कर भरणे आणि पॅन कार्ड मिळवण्यासाठी हे आवश्यक आहे." },
-                        { q: "नवीन आधार नोंदणीसाठी कोणती कागदपत्रे आवश्यक आहेत?", a: "ओळख पुरावा, पत्ता पुरावा, जन्मतारीख पुरावा आणि नातेसंबंधाचा पुरावा." },
-                        { q: "गमावलेला आधार क्रमांक कसा मिळवावा?", a: "तुम्ही तुमच्या नोंदणीकृत मोबाईल नंबर किंवा ईमेलचा वापर करून UIDAI च्या अधिकृत वेबसाइटवरून ऑनलाइन पुनर्प्राप्त करू शकता." }
+                        { q: "१. मी माझे आधार कार्ड ऑनलाइन कसे डाउनलोड करू शकतो?", a: "तुम्ही तुमच्या आधार नंबर, नावनोंदणी आयडी किंवा VID आणि OTP पडताळणीचा वापर करून अधिकृत UIDAI वेबसाइटवरून तुमचे ई-आधार डाउनलोड करू शकता." },
+                        { q: "२. आधारशी जोडलेला मोबाईल नंबर बदलता येतो का?", a: "होय, तुम्ही आधार नावनोंदणी किंवा अपडेट केंद्राला भेट देऊन तुमचा नोंदणीकृत मोबाईल नंबर अपडेट करू शकता." },
+                        { q: "३. आधारमध्ये माझे नाव कसे अपडेट करावे?", a: "आवश्यक कागदपत्रे सादर करून तुम्ही आधार केंद्रावर नाव अपडेट करण्याची विनंती करू शकता." },
+                        { q: "४. आधारमधील जन्मतारीख कशी बदलता येईल?", a: "वैध जन्म तारीख पुराव्यासह तुम्ही आधार केंद्रावर जन्मतारीख दुरुस्तीसाठी अर्ज करू शकता." },
+                        { q: "५. आधार अपडेटची स्थिती कशी तपासावी?", a: "तुम्हाला दिलेल्या अपडेट/नावनोंदणी तपशीलांचा वापर करून तुम्ही तुमच्या आधार अपडेट विनंतीची स्थिती ऑनलाइन तपासू शकता." },
+                        { q: "६. माझे आधार हरवल्यास काय करावे?", a: "तुम्ही तुमचा आधार क्रमांक ऑनलाइन मिळवू शकता आणि नवीन ई-आधार डाउनलोड करू शकता." },
+                        { q: "७. भौतिक आधार कार्डऐवजी ई-आधार वापरता येईल का?", a: "होय, ई-आधार ही डिजिटल स्वाक्षरी केलेली इलेक्ट्रॉनिक प्रत आहे आणि ती वैध आधार दस्तऐवज म्हणून वापरली जाऊ शकते." },
+                        { q: "८. आधारमध्ये VID म्हणजे काय?", a: "VID किंवा व्हर्च्युअल आयडी हा एक तात्पुरता १६-अंकी नंबर आहे जो विशिष्ट प्रमाणीकरण सेवांसाठी आधार नंबर शेअर करण्याऐवजी वापरला जाऊ शकतो." },
+                        { q: "९. मुलासाठी आधार कार्ड काढता येते का?", a: "होय, मुलांचे आधार नोंदवले जाऊ शकते, ज्याची प्रक्रिया आणि कागदपत्रे मुलाच्या वयावर अवलंबून असतात." },
+                        { q: "१०. माझी आधार माहिती कशी संरक्षित करावी?", a: "तुमचे आधार तपशील अनावश्यकपणे शेअर करणे टाळा आणि आवश्यकतेनुसार UIDAI च्या सुरक्षा वैशिष्ट्यांचा वापर करा." }
                     ],
                     hi: [
-                        { q: "क्या मैं आधार में अपना पता पूरी तरह से ऑनलाइन अपडेट कर सकता हूं?", a: "हां, myAadhaar पोर्टल के माध्यम से OTP सत्यापन और पता प्रमाण पत्र अपलोड करके पता अपडेट पूरी तरह से ऑनलाइन किया जा सकता है।" },
-                        { q: "क्या आधार अनिवार्य है?", a: "यह विभिन्न सरकारी सब्सिडी, बैंक खाता खोलने, टैक्स दाखिल करने और पैन कार्ड प्राप्त करने के लिए आवश्यक है।" },
-                        { q: "नए आधार नामांकन के लिए किन दस्तावेजों की आवश्यकता होती है?", a: "पहचान प्रमाण, पता प्रमाण, जन्मतिथि प्रमाण और यदि लागू हो तो संबंध प्रमाण।" },
-                        { q: "खोया हुआ आधार नंबर ऑनलाइन कैसे प्राप्त करें?", a: "आप अपने पंजीकृत मोबाइल नंबर या ईमेल का उपयोग करके UIDAI की आधिकारिक वेबसाइट से इसे पुनः प्राप्त कर सकते हैं।" }
+                        { q: "1. मैं अपना आधार card ऑनलाइन कैसे डाउनलोड कर सकता हूँ?", a: "आप अपने आधार नंबर, नामांकन आईडी, या VID और OTP सत्यापन का उपयोग करके आधिकारिक UIDAI वेबसाइट से अपना ई-आधार डाउनलोड कर सकते हैं।" },
+                        { q: "2. क्या मैं आधार से जुड़ा अपना मोबाइल नंबर बदल सकता हूँ?", a: "हाँ, आप आधार नामांकन या अपडेट केंद्र पर जाकर अपना पंजीकृत मोबाइल नंबर अपडेट कर सकते हैं।" },
+                        { q: "3. मैं आधार में अपना नाम कैसे अपडेट कर सकता हूँ?", a: "आवश्यक सहायक दस्तावेज़ प्रदान करके आप आधार केंद्र पर नाम अपडेट करने का अनुरोध कर सकते हैं।" },
+                        { q: "4. मैं आधार में अपनी जन्म तिथि कैसे अपडेट कर सकता हूँ?", a: "वैध जन्मतिथि दस्तावेज़ के साथ आप आधार केंद्र पर जन्मतिथि सुधार के लिए अनुरोध कर सकते हैं।" },
+                        { q: "5. मैं अपने आधार अपडेट की स्थिति कैसे जाँच सकता हूँ?", a: "आपको दिए गए अपडेट/नामांकन विवरण का उपयोग करके आप ऑनलाइन अपने आधार अपडेट अनुरोध की स्थिति जाँच सकते हैं।" },
+                        { q: "6. यदि मेरा आधार खो जाए तो मुझे क्या करना चाहिए?", a: "आप अपना आधार नंबर ऑनलाइन पुनः प्राप्त कर सकते हैं और एक नया ई-आधार डाउनलोड कर सकते हैं।" },
+                        { q: "7. क्या भौतिक आधार कार्ड के बजाय ई-आधार का उपयोग किया जा सकता है?", a: "हाँ, ई-आधार एक डिजिटल रूप से हस्ताक्षरित इलेक्ट्रॉनिक प्रति है और इसका उपयोग आधार दस्तावेज़ के रूप में किया जा सकता है।" },
+                        { q: "8. आधार में VID क्या है?", a: "VID, या वर्चुअल आईडी, एक अस्थायी 16-अंकीय नंबर है जिसका उपयोग कुछ प्रमाणीकरण सेवाओं के लिए अपना आधार नंबर साझा करने के बजाय किया जा सकता है।" },
+                        { q: "9. क्या बच्चे के लिए आधार कार्ड बन सकता है?", a: "हाँ, बच्चों का आधार नामांकन किया जा सकता है, जिसकी प्रक्रिया और दस्तावेज़ बच्चे की उम्र पर निर्भर करते हैं।" },
+                        { q: "10. मैं अपनी आधार जानकारी की सुरक्षा कैसे करूँ?", a: "अपने आधार विवरण को अनावश्यक रूप से साझा करने से बचें और आवश्यकतानुसार UIDAI की सुरक्षा सुविधाओं का उपयोग करें।" }
                     ]
                 }
             },
@@ -456,22 +470,40 @@
                 },
                 faqs: {
                     en: [
-                        { q: "What is a PAN card?", a: "A Permanent Account Number is a 10-digit alphanumeric identifier issued by the Income Tax Department of India." },
-                        { q: "Who needs a PAN card?", a: "Anyone earning a taxable income, businesses, companies, and individuals performing high-value financial transactions must have a PAN." },
-                        { q: "How can I link my PAN with Aadhaar?", a: "You can link them online through the Income Tax e-filing portal by paying the applicable fee." },
-                        { q: "How long is a PAN card valid?", a: "A PAN card has lifetime validity and does not expire." }
+                        { q: "1. How can I apply for a PAN card online?", a: "You can apply for a PAN online through the authorized PAN application services." },
+                        { q: "2. What documents are needed for a PAN card?", a: "You generally need proof of identity, proof of address and proof of date of birth as applicable." },
+                        { q: "3. Can I correct mistakes on my PAN card?", a: "Yes, you can submit a PAN correction request to update incorrect personal information." },
+                        { q: "4. What should I do if I lose my PAN card?", a: "You can request a reprint or download an electronic PAN where applicable." },
+                        { q: "5. Can I have more than one PAN card?", a: "No. A person should not hold more than one PAN." },
+                        { q: "6. How can I check my PAN application status?", a: "You can check your application status online using the acknowledgement or application details." },
+                        { q: "7. Does PAN expire?", a: "No. A PAN remains valid throughout the lifetime of the holder unless it is cancelled or surrendered as applicable." },
+                        { q: "8. Can I change my address on my PAN?", a: "Yes, your PAN database details can be updated through the appropriate correction process." },
+                        { q: "9. Why is PAN required for financial transactions?", a: "PAN helps the Income Tax Department identify taxpayers and track specified financial transactions." },
+                        { q: "10. What should I do if my PAN card has the wrong name?", a: "You can submit a PAN correction request with the appropriate supporting documents." }
                     ],
                     mr: [
-                        { q: "पॅन कार्ड म्हणजे काय?", a: "कायमस्वरूपी खाते क्रमांक हा भारत सरकारच्या प्राप्तिकर विभागाद्वारे जारी केलेला १०-अंकी अल्फान्यूमेरिक आयडेंटिफायर आहे." },
-                        { q: "पॅन कार्ड कोणाला आवश्यक आहे?", a: "करपात्र उत्पन्न मिळवणारी कोणतीही व्यक्ती, व्यावसायिक आणि उच्च मूल्याचे आर्थिक व्यवहार करणाऱ्या प्रत्येकाला पॅन आवश्यक आहे." },
-                        { q: "मी पॅन आधारशी कसे लिंक करू शकतो?", a: "तुम्ही लागू शुल्क भरून इन्कम टॅक्स ई-फायलिंग पोर्टलद्वारे ते ऑनलाइन लिंक करू शकता." },
-                        { q: "पॅन कार्ड किती काळासाठी वैध असते?", a: "पॅन कार्ड आजीवन वैध असते आणि ते कालबाह्य होत नाही." }
+                        { q: "१. मी पॅन कार्डसाठी ऑनलाइन अर्ज कसा करू शकतो?", a: "तुम्ही अधिकृत पॅन अर्ज सेवांद्वारे ऑनलाइन पॅनसाठी अर्ज करू शकता." },
+                        { q: "२. पॅन कार्डसाठी कोणती कागदपत्रे आवश्यक आहेत?", a: "तुम्हाला साधारणपणे ओळख पुरावा, पत्ता पुरावा आणि लागू असल्यास जन्मतारीख पुरावा आवश्यक असतो." },
+                        { q: "३. मी माझ्या पॅन कार्डवरील चुका सुधारू शकतो का?", a: "होय, चुकीची वैयक्तिक माहिती अद्यतनित करण्यासाठी तुम्ही पॅन दुरुस्ती विनंती सबमिट करू शकता." },
+                        { q: "४. माझे पॅन कार्ड हरवल्यास मी काय करावे?", a: "लागू असल्यास तुम्ही पुनर्मुद्रणाची विनंती करू शकता किंवा इलेक्ट्रॉनिक पॅन डाउनलोड करू शकता." },,
+                        { q: "५. माझ्याकडे एकापेक्षा जास्त पॅन कार्ड असू शकतात का?", a: "नाही. कोणत्याही व्यक्तीकडे एकापेक्षा जास्त पॅन कार्ड असू नयेत." },
+                        { q: "६. मी माझ्या पॅन अर्जाची स्थिती कशी तपासू शकतो?", a: "तुम्ही पावती किंवा अर्ज तपशीलांचा वापर करून ऑनलाइन अर्जाची स्थिती तपासू शकता." },
+                        { q: "७. पॅन कार्डची मुदत संपते का?", a: "नाही. रद्द् किंवा सरेंडर केल्याशिवाय पॅन कार्ड धारकाच्या संपूर्ण आयुष्यासाठी वैध राहते." },
+                        { q: "८. मी माझ्या पॅनवरील पत्ता बदलू शकतो का?", a: "होय, योग्य दुरुस्ती प्रक्रियेद्वारे तुमच्या पॅन डेटाबेसचा तपशील अद्यतनित केला जाऊ शकतो." },
+                        { q: "९. आर्थिक व्यवहारांसाठी पॅन का आवश्यक आहे?", a: "पॅन प्राप्तिकर विभागाला करदात्यांची ओळख पटवण्यास आणि निर्दिष्ट आर्थिक व्यवहारांचा मागोवा घेण्यास मदत करते." },
+                        { q: "१०. माझ्या पॅन कार्डवर चुकीचे नाव असल्यास मी काय करावे?", a: "तुम्ही योग्य कागदपत्रे जोडून पॅन दुरुस्तीसाठी अर्ज करू शकता." }
                     ],
                     hi: [
-                        { q: "पैन कार्ड क्या है?", a: "स्थायी खाता संख्या भारत के आयकर विभाग द्वारा जारी 10-अंकीय अल्फान्यूमेरिक पहचानकर्ता है।" },
-                        { q: "पैन कार्ड की आवश्यकता किसे है?", a: "कर योग्य आय अर्जित करने वाले किसी भी व्यक्ति, व्यवसाय और उच्च मूल्य के वित्तीय लेनदेन करने वाले व्यक्तियों के पास पैन होना अनिवार्य है।" },
-                        { q: "मैं अपने पैन को आधार से कैसे लिंक कर सकता हूं?", a: "आप आयकर ई-फाइलिंग पोर्टल के माध्यम से लागू शुल्क का भुगतान करके उन्हें ऑनलाइन लिंक कर सकते हैं।" },
-                        { q: "पैन कार्ड कितने समय के लिए वैध है?", a: "पैन कार्ड की वैधता जीवन भर होती है और यह एक्सपायर नहीं होता है।" }
+                        { q: "1. मैं पैन कार्ड के लिए ऑनलाइन आवेदन कैसे कर सकता हूँ?", a: "आप अधिकृत पैन आवेदन सेवाओं के माध्यम से ऑनलाइन पैन के लिए आवेदन कर सकते हैं।" },
+                        { q: "2. पैन कार्ड के लिए किन दस्तावेजों की आवश्यकता होती है?", a: "आपको आमतौर पर पहचान प्रमाण, पता प्रमाण और लागू होने पर जन्म तिथि प्रमाण की आवश्यकता होती है।" },
+                        { q: "3. क्या मैं अपने पैन कार्ड की गलतियों को सुधार सकता हूँ?", a: "हाँ, आप गलत व्यक्तिगत जानकारी को अपडेट करने के लिए पैन सुधार अनुरोध सबमिट कर सकते हैं।" },
+                        { q: "4. यदि मेरा पैन कार्ड खो जाए तो मुझे क्या करना चाहिए?", a: "लागू होने पर आप पुनः प्रिंट का अनुरोध कर सकते हैं या इलेक्ट्रॉनिक पैन डाउनलोड कर सकते हैं।" },
+                        { q: "5. क्या मेरे पास एक से अधिक पैन कार्ड हो सकते हैं?", a: "नहीं। किसी भी व्यक्ति के पास एक से अधिक पैन नहीं होना चाहिए।" },
+                        { q: "6. मैं अपने पैन आवेदन की स्थिति कैसे जाँच सकता हूँ?", a: "आप पावती या आवेदन विवरण का उपयोग करके ऑनलाइन अपनी आवेदन स्थिति जाँच सकते हैं।" },
+                        { q: "7. क्या पैन कार्ड एक्सपायर होता है?", a: "नहीं। रद्द या सरेंडर किए जाने को छोड़कर पैन धारक के जीवन भर वैध रहता है।" },
+                        { q: "8. क्या मैं अपने पैन पर अपना पता बदल सकता हूँ?", a: "हाँ, उचित सुधार प्रक्रिया के माध्यम से आपके पैन डेटाबेस विवरण को अपडेट किया जा सकता है।" },
+                        { q: "9. वित्तीय लेनदेन के लिए पैन क्यों आवश्यक है?", a: "पैन आयकर विभाग को करदाताओं की पहचान करने और निर्दिष्ट वित्तीय लेनदेन को ट्रैक करने में मदद करता है।" },
+                        { q: "10. यदि मेरे पैन कार्ड पर गलत नाम है तो मुझे क्या करना चाहिए?", a: "आप उचित सहायक दस्तावेजों के साथ पैन सुधार अनुरोध सबमिट कर सकते हैं।" }
                     ]
                 }
             },
@@ -526,19 +558,40 @@
                 },
                 faqs: {
                     en: [
-                        { q: "What is DigiLocker?", a: "A platform providing a secure cloud-based storage and verification system for documents." },
-                        { q: "Are DigiLocker documents legally valid?", a: "Yes, under Rule 9A of the IT Rules, documents in DigiLocker are treated at par with original physical documents." },
-                        { q: "Is DigiLocker free to use?", a: "Yes, registering and using basic storage on DigiLocker is completely free for Indian citizens." }
+                        { q: "1. How can I create a DigiLocker account?", a: "You can create a DigiLocker account using the official DigiLocker platform and the required identity/mobile verification." },
+                        { q: "2. How can I log in to DigiLocker?", a: "You can log in using the authentication method provided by DigiLocker, such as your registered mobile number or other supported credentials." },
+                        { q: "3. Can I store my Aadhaar in DigiLocker?", a: "DigiLocker can provide access to eligible Aadhaar-related information/documents through supported services." },
+                        { q: "4. Can I store my driving licence in DigiLocker?", a: "Yes, you can fetch an eligible digital driving licence from the issuing authority through DigiLocker." },
+                        { q: "5. Can I store my educational certificates in DigiLocker?", a: "Yes, educational documents issued by participating institutions/boards can be available through DigiLocker." },
+                        { q: "6. What should I do if my document is not showing in DigiLocker?", a: "Check that the information entered matches the issuing authority's records. If it still does not appear, contact the relevant issuer or DigiLocker support." },
+                        { q: "7. Can I share my DigiLocker documents with others?", a: "Yes, DigiLocker provides options to securely share eligible digital documents." },
+                        { q: "8. What happens if I change my mobile number?", a: "You should update your account details through the available DigiLocker account settings and verification process." },
+                        { q: "9. Can DigiLocker documents be used instead of physical documents?", a: "Eligible documents issued through DigiLocker can be used where the concerned authority accepts them as valid digital documents." },
+                        { q: "10. What should I do if I forget my DigiLocker login details?", a: "Use the account recovery or verification options provided by DigiLocker to regain access." }
                     ],
                     mr: [
-                        { q: "डिजिलॉकर म्हणजे काय?", a: "दस्तऐवजांच्या साठवणुकीसाठी आणि पडताळणीसाठी सुरक्षित क्लाउड-आधारित प्लॅटफॉर्म." },
-                        { q: "डिजिलॉकरमधील दस्तऐवज कायदेशीररित्या वैध आहेत का?", a: "होय, IT नियमांच्या नियम 9A अंतर्गत, डिजिलॉकरमधील दस्तऐवज मूळ भौतिक दस्तऐवजांच्या समान मानले जातात." },
-                        { q: "डिजिलॉकर वापरणे मोफत आहे का?", a: "होय, भारतीय नागरिकांसाठी नोंदणी आणि मूळ स्टोरेज वापरणे पूर्णपणे मोफत आहे." }
+                        { q: "१. मी डिजिलॉकर खाते कसे तयार करू शकतो?", a: "तुम्ही अधिकृत डिजिलॉकर प्लॅटफॉर्म आणि आवश्यक ओळख/मोबाईल पडताळणीचा वापर करून डिजिलॉकर खाते तयार करू शकता." },
+                        { q: "२. मी डिजिलॉकरमध्ये कसे लॉगिन करू शकतो?", a: "तुम्ही तुमचा नोंदणीकृत मोबाईल नंबर किंवा इतर समर्थित क्रेडेन्शियल्स वापरून लॉगिन करू शकता." },
+                        { q: "३. मी माझा आधार डिजिलॉकरमध्ये ठेवू शकतो का?", a: "डिजिलॉकर समर्थित सेवांद्वारे आधार-संबंधित माहिती/दस्तऐवजांमध्ये प्रवेश प्रदान करू शकते." },
+                        { q: "४. मी माझा ड्रायव्हिंग लायसन्स डिजिलॉकरमध्ये स्टोअर करू शकतो का?", a: "होय, तुम्ही डिजिलॉकरद्वारे जारी करणाऱ्या प्राधिकाऱ्याकडून पात्र डिजिटल ड्रायव्हिंग लायसन्स मिळवू शकता." },
+                        { q: "५. मी माझी शैक्षणिक प्रमाणपत्रे डिजिलॉकरमध्ये स्टोअर करू शकतो का?", a: "होय, सहभागी संस्थांद्वारे जारी केलेले शैक्षणिक कागदपत्रे डिजिलॉकरद्वारे उपलब्ध होऊ शकतात." },
+                        { q: "६. माझे दस्तऐवज डिजिलॉकरमध्ये दिसत नसल्यास मी काय करावे?", a: "प्रविष्ट केलेली माहिती जारी करणाऱ्या प्राधिकाऱ्याच्या रेकॉर्डशी जुळत असल्याची खात्री करा. तरीही ते दिसत नसल्यास, संबंधित जारीकर्ता किंवा डिजिलॉकर समर्थनाशी संपर्क साधा." },
+                        { q: "७. मी माझे डिजिलॉकर कागदपत्रे इतरांसोबत शेअर करू शकतो का?", a: "होय, डिजिलॉकर सुरक्षितपणे डिजिटल दस्तऐवज शेअर करण्याचे पर्याय प्रदान करते." },
+                        { q: "८. मी माझा मोबाईल नंबर बदलल्यास काय होते?", a: "तुम्ही उपलब्ध डिजिलॉकर खाते सेटिंग्ज आणि पडताळणी प्रक्रियेद्वारे तुमचे खाते तपशील अद्यतनित केले पाहिजे." },
+                        { q: "९. भौतिक कागदपत्रांऐवजी डिजिलॉकर कागदपत्रे वापरली जाऊ शकतात का?", a: "डिजिलॉकरद्वारे जारी केलेले पात्र दस्तऐवज तिथे वापरले जाऊ शकतात जिथे संबंधित प्राधिकरण त्यांना वैध डिजिटल दस्तऐवज म्हणून स्वीकारते." },
+                        { q: "१०. मी माझे डिजिलॉकर लॉगिन तपशील विसरल्यास काय करावे?", a: "पुन्हा प्रवेश मिळवण्यासाठी डिजिलॉकरद्वारे प्रदान केलेले खाते पुनर्प्राप्ती किंवा पडताळणी पर्याय वापर." }
                     ],
                     hi: [
-                        { q: "डिजीलाकर क्या है?", a: "दस्तावेजों के भंडारण और सत्यापन के लिए एक सुरक्षित क्लाउड-आधारित प्लेटफॉर्म।" },
-                        { q: "क्या डिजीलाकर दस्तावेज कानूनी रूप से मान्य हैं?", a: "हां, आईटी नियमों के नियम 9A के तहत, डिजीलाकर में दस्तावेजों को मूल भौतिक दस्तावेजों के बराबर माना जाता है।" },
-                        { q: "क्या डिजीलाकर का उपयोग मुफ्त है?", a: "हां, भारतीय नागरिकों के लिए डिजीलाकर पर पंजीकरण और बुनियादी भंडारण का उपयोग पूरी तरह से मुफ्त है।" }
+                        { q: "1. मैं DigiLocker अकाउंट कैसे बना सकता हूँ?", a: "आप आधिकारिक DigiLocker प्लेटफॉर्म और आवश्यक पहचान/मोबाइल सत्यापन का उपयोग करके DigiLocker अकाउंट बना सकते हैं।" },
+                        { q: "2. मैं DigiLocker में लॉगिन कैसे कर सकता हूँ?", a: "आप पंजीकृत मोबाइल नंबर या अन्य समर्थित क्रेडेंशियल्स जैसे प्रमाणीकरण तरीकों का उपयोग करके लॉगिन कर सकते हैं।" },
+                        { q: "3. क्या मैं DigiLocker में अपना आधार स्टोर कर सकता हूँ?", a: "DigiLocker समर्थित सेवाओं के माध्यम से आधार-संबंधित जानकारी/दस्तावेज़ तक पहुँच प्रदान कर सकता है।" },
+                        { q: "4. क्या मैं DigiLocker में अपना ड्राइविंग लाइसेंस स्टोर कर सकता हूँ?", a: "हाँ, आप DigiLocker के माध्यम से जारीकर्ता प्राधिकरण से एक योग्य डिजिटल ड्राइविंग लाइसेंस प्राप्त कर सकते हैं।" },
+                        { q: "5. क्या मैं DigiLocker में अपने शैक्षिक प्रमाण पत्र स्टोर कर सकता हूँ?", a: "हाँ, भाग लेने वाली संस्थाओं/बोर्डों द्वारा जारी किए गए शैक्षिक दस्तावेज़ DigiLocker के माध्यम से उपलब्ध हो सकते हैं।" },
+                        { q: "6. यदि मेरा दस्तावेज़ DigiLocker में नहीं दिख रहा है तो मुझे क्या करना चाहिए?", a: "जाँच करें कि दर्ज की गई जानकारी जारीकर्ता प्राधिकरण के रिकॉर्ड से मेल खाती है। यदि यह अभी भी दिखाई नहीं देता है, तो संबंधित जारीकर्ता या DigiLocker सहायता से संपर्क करें।" },
+                        { q: "7. क्या मैं अपने DigiLocker दस्तावेज़ दूसरों के साथ साझा कर सकता हूँ?", a: "हाँ, DigiLocker सुरक्षित रूप से डिजिटल दस्तावेज़ साझा करने के विकल्प प्रदान करता है।" },
+                        { q: "8. यदि मैं अपना मोबाइल नंबर बदल दूँ तो क्या होता है?", a: "आपको उपलब्ध DigiLocker अकाउंट सेटिंग और सत्यापन प्रक्रिया के माध्यम से अपने अकाउंट विवरण को अपडेट करना चाहिए।" },
+                        { q: "9. क्या भौतिक दस्तावेजों के बजाय DigiLocker दस्तावेजों का उपयोग किया जा सकता है?", a: "DigiLocker के माध्यम से जारी किए गए पात्र दस्तावेजों का उपयोग वहाँ किया जा सकता है जहाँ संबंधित प्राधिकरण उन्हें वैध डिजिटल दस्तावेजों के रूप में स्वीकार करता है।" },
+                        { q: "10. यदि मैं अपना DigiLocker लॉगिन विवरण भूल जाऊं तो मुझे क्या करना चाहिए?", a: "पुनः एक्सेस प्राप्त करने के लिए DigiLocker द्वारा प्रदान किए गए अकाउंट रिकवरी या सत्यापन विकल्पों का उपयोग करें।" }
                     ]
                 }
             },
@@ -599,19 +652,40 @@
                 },
                 faqs: {
                     en: [
-                        { q: "What is a Learner's License (LL)?", a: "A provisional legal permit that allows you to practice driving on public roads before obtaining a permanent driving license." },
-                        { q: "What is the minimum age for a driving license in India?", a: "18 years for gear vehicles and commercial transport; 16 years for non-gear motorcycles up to 50cc with parental consent." },
-                        { q: "How do I renew an expired driving license?", a: "You can apply for renewal online via the Sarathi Parivahan portal within 1 year of expiration." }
+                        { q: "1. How can I apply for a driving licence online?", a: "You can start the driving licence application process through the Sarathi Parivahan portal." },
+                        { q: "2. What documents are required for a driving licence?", a: "The required documents generally include age/address proof and other documents specified for the particular application." },
+                        { q: "3. How can I check my driving licence application status?", a: "You can check your application status online through the Parivahan/Sarathi portal." },
+                        { q: "4. What should I do if I lose my driving licence?", a: "You can apply for a duplicate driving licence through the applicable transport service." },
+                        { q: "5. Can I change my address on my driving licence?", a: "Yes, you can apply for an address change through the appropriate driving licence service." },
+                        { q: "6. How long is a driving licence valid?", a: "The validity depends on the type of licence, vehicle category and applicable rules." },
+                        { q: "7. Can I download my driving licence digitally?", a: "Yes, eligible digital driving licence records can be accessed through government digital platforms such as DigiLocker or mParivahan." },
+                        { q: "8. Do I need to take a driving test for a permanent licence?", a: "Generally, applicants for a new permanent driving licence must complete the required driving test." },
+                        { q: "9. Can I apply for a driving licence without a learner's licence?", a: "Generally, a learner's licence is required before applying for a permanent driving licence." },
+                        { q: "10. How can I find my nearest RTO?", a: "You can use the Parivahan services to identify the relevant Regional Transport Office for your location." }
                     ],
                     mr: [
-                        { q: "लर्नर लायसन्स म्हणजे काय?", a: "पक्के ड्रायव्हिंग लायसन्स मिळवण्यापूर्वी सार्वजनिक रस्त्यावर गाडी चालवण्याचा सराव करण्याची तात्पुरती परवानगी." },
-                        { q: "भारतात ड्रायव्हिंग लायसन्ससाठी किमान वय किती आहे?", a: "गियर वाहनांसाठी १८ वर्षे आणि पालक परवानगीसह ५०सीसी पर्यंतच्या गियर नसलेल्या दुचाकींसाठी १६ वर्षे." },
-                        { q: "मुदत संपलेले लायसन्स नूतनीकरण कसे करावे?", a: "तुम्ही सारथी पोर्टलद्वारे मुदत संपल्यापासून १ वर्षाच्या आत ऑनलाइन अर्ज करू शकता." }
+                        { q: "१. मी ड्रायव्हिंग लायसन्ससाठी ऑनलाइन अर्ज कसा करू शकतो?", a: "तुम्ही सारथी परिवहन पोर्टलद्वारे ड्रायव्हिंग लायसन्स अर्ज प्रक्रिया सुरू करू शकता." },
+                        { q: "२. ड्रायव्हिंग लायसन्ससाठी कोणती कागदपत्रे आवश्यक आहेत?", a: "आवश्यक कागदपत्रांमध्ये सामान्यतः वयाचा/पत्त्याचा पुरावा आणि विशिष्ट अर्जासाठी निर्दिष्ट केलेले इतर कागदपत्रे समाविष्ट असतात." },
+                        { q: "३. मी माझ्या ड्रायव्हिंग लायसन्स अर्जाची स्थिती कशी तपासू शकतो?", a: "तुम्ही परिवहन/सारथी पोर्टलद्वारे ऑनलाइन अर्जाची स्थिती तपासू शकता." },
+                        { q: "४. माझे ड्रायव्हिंग लायसन्स हरवल्यास मी काय करावे?", a: "तुम्ही लागू परिवहन सेवेद्वारे डुप्लिकेट ड्रायव्हिंग लायसन्ससाठी अर्ज करू शकता." },
+                        { q: "५. मी माझ्या ड्रायव्हिंग लायसन्सवरील पत्ता बदलू शकतो का?", a: "होय, तुम्ही योग्य ड्रायव्हिंग लायसन्स सेवेद्वारे पत्ता बदलासाठी अर्ज करू शकता." },
+                        { q: "६. ड्रायव्हिंग लायसन्स किती काळासाठी वैध असते?", a: "वैधता लायसन्सचा प्रकार, वाहन श्रेणी आणि लागू नियमांवर अवलंबून असते." },
+                        { q: "७. मी माझे ड्रायव्हिंग लायसन्स डिजिटल पद्धतीने डाउनलोड करू शकतो का?", a: "होय, डिजिलॉकर किंवा एमपरिवहन सारख्या डिजिटल प्लॅटफॉर्मवरून डिजिटल ड्रायव्हिंग लायसन्स रेकॉर्ड मिळवता येतात." },
+                        { q: "८. पक्क्या लायसन्ससाठी मला ड्रायव्हिंग टेस्ट द्यावी लागेल का?", a: "सामान्यतः, नवीन पक्क्या ड्रायव्हिंग लायसन्सच्या अर्जदारांनी आवश्यक ड्रायव्हिंग टेस्ट पूर्ण करणे आवश्यक आहे." },
+                        { q: "९. मी लर्नर लायसन्सशिवाय ड्रायव्हिंग लायसन्ससाठी अर्ज करू शकतो का?", a: "सामान्यतः, पक्क्या ड्रायव्हिंग लायसन्ससाठी अर्ज करण्यापूर्वी लर्नर लायसन्स असणे आवश्यक असते." },
+                        { q: "१०. मी माझे जवळचे आरटीओ कसे शोधू शकतो?", a: "तुम्ही तुमच्या ठिकाणासाठी संबंधित प्रादेशिक परिवहन कार्यालय (RTO) ओळखण्यासाठी परिवहन सेवा वापरू शकता." }
                     ],
                     hi: [
-                        { q: "लर्नर लाइसेंस क्या है?", a: "स्थायी ड्राइविंग लाइसेंस प्राप्त करने से पहले आपको सार्वजनिक सड़कों पर वाहन चलाने का अभ्यास करने की अनुमति देने वाला अनंतिम परमिट।" },
-                        { q: "भारत में ड्राइविंग लाइसेंस के लिए न्यूनतम आयु क्या है?", a: "गियर वाले वाहनों के लिए 18 वर्ष और माता-पिता की सहमति से 50cc तक की बिना गियर वाली मोटरसाइकिल के लिए 16 वर्ष।" },
-                        { q: "समाप्त हो चुके ड्राइविंग लाइसेंस का नवीनीकरण कैसे करें?", a: "आप सारथी पोर्टल के माध्यम से समाप्ति के 1 वर्ष के भीतर ऑनलाइन नवीनीकरण आवेदन कर सकते हैं।" }
+                        { q: "1. मैं ड्राइविंग लाइसेंस के लिए ऑनलाइन आवेदन कैसे कर सकता हूँ?", a: "आप सारथी परिवहन पोर्टल के माध्यम से ड्राइविंग लाइसेंस आवेदन प्रक्रिया शुरू कर सकते हैं।" },
+                        { q: "2. ड्राइविंग लाइसेंस के लिए किन दस्तावेजों की आवश्यकता होती है?", a: "आवश्यक दस्तावेजों में आम तौर पर आयु/पता प्रमाण और विशेष आवेदन के लिए निर्दिष्ट अन्य दस्तावेज शामिल होते हैं।" },
+                        { q: "3. मैं अपने ड्राइविंग लाइसेंस आवेदन की स्थिति कैसे जाँच सकता हूँ?", a: "आप परिवहन/सारथी पोर्टल के माध्यम से ऑनलाइन अपने आवेदन की स्थिति जाँच सकते हैं।" },
+                        { q: "4. यदि मेरा ड्राइविंग लाइसेंस खो जाए तो मुझे क्या करना चाहिए?", a: "आप लागू परिवहन सेवा के माध्यम से डुप्लीकेट ड्राइविंग लाइसेंस के लिए आवेदन कर सकते हैं।" },
+                        { q: "5. क्या मैं अपने ड्राइविंग लाइसेंस पर अपना पता बदल सकता हूँ?" , a: "हाँ, आप उपयुक्त ड्राइविंग लाइसेंस सेवा के माध्यम से पता परिवर्तन के लिए आवेदन कर सकते हैं।" },
+                        { q: "6. ड्राइविंग लाइसेंस कितने समय के लिए वैध है?", a: "वैधता लाइसेंस के प्रकार, वाहन श्रेणी और लागू नियमों पर निर्भर करती है।" },
+                        { q: "7. क्या मैं अपना ड्राइविंग लाइसेंस डिजिटल रूप से डाउनलोड कर सकता हूँ?", a: "हाँ, DigiLocker या mParivahan जैसे सरकारी डिजिटल प्लेटफॉर्म के माध्यम से डिजिटल ड्राइविंग लाइसेंस रिकॉर्ड एक्सेस किए जा सकते हैं।" },
+                        { q: "8. क्या स्थायी लाइसेंस के लिए मुझे ड्राइविंग टेस्ट देना होगा?", a: "आम तौर पर, नए स्थायी ड्राइविंग लाइसेंस के आवेदकों को आवश्यक ड्राइविंग टेस्ट पूरा करना होगा।" },
+                        { q: "9. क्या मैं बिना लर्नर लाइसेंस के ड्राइविंग लाइसेंस के लिए आवेदन कर सकता हूँ?", a: "आम तौर पर, स्थायी ड्राइविंग लाइसेंस के लिए आवेदन करने से पहले लर्नर लाइसेंस आवश्यक होता है।" },
+                        { q: "10. मैं अपना निकटतम RTO कैसे ढूंढ सकता हूँ?", a: "आप अपने स्थान के लिए प्रासंगिक क्षेत्रीय परिवहन कार्यालय (RTO) की पहचान करने के लिए परिवहन सेवाओं का उपयोग कर सकते हैं।" }
                     ]
                 }
             },
@@ -670,22 +744,40 @@
                 },
                 faqs: {
                     en: [
-                        { q: "What is the PM-Kisan scheme?", a: "A central sector scheme providing income support of ₹6,000 per year in three equal installments of ₹2,000 directly to eligible farmer families." },
-                        { q: "Who is eligible for PM-Kisan?", a: "All landholding farmer families having cultivable land in their names are eligible, subject to certain exclusion criteria." },
-                        { q: "How can a farmer register for PM-Kisan?", a: "Farmers can self-register online through the PM-Kisan portal, via CSCs, or through local agriculture officials." },
-                        { q: "Is Aadhaar mandatory for PM-Kisan?", a: "Yes, Aadhaar seeding and authentication are mandatory for registration and receiving installment payments." }
+                        { q: "1. How can I check my PM-Kisan payment status?", a: "You can check your payment and beneficiary details through the official PM-Kisan portal." },
+                        { q: "2. Why have I not received my PM-Kisan installment?", a: "Payment may be affected by issues such as incomplete verification, incorrect bank details, or eligibility-related problems." },
+                        { q: "3. How can I update my bank account details in PM-Kisan?", a: "Eligible farmers can use the available PM-Kisan services or contact the appropriate officials to update their details." },
+                        { q: "4. What is e-KYC in PM-Kisan?", a: "e-KYC is an identity verification process used to confirm the identity of eligible PM-Kisan beneficiaries." },
+                        { q: "5. How can I complete PM-Kisan e-KYC?", a: "Eligible beneficiaries can complete e-KYC using the methods provided on the official PM-Kisan portal." },
+                        { q: "6. How can I check my name in the PM-Kisan beneficiary list?", a: "You can use the beneficiary-related services on the official PM-Kisan portal to check your details." },
+                        { q: "7. Can I register for PM-Kisan online?", a: "Yes, eligible farmers can use the official PM-Kisan portal for self-registration." },
+                        { q: "8. What should I do if my PM-Kisan details are incorrect?", a: "You should use the available correction facilities or contact the appropriate agriculture authorities." },
+                        { q: "9. Is PM-Kisan money transferred directly to the farmer's bank account?", a: "Yes, eligible benefits are transferred through the Direct Benefit Transfer system to the registered bank account." },
+                        { q: "10. Can a farmer check PM-Kisan information using a mobile phone?", a: "Yes, many PM-Kisan services can be accessed online using a smartphone and internet connection." }
                     ],
                     mr: [
-                        { q: "पीएम-किसान योजना काय आहे?", a: "पात्र शेतकरी कुटुंबांना थेट ₹२,००० च्या तीन समान हप्त्यांमध्ये दरवर्षी ₹६,००० चे उत्पन्न सहाय्य देणारी केंद्र सरकारची योजना." },
-                        { q: "पीएम-किसानसाठी कोण पात्र आहे?", a: "काही वगळण्याचे निकष वगळता, ज्यांच्या नावावर लागवडीयोग्य जमीन आहे अशी सर्व शेतकरी कुटुंबे पात्र आहेत." },
-                        { q: "शेतकरी पीएम-किसानसाठी नोंदणी कशी करू शकतात?", a: "शेतकरी पीएम-किसान पोर्टलवरून ऑनलाइन, सीएससी केंद्रांमार्फत किंवा स्थानिक कृषी अधिकाऱ्यांद्वारे नोंदणी करू शकतात." },
-                        { q: "पीएम-किसानसाठी आधार अनिवार्य आहे का?", a: "होय, नोंदणी आणि हप्त्यांचे पैसे मिळवण्यासाठी आधार लिंक असणे अनिवार्य आहे." }
+                        { q: "१. मी पीएम-किसान पेमेंटची स्थिती कशी तपासू शकतो?", a: "तुम्ही अधिकृत पीएम-किसान पोर्टलद्वारे तुमच्या पेमेंट आणि लाभार्थी तपशीलांची तपासणी करू शकता." },
+                        { q: "२. मला पीएम-किसानचा हप्ता का मिळालेला नाही?", a: "अपूर्ण पडताळणी, चुकीचे बँक तपशील किंवा पात्रता-संबंधित समस्यांमुळे पेमेंट प्रभावि झाले असू शकते." },
+                        { q: "३. मी पीएम-किसान मधील माझे बँक खाते तपशील कसे अपडेट करू शकतो?", a: "पात्र शेतकरी त्यांचे तपशील अपडेट करण्यासाठी उपलब्ध पीएम-किसान सेवा वापरू शकतात किंवा योग्य अधिकाऱ्यांशी संपर्क साधू शकतात." },
+                        { q: "४. पीएम-किसान मध्ये ई-केवायसी (e-KYC) म्हणजे काय?", a: "ई-केवायसी ही पात्र पीएम-किसान लाभार्थ्यांची ओळख पुष्टी करण्यासाठी वापरली जाणारी ओळख पडताळणी प्रक्रिया आहे." },
+                        { q: "५. मी पीएम-किसान ई-केवायसी कशी पूर्ण करू शकतो?", a: "पात्र लाभार्थी अधिकृत पीएम-किसान पोर्टलवर उपलब्ध पद्धतींचा वापर करून ई-केवायसी पूर्ण करू शकतात." },
+                        { q: "६. मी पीएम-किसान लाभार्थी यादीत माझे नाव कसे तपासू शकतो?", a: "तुम्ही तुमचे तपशील तपासण्यासाठी अधिकृत पीएम-किसान पोर्टलवरील लाभार्थी-संबंधित सेवा वापरू शकता." },
+                        { q: "७. मी पीएम-किसानसाठी ऑनलाइन नोंदणी करू शकतो का?", a: "होय, पात्र शेतकरी स्वयंप्रवेशासाठी (Self-registration) अधिकृत पीएम-किसान पोर्टल वापरू शकतात." },
+                        { q: "८. माझे पीएम-किसान तपशील चुकीचे असल्यास मी काय करावे?", a: "तुम्ही उपलब्ध दुरुस्ती सुविधांचा वापर केला पाहिजे किंवा संबंधित कृषी प्राधिकाऱ्यांशी संपर्क साधावा." },
+                        { q: "९. पीएम-किसानचे पैसे थेट शेतकऱ्याच्या बँक खात्यात जमा होतात का?", a: "होय, पात्र लाभ थेट लाभ हस्तांतरण (DBT) प्रणालीद्वारे नोंदणीकृत बँक खात्यात हस्तांतरित केले जातात." },
+                        { q: "१०. शेतकरी मोबाईल फोन वापरून पीएम-किसान माहिती तपासू शकतो का?", a: "होय, स्मार्टफोन आणि इंटरनेट कनेक्शन वापरून अनेक पीएम-किसान सेवा ऑनलाइन ॲक्सेस केल्या जाऊ शकतात." }
                     ],
                     hi: [
-                        { q: "पीएम-किसान योजना क्या है?", a: "पात्र किसान परिवारों को सीधे ₹2,000 की तीन समान किश्तों में प्रति वर्ष ₹6,000 की आय सहायता प्रदान करने वाली केंद्रीय योजना।" },
-                        { q: "पीएम-किसान के लिए कौन पात्र है?", a: "कुछ अपवर्जन मानदंडों के अधीन, जिनके नाम पर कृषि योग्य भूमि है, वे सभी भूमिधारक किसान परिवार पात्र हैं।" },
-                        { q: "किसान पीएम-किसान के लिए पंजीकरण कैसे कर सकते हैं?", a: "किसान पीएम-किसान पोर्टल के माध्यम से ऑनलाइन, सीएससी के माध्यम से या स्थानीय कृषि अधिकारियों के माध्यम से पंजीकरण कर सकते हैं।" },
-                        { q: "क्या पीएम-किसान के लिए आधार अनिवार्य है?", a: "हां, पंजीकरण और किश्त भुगतान प्राप्त करने के लिए आधार सीडिंग और प्रमाणीकरण अनिवार्य है।" }
+                        { q: "1. मैं अपना पीएम-किसान भुगतान स्टेटस कैसे देख सकता हूँ?", a: "आप आधिकारिक पीएम-किसान पोर्टल के माध्यम से अपने भुगतान और लाभार्थी विवरण की जाँच कर सकते हैं।" },
+                        { q: "2. मुझे पीएम-किसान की किश्त क्यों नहीं मिली है?", a: "अपूर्ण सत्यापन, गलत बैंक विवरण या पात्रता संबंधी समस्याओं के कारण भुगतान प्रभावित हो सकता है।" },
+                        { q: "3. मैं पीएम-किसान में अपने बैंक खाते का विवरण कैसे अपडेट कर सकता हूँ?", a: "पात्र किसान अपने विवरण को अपडेट करने के लिए उपलब्ध पीएम-किसान सेवाओं का उपयोग कर सकते हैं या उचित अधिकारियों से संपर्क कर सकते हैं।" },
+                        { q: "4. पीएम-किसान में ई-केवायसी (e-KYC) क्या है?", a: "e-KYC एक पहचान सत्यापन प्रक्रिया है जिसका उपयोग पात्र पीएम-किसान लाभार्थियों की पहचान की पुष्टि के लिए किया जाता है।" },
+                        { q: "5. मैं पीएम-किसान e-KYC कैसे पूरा कर सकता हूँ?", a: "पात्र लाभार्थी आधिकारिक पीएम-किसान पोर्टल पर उपलब्ध तरीकों का उपयोग करके e-KYC पूरा कर सकते हैं।" },
+                        { q: "6. मैं पीएम-किसान लाभार्थी सूची में अपना नाम कैसे देख सकता हूँ?", a: "आप अपने विवरण की जाँच के लिए आधिकारिक पीएम-किसान पोर्टल पर लाभार्थी-संबंधित सेवाओं का उपयोग कर सकते हैं।" },
+                        { q: "7. क्या मैं पीएम-किसान के लिए ऑनलाइन पंजीकरण कर सकता हूँ?", a: "हाँ, पात्र किसान स्व-पंजीकरण के लिए आधिकारिक पीएम-किसान पोर्टल का उपयोग कर सकते हैं।" },
+                        { q: "8. यदि मेरा पीएम-किसान विवरण गलत है तो मुझे क्या करना चाहिए?", a: "आपको उपलब्ध सुधार सुविधाओं का उपयोग करना चाहिए या उचित कृषि अधिकारियों से संपर्क करना चाहिए।" },
+                        { q: "9. क्या पीएम-किसान का पैसा सीधे किसान के बैंक खाते में ट्रांसफर किया जाता है?", a: "हाँ, पात्र लाभ सीधे लाभ हस्तांतरण (DBT) प्रणाली के माध्यम से पंजीकृत बैंक खाते में स्थानांतरित किए जाते हैं।" },
+                        { q: "10. क्या कोई किसान मोबाइल फोन का उपयोग करके पीएम-किसान की जानकारी देख सकता है?", a: "हाँ, स्मार्टफोन और इंटरनेट कनेक्शन का उपयोग करके कई पीएम-किसान सेवाओं को ऑनलाइन एक्सेस किया जा सकता है।" }
                     ]
                 }
             },
@@ -743,20 +835,40 @@
                 },
                 faqs: {
                     en: [
-                        { q: "What is Ayushman Bharat PM-JAY?", a: "A health insurance scheme providing health cover of up to ₹5 Lakh per family per year for hospitalization." },
-                        { q: "How can I check if my name is on the beneficiary list?", a: "You can check your eligibility online at the PMJAY portal or by calling the toll-free number 14555." },
-                        { q: "What is an Ayushman Card?", a: "A card issued to verified beneficiaries to avail cashless treatment at empaneled hospitals." }
-                        { q:"How can I apply for an Ayushman Card?", a:"Eligible beneficiaries can obtain an Ayushman Card through the available official beneficiary services and authorized centres."}
+                        { q: "1. How can I apply for an Ayushman Card?", a: "Eligible beneficiaries can obtain an Ayushman Card through the available official beneficiary services and authorized centres." },
+                        { q: "2. How can I check my Ayushman Bharat eligibility?", a: "You can check your eligibility through the official PM-JAY beneficiary services." },
+                        { q: "3. Where can I use my Ayushman Card?", a: "The card can be used for eligible treatment at hospitals empanelled under the scheme." },
+                        { q: "4. How can I find an Ayushman Bharat hospital near me?", a: "You can use the official PM-JAY hospital search facility to find empanelled hospitals." },
+                        { q: "5. Is an Ayushman Card free?", a: "There is no charge for eligible beneficiaries to receive the Ayushman Card through the official process." },
+                        { q: "6. What should I do if my name is not found?", a: "You should verify your details through the official beneficiary system or contact the PM-JAY support system for assistance." },
+                        { q: "7. Can I use my Ayushman Card in another state?", a: "PM-JAY provides portability, allowing eligible beneficiaries to receive covered treatment at empanelled hospitals outside their home state." },
+                        { q: "8. Can I check my Ayushman Card online?", a: "Yes, eligible beneficiaries can access their beneficiary and card-related information through official online services." },
+                        { q: "9. What documents may be required for an Ayushman Card?", a: "The required information or documents depend on the beneficiary verification process and the applicable rules." },
+                        { q: "10. What should I do if an empanelled hospital refuses eligible treatment?", a: "You can contact the official PM-JAY grievance/support system to report the issue and seek assistance." }
                     ],
                     mr: [
-                        { q: "आयुष्मान भारत PM-JAY काय आहे?", a: "कुटुंबाला रुग्णालयात दाखल करण्यासाठी दरवर्षी ₹५ लाखांपर्यंतचे आरोग्य विमा संरक्षण देणारी योजना." },
-                        { q: "लाभार्थी यादीत माझे नाव आहे का हे मी कसे तपासू शकतो?", a: "तुम्ही तुमची पात्रता PMJAY पोर्टलवर ऑनलाइन किंवा १४५५५ या टोल-फ्री क्रमांकावर कॉल करून तपासू शकता." },
-                        { q: "आयुष्मान कार्ड म्हणजे काय?", a: "सूचीबद्ध रुग्णालयांमध्ये मोफत उपचारांचा लाभ घेण्यासाठी सत्यापित लाभार्थ्यांना दिलेले ओळखपत्र." }
+                        { q: "१. मी आयुष्मान कार्डसाठी कसा अर्ज करू शकतो?", a: "पात्र लाभार्थी अधिकृत लाभार्थी सेवा आणि प्राधिकृत केंद्रांद्वारे आयुष्मान कार्ड मिळवू शकतात." },
+                        { q: "२. मी माझी आयुष्मान भारत पात्रता कशी तपासू शकतो?", a: "तुम्ही अधिकृत पीएम-जय (PM-JAY) लाभार्थी सेवांद्वारे तुमची पात्रता तपासू शकता." },
+                        { q: "३. मी माझ्या आयुष्मान कार्डचा वापर कुठे करू शकतो?", a: "या योजनेअंतर्गत सूचीबद्ध (empanelled) रुग्णालयांमध्ये पात्र उपचारांसाठी कार्ड वापरले जाऊ शकते." },
+                        { q: "४. माझ्या जवळचे आयुष्मान भारत रुग्णालय कसे शोधायचे?", a: "सूचीबद्ध रुग्णालये शोधण्यासाठी तुम्ही अधिकृत पीएम-जय हॉस्पिटल सर्च सुविधा वापरू शकता." },
+                        { q: "५. आयुष्मान कार्ड मोफत आहे का?", a: "अधिकृत प्रक्रियेद्वारे आयुष्मान कार्ड मिळवण्यासाठी पात्र लाभार्थ्यांकडून कोणतेही शुल्क आकारले जात नाही." },
+                        { q: "६. माझे नाव न आढळल्यास मी काय करावे?", a: "तुम्ही अधिकृत लाभार्थी प्रणालीद्वारे तुमच्या तपशीलांची पडताळणी केली पाहिजे किंवा मदतीसाठी पीएम-जय सपोर्ट सिस्टमशी संपर्क साधावा." },
+                        { q: "७. मी इतर राज्यामध्ये माझे आयुष्मान कार्ड वापरू शकतो का?", a: "पीएम-जय पोर्टेबिलिटी प्रदान करते, ज्यामुळे पात्र लाभार्थ्यांना त्यांच्या मूळ राज्याबाहेरील सूचीबद्ध रुग्णालयांमध्ये उपचाराचा लाभ घेता येतो." },
+                        { q: "८. मी माझे आयुष्मान कार्ड ऑनलाइन तपासू शकतो का?", a: "होय, पात्र लाभार्थी अधिकृत ऑनलाइन सेवांद्वारे त्यांच्या लाभार्थी आणि कार्ड-संबंधित माहिती मिळवू शकतात." },
+                        { q: "९. आयुष्मान कार्डसाठी कोणती कागदपत्रे आवश्यक असू शकतात?", a: "आवश्यक माहिती किंवा कागदपत्रे लाभार्थी पडताळणी प्रक्रिया आणि लागू नियमांवर अवलंबून असतात." },
+                        { q: "१०. सूचीबद्ध रुग्णालयाने पात्र उपचारास नकार दिल्यास मी काय करावे?", a: "समस्या नोंदवण्यासाठी आणि मदत मिळवण्यासाठी तुम्ही अधिकृत पीएम-जय ग्रीव्हन्स/सपोर्ट सिस्टमशी संपर्क साधू शकता." }
                     ],
                     hi: [
-                        { q: "आयुष्मान भारत PM-JAY क्या है?", a: "अस्पताल में भर्ती होने के लिए प्रति परिवार प्रति वर्ष ₹5 लाख तक का स्वास्थ्य कवर प्रदान करने वाली योजना।" },
-                        { q: "मैं कैसे जांच सकता हूं कि मेरा नाम लाभार्थी सूची में है या नहीं?", a: "आप PMJAY पोर्टल पर ऑनलाइन या टोल-फ्री नंबर 14555 पर कॉल करके अपनी पात्रता की जांच कर सकते हैं।" },
-                        { q: "आयुष्मान कार्ड क्या है?", a: "संबद्ध अस्पतालों में कैशलेस उपचार का लाभ उठाने के लिए सत्यापित लाभार्थियों को जारी किया जाने वाला कार्ड।" }
+                        { q: "1. मैं आयुष्मान कार्ड के लिए आवेदन कैसे कर सकता हूँ?", a: "पात्र लाभार्थी उपलब्ध आधिकारिक लाभार्थी सेवाओं और अधिकृत केंद्रों के माध्यम से आयुष्मान कार्ड प्राप्त कर सकते हैं।" },
+                        { q: "2. मैं अपनी आयुष्मान भारत पात्रता कैसे जाँच सकता हूँ?", a: "आप आधिकारिक PM-JAY लाभार्थी सेवाओं के माध्यम से अपनी पात्रता जाँच सकते हैं।" },
+                        { q: "3. मैं अपने आयुष्मान कार्ड का उपयोग कहाँ कर सकता हूँ?", a: "इस योजना के तहत अनुबंधित (empanelled) अस्पतालों में पात्र उपचार के लिए कार्ड का उपयोग किया जा सकता है।" },
+                        { q: "4. मेरे पास का आयुष्मान भारत अस्पताल कैसे ढूंढूँ?", a: "आप सूचीबद्ध अस्पतालों को खोजने के लिए आधिकारिक PM-JAY अस्पताल खोज सुविधा का उपयोग कर सकते हैं।" },
+                        { q: "5. क्या आयुष्मान कार्ड निःशुल्क है?", a: "आधिकारिक प्रक्रिया के माध्यम से आयुष्मान कार्ड प्राप्त करने वाले पात्र लाभार्थियों के लिए कोई शुल्क नहीं है।" },
+                        { q: "6. यदि मेरा नाम नहीं मिलता है तो मुझे क्या करना चाहिए?", a: "आपको आधिकारिक लाभार्थी प्रणाली के माध्यम से अपने विवरण का सत्यापन करना चाहिए या सहायता के लिए PM-JAY सहायता प्रणाली से संपर्क करना चाहिए।" },
+                        { q: "7. क्या मैं दूसरे राज्य में अपने आयुष्मान कार्ड का उपयोग कर सकता हूँ?", a: "PM-JAY पोर्टेबिलिटी प्रदान करता है, जिससे पात्र लाभार्थियों को अपने गृह राज्य के बाहर अनुबंधित अस्पतालों में उपचार प्राप्त करने की अनुमति मिलती है।" },
+                        { q: "8. क्या मैं अपना आयुष्मान कार्ड ऑनलाइन देख सकता हूँ?", a: "हाँ, पात्र लाभार्थी आधिकारिक ऑनलाइन सेवाओं के माध्यम से अपने लाभार्थी और कार्ड-संबंधित जानकारी प्राप्त कर सकते हैं।" },
+                        { q: "9. आयुष्मान कार्ड के लिए कौन से दस्तावेजों की आवश्यकता हो सकती है?", a: "आवश्यक जानकारी या दस्तावेज लाभार्थी सत्यापन प्रक्रिया और लागू नियमों पर निर्भर करते हैं।" },
+                        { q: "10. यदि कोई अनुबंधित अस्पताल पात्र उपचार से इनकार करता है तो मुझे क्या करना चाहिए?", a: "आप इस मुद्दे की रिपोर्ट करने और सहायता प्राप्त करने के लिए आधिकारिक PM-JAY शिकायत/सहायता प्रणाली से संपर्क कर सकते हैं।" }
                     ]
                 }
             }
@@ -876,7 +988,6 @@
             let isAutoCorrected = false;
             let matchedTerm = "";
 
-            // 1. Direct Keyword Match
             for (let entry of knowledgeBase) {
                 if (entry.keywords.some(kw => rawQuery.toLowerCase().includes(kw))) {
                     matchedEntry = entry;
@@ -885,7 +996,6 @@
                 }
             }
 
-            // 2. Levenshtein Distance Fuzzy Match if direct match fails
             if (!matchedEntry) {
                 for (let entry of knowledgeBase) {
                     for (let kw of entry.keywords) {
@@ -1026,7 +1136,6 @@
             document.getElementById('modalTitle').innerText = details.name;
             document.getElementById('modalRedirectBtn').href = activeModalService.officialUrl;
             
-            // Show/hide Online Update sub-tab depending on service support
             const btnUpdate = document.getElementById('tabBtnUpdate');
             if (activeModalService.en.updateSteps) {
                 btnUpdate.classList.remove('hidden');
@@ -1034,7 +1143,6 @@
                 btnUpdate.classList.add('hidden');
             }
 
-            // Reset to default 'steps' tab on open
             activeModalTabName = 'steps';
             switchModalTab('steps');
 
@@ -1049,7 +1157,6 @@
             activeModalService = null;
         }
 
-        // Close modal when clicking outside the modal content box
         window.addEventListener('click', function (event) {
             const modal = document.getElementById('faqModal');
             if (event.target === modal) {
@@ -1057,7 +1164,6 @@
             }
         });
 
-        // Initial Page Load Execution
         document.addEventListener('DOMContentLoaded', () => {
             renderLanguageStaticTexts();
             displayServices(servicesData);
