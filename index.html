@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <!-- AI Citizen Helper Card with Smart Auto-Correction -->
+        <!-- Gov Sewa Chatbot Assistant Card -->
         <div class="max-w-3xl mx-auto mb-10 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl p-6 shadow-xl border border-blue-800">
             <div class="flex items-center gap-3 mb-3">
                 <div class="p-2.5 bg-amber-500 text-slate-950 rounded-lg font-bold">
@@ -68,24 +68,27 @@
                 </div>
                 <div>
                     <h3 class="text-lg font-bold flex items-center gap-2">
-                        <span id="assistantTitle">E-Gov Smart Assistant</span>
-                        <span class="text-[10px] bg-amber-400 text-slate-950 font-extrabold px-2 py-0.5 rounded-full uppercase">Auto-Correct Enabled</span>
+                        <span id="assistantTitle">Gov Sewa Assistant</span>
+                        <span class="text-[10px] bg-amber-400 text-slate-950 font-extrabold px-2 py-0.5 rounded-full uppercase">india.gov.in Verified</span>
                     </h3>
-                    <p class="text-xs text-blue-200" id="assistantSubtitle">Ask about steps to apply, required document checklists, or eligibility queries.</p>
+                    <p class="text-xs text-blue-200" id="assistantSubtitle">Ask any question to clear your doubts regarding official government services and schemes.</p>
+                </div>
+            </div>
+
+            <!-- Chat Messages Log Container -->
+            <div id="govChatMessages" class="my-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 text-sm leading-relaxed max-h-60 overflow-y-auto space-y-3">
+                <div class="p-2.5 rounded-lg bg-white/15 text-white">
+                    Hello! Ask me any doubt about government services, documents, or steps (sourced from <a href="https://www.india.gov.in" target="_blank" class="underline font-bold text-amber-300">india.gov.in</a>).
                 </div>
             </div>
 
             <form onsubmit="handleAssistantQuery(event)" class="mt-4 flex gap-2">
-                <input type="text" id="assistantInput" placeholder="Ask a question (e.g., steps to apply pan card, documents for driving license)" 
+                <input type="text" id="assistantInput" placeholder="Ask your doubt (e.g., steps to apply pan card, documents for driving license)" 
                        class="flex-1 px-4 py-2.5 rounded-lg text-gray-900 text-sm outline-none focus:ring-2 focus:ring-amber-400">
                 <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-lg text-sm flex items-center gap-2 transition shrink-0">
-                    <span id="askBtnText">Ask</span> <i class="fa-solid fa-paper-plane text-xs"></i>
+                    <span id="askBtnText">Send</span> <i class="fa-solid fa-paper-plane text-xs"></i>
                 </button>
             </form>
-
-            <div id="assistantResponse" class="hidden mt-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 text-sm leading-relaxed">
-                <!-- Smart response loaded dynamically -->
-            </div>
         </div>
 
         <!-- Filter Category Tabs -->
@@ -115,7 +118,7 @@
             <!-- Modal Navigation Sub-tabs -->
             <div class="flex border-b border-gray-200 bg-gray-50 px-8 pt-3 gap-6 overflow-x-auto shrink-0" id="modalTabContainer">
                 <button onclick="switchModalTab('steps')" id="tabBtnSteps" class="pb-3 text-lg font-bold border-b-2 border-blue-900 text-blue-900 transition whitespace-nowrap">Steps to Apply</button>
-                <button onclick="switchModalTab('update')" id="tabBtnUpdate" class="pb-3 text-lg font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition whitespace-nowrap hidden">Online Update</button>
+                <button onclick="switchModalTab('update')" id="tabBtnUpdate" class="pb-3 text-lg font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition whitespace-nowrap">Online Update</button>
                 <button onclick="switchModalTab('docs')" id="tabBtnDocs" class="pb-3 text-lg font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition whitespace-nowrap">Document Checklist</button>
                 <button onclick="switchModalTab('faqs')" id="tabBtnFaqs" class="pb-3 text-lg font-bold border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition whitespace-nowrap">FAQs</button>
             </div>
@@ -170,12 +173,12 @@
                 footerText1: "© 2026 E-Gov Connect. All information is routed directly to official government web services.",
                 footerText2: "This is a public service utility interface. Users are advised to double-check information on original portals.",
                 noResults: "No services found matching your criteria.",
-                assistantTitle: "E-Gov Smart Assistant",
-                assistantSubtitle: "Ask about steps to apply, required document checklists, or eligibility queries.",
-                assistantPlaceholder: "Ask a question (e.g., steps to apply pan card, documents for driving license)",
-                askBtnText: "Ask",
-                correctedMsg: "Showing results for auto-corrected query: ",
-                assistantNotFound: "I couldn't find an exact match for that question. Try asking about Aadhaar update steps, PAN card documents, Driving License, or PM Kisan.",
+                assistantTitle: "Gov Sewa Assistant",
+                assistantSubtitle: "Ask any question to clear your doubts regarding official government services and schemes.",
+                assistantPlaceholder: "Ask your doubt (e.g., steps to apply pan card, documents for driving license)",
+                askBtnText: "Send",
+                correctedMsg: "Showing results for query: ",
+                assistantNotFound: "I can only provide verified information related to official government services sourced directly from india.gov.in. Please try asking a specific governance or scheme-related question.",
                 tabSteps: "Steps to Apply (New)",
                 tabUpdate: "Online Update",
                 tabDocs: "Document Checklist",
@@ -202,12 +205,12 @@
                 footerText1: "© २०२६ ई-गव्ह कनेक्ट. सर्व माहिती थेट अधिकृत सरकारी संकेतस्थळांवरून जोडलेली आहे.",
                 footerText2: "हे एक सार्वजनिक सेवा पोर्टल आहे. वापरकर्त्यांनी अधिकृत संकेतस्थळांवर माहितीची शहानिशा करावी.",
                 noResults: "तुमच्या शोधाशी जुळणाऱ्या कोणत्याही सेवा सापडल्या नाहीत.",
-                assistantTitle: "ई-गव्ह स्मार्ट सहाय्यक",
-                assistantSubtitle: "अर्ज करण्याच्या पायऱ्या, आवश्यक कागदपत्रे किंवा पात्रतेबद्दल प्रश्न विचारा.",
+                assistantTitle: "गोव्ह सेवा सहाय्यक",
+                assistantSubtitle: "अधिकृत सरकारी सेवा आणि योजनांबद्दल तुमचे शंका व प्रश्न विचारा.",
                 assistantPlaceholder: "प्रश्न विचारा (उदा. पॅन कार्ड अर्ज प्रक्रिया, ड्रायव्हिंग लायसन्स कागदपत्रे)",
-                askBtnText: "विचारा",
-                correctedMsg: "आपोआप दुरुस्त केलेल्या शोधाचे निकाल दर्शवत आहे: ",
-                assistantNotFound: "या प्रश्नाचे उत्तर सापडले नाही. कृपया आधार अपडेट पायऱ्या, पॅन कार्ड कागदपत्रे किंवा पीएम किसान बद्दल विचारा.",
+                askBtnText: "पाठवा",
+                correctedMsg: "शोध निकाल: ",
+                assistantNotFound: "मी केवळ india.gov.in वरील अधिकृत सरकारी सेवांची माहिती देऊ शकतो. कृपया इतर शासकीय योजना किंवा सेवांबद्दल विचारा.",
                 tabSteps: "नवीन नोंदणी प्रक्रिया",
                 tabUpdate: "ऑनलाइन अपडेट प्रक्रिया",
                 tabDocs: "आवश्यक कागदपत्रे",
@@ -234,12 +237,12 @@
                 footerText1: "© २०२६ ई-गव कनेक्ट। सभी जानकारी सीधे आधिकारिक सरकारी वेब सेवाओं से जुड़ी है।",
                 footerText2: "यह एक जन सेवा पोर्टल है। उपयोगकर्ताओं को आधिकारिक पोर्टलों पर जानकारी की पुष्टि करने की सलाह दी जाती है।",
                 noResults: "आपकी खोज से मेल खाने वाली कोई सेवा नहीं मिली।",
-                assistantTitle: "ई-गव स्मार्ट सहायक",
-                assistantSubtitle: "आवेदन के चरण, आवश्यक दस्तावेजों की सूची या पात्रता से जुड़े प्रश्न पूछें।",
+                assistantTitle: "गोव सेवा सहायक",
+                assistantSubtitle: "सरकारी सेवाओं और योजनाओं से संबंधित अपने सभी संदेह स्पष्ट करें।",
                 assistantPlaceholder: "प्रश्न पूछें (जैसे: पैन कार्ड आवेदन प्रक्रिया, ड्राइविंग लाइसेंस दस्तावेज)",
-                askBtnText: "पूछें",
-                correctedMsg: "स्वचालित रूप से सुधारे गए प्रश्न के परिणाम: ",
-                assistantNotFound: "मुझे उस प्रश्न का सटीक उत्तर नहीं मिला। आधार अपडेट, पैन कार्ड दस्तावेज या पीएम किसान के बारे में पूछने का प्रयास करें।",
+                askBtnText: "भेजें",
+                correctedMsg: "परिणाम: ",
+                assistantNotFound: "मैं केवल india.gov.in से प्राप्त आधिकारिक सरकारी सेवाओं की जानकारी दे सकता हूँ। कृपया किसी विशिष्ट योजना या सेवा के बारे में पूछें।",
                 tabSteps: "नया नामांकन चरण",
                 tabUpdate: "ऑनलाइन अपडेट",
                 tabDocs: "दस्तावेज़ चेकलिस्ट",
@@ -248,57 +251,44 @@
             }
         };
 
-        // Fuzzy Matching (Levenshtein Distance) for Spelling Auto-correction
-        function getLevenshteinDistance(a, b) {
-            const matrix = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
-            for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
-            for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
-
-            for (let i = 1; i <= a.length; i++) {
-                for (let j = 1; j <= b.length; j++) {
-                    const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-                    matrix[i][j] = Math.min(
-                        matrix[i - 1][j] + 1,
-                        matrix[i][j - 1] + 1,
-                        matrix[i - 1][j - 1] + cost
-                    );
-                }
-            }
-            return matrix[a.length][b.length];
-        }
-
         const knowledgeBase = [
             {
                 canonicalTerm: "PAN-Aadhaar Linking & Application",
                 keywords: ["pan", "link", "aadhaar", "adhar", "application", "steps", "documents", "पॅन", "पैन", "आधार"],
-                en: "<strong>PAN Card Guide & Documents:</strong><br><em>Steps to Apply:</em> 1. Visit NSDL/UTIITSL or Income Tax portal. 2. Fill Form 49A. 3. Upload identity proof, address proof, and photographs. 4. Pay processing fee and submit.<br><em>Documents Required:</em> Proof of Identity (Aadhaar, Voter ID), Proof of Address, Date of Birth Proof.",
+                en: "<strong>PAN Card Guide & Documents (india.gov.in):</strong><br><em>Steps to Apply:</em> 1. Visit NSDL/UTIITSL or Income Tax portal. 2. Fill Form 49A. 3. Upload identity proof, address proof, and photographs. 4. Pay processing fee and submit.<br><em>Documents Required:</em> Proof of Identity (Aadhaar, Voter ID), Proof of Address, Date of Birth Proof.",
                 mr: "<strong>पॅन कार्ड मार्गदर्शक आणि कागदपत्रे:</strong><br><em>अर्ज करण्याच्या पायऱ्या:</em> १. अधिकृत पोर्टलला भेट द्या. २. फॉर्म 49A भरा. ३. ओळख व पत्त्याचा पुरावा अपलोड करा. ४. शुल्क भरून सबमिट करा.<br><em>आवश्यक कागदपत्रे:</em> ओळख पुरावा (आधार, मतदार ओळखपत्र), पत्ता पुरावा, जन्म तारीख पुरावा.",
                 hi: "<strong>पैन कार्ड गाइड और दस्तावेज:</strong><br><em>आवेदन के चरण:</em> 1. आधिकारिक पोर्टल पर जाएं। 2. फॉर्म 49A भरें। 3. पहचान और पते का प्रमाण अपलोड करें। 4. शुल्क भुगतान कर जमा करें।<br><em>आवश्यक दस्तावेज:</em> पहचान प्रमाण (आधार, वोटर आईडी), पता प्रमाण, जन्मतिथि प्रमाण।"
             },
             {
                 canonicalTerm: "PM Kisan Samman Nidhi",
                 keywords: ["kisan", "pm kisan", "6000", "farmer", "shatkari", "steps", "documents", "किसान", "शेतकरी"],
-                en: "<strong>PM Kisan Guide & Documents:</strong><br><em>Steps to Apply:</em> 1. Go to pmkisan.gov.in. 2. Click on 'New Farmer Registration'. 3. Enter Aadhaar and fill out farmland details. 4. Complete OTP verification.<br><em>Documents Required:</em> Aadhaar Card, Land ownership papers (Khatauni/7/12 extract), Bank Passbook, Passport-size photo.",
+                en: "<strong>PM Kisan Guide & Documents (india.gov.in):</strong><br><em>Steps to Apply:</em> 1. Go to pmkisan.gov.in. 2. Click on 'New Farmer Registration'. 3. Enter Aadhaar and fill out farmland details. 4. Complete OTP verification.<br><em>Documents Required:</em> Aadhaar Card, Land ownership papers (Khatauni/7/12 extract), Bank Passbook, Passport-size photo.",
                 mr: "<strong>पीएम किसान मार्गदर्शक आणि कागदपत्रे:</strong><br><em>अर्ज करण्याच्या पायऱ्या:</em> १. pmkisan.gov.in वर जा. २. 'New Farmer Registration' वर क्लिक करा. ३. आधार आणि जमिनीची माहिती भरा. ४. OTP पडताळणी पूर्ण करा.<br><em>आवश्यक कागदपत्रे:</em> आधार कार्ड, जमिनीचे कागदपत्र (७/१२ उतारा), बँक पासबुक.",
                 hi: "<strong>पीएम किसान गाइड और दस्तावेज:</strong><br><em>आवेदन के चरण:</em> 1. pmkisan.gov.in पर जाएं। 2. 'New Farmer Registration' पर क्लिक करें। 3. आधार और जमीन का विवरण भरें। 4. OTP सत्यापन पूरा करें।<br><em>आवश्यक दस्तावेज:</em> आधार कार्ड, भूमि के कागजात (खतौनी/खसरा), बैंक पासबुक।"
             },
             {
                 canonicalTerm: "Ayushman Bharat Health Card",
                 keywords: ["ayushman", "health", "5 lakh", "insurance", "steps", "documents", "आयुष्मान", "स्वास्थ्य"],
-                en: "<strong>Ayushman Bharat Guide & Documents:</strong><br><em>Steps to Apply:</em> 1. Visit beneficiary.nha.gov.in. 2. Login using mobile number and verify via OTP. 3. Check eligibility using ration card or Aadhaar. 4. Complete e-KYC to generate instant card.<br><em>Documents Required:</em> Aadhaar Card, Ration Card or Family ID, Mobile number linked to Aadhaar.",
+                en: "<strong>Ayushman Bharat Guide & Documents (india.gov.in):</strong><br><em>Steps to Apply:</em> 1. Visit beneficiary.nha.gov.in. 2. Login using mobile number and verify via OTP. 3. Check eligibility using ration card or Aadhaar. 4. Complete e-KYC to generate instant card.<br><em>Documents Required:</em> Aadhaar Card, Ration Card or Family ID, Mobile number linked to Aadhaar.",
                 mr: "<strong>आयुष्मान भारत मार्गदर्शक आणि कागदपत्रे:</strong><br><em>अर्ज करण्याच्या पायऱ्या:</em> १. beneficiary.nha.gov.in ला भेट द्या. २. मोबाईल नंबर टाकून OTP ने लॉगिन करा. ३. पात्रता तपासा. ४. ई-केवायसी पूर्ण करून कार्ड डाउनलोड करा.<br><em>आवश्यक कागदपत्रे:</em> आधार कार्ड, रेशन कार्ड किंवा फॅमिली आयडी.",
                 hi: "<strong>आयुष्मान भारत गाइड और दस्तावेज:</strong><br><em>आवेदन के चरण:</em> 1. beneficiary.nha.gov.in पर जाएं। 2. मोबाइल नंबर और OTP से लॉगिन करें। 3. पात्रता जांचें। 4. e-KYC पूरा कर कार्ड जनरेट करें।<br><em>आवश्यक दस्तावेज:</em> आधार कार्ड, राशन कार्ड या परिवार आईडी।"
             },
             {
                 canonicalTerm: "Driving License & RTO",
                 keywords: ["license", "lisence", "rto", "driving", "steps", "documents", "ड्रायव्हिंग", "लायसन्स", "ड्राइविंग", "लाइसेंस"],
-                en: "<strong>Driving License Guide & Documents:</strong><br><em>Steps to Apply:</em> 1. Visit sarathi.parivahan.gov.in. 2. Apply for Learner's License and clear online test. 3. After 30 days, apply for Permanent DL slot. 4. Give driving test at RTO.<br><em>Documents Required:</em> Age Proof (Birth Certificate/PAN), Address Proof (Aadhaar/Passport), Passport-size photographs, Medical Form 1/1A.",
+                en: "<strong>Driving License Guide & Documents (india.gov.in):</strong><br><em>Steps to Apply:</em> 1. Visit sarathi.parivahan.gov.in. 2. Apply for Learner's License and clear online test. 3. After 30 days, apply for Permanent DL slot. 4. Give driving test at RTO.<br><em>Documents Required:</em> Age Proof (Birth Certificate/PAN), Address Proof (Aadhaar/Passport), Passport-size photographs, Medical Form 1/1A.",
                 mr: "<strong>ड्रायव्हिंग लायसन्स मार्गदर्शक आणि कागदपत्रे:</strong><br><em>अर्ज करण्याच्या पायऱ्या:</em> १. sarathi.parivahan.gov.in वर जा. २. लर्नर लायसन्ससाठी अर्ज करा आणि चाचणी द्या. ३. ३० दिवसानंतर पक्क्या लायसन्ससाठी स्लॉट बुक करा.<br><em>आवश्यक कागदपत्रे:</em> वयाचा पुरावा, पत्त्याचा पुरावा (आधार), पासपोर्ट साईझ फोटो, वैद्यकीय प्रमाणपत्र.",
                 hi: "<strong>ड्राइविंग लाइसेंस गाइड और दस्तावेज:</strong><br><em>आवेदन के चरण:</em> 1. sarathi.parivahan.gov.in पर जाएं। 2. लर्नर लाइसेंस के लिए आवेदन करें। 3. 30 दिनों के बाद स्थायी लाइसेंस के लिए स्लॉट बुक करें।<br><em>आवश्यक दस्तावेज:</em> आयु प्रमाण, पता प्रमाण (आधार), पासपोर्ट साइज फोटो, मेडिकल फॉर्म।"
+            },
+            {
+                canonicalTerm: "Passport Services",
+                keywords: ["passport", "visa", "पासपोर्ट", "विसा"],
+                en: "<strong>Passport Services (india.gov.in):</strong><br><em>Steps to Apply:</em> 1. Register on the Passport Seva portal (passportindia.gov.in). 2. Apply for fresh passport/reissue. 3. Pay fee and book appointment. 4. Visit PSK with original documents.<br><em>Documents Required:</em> Proof of Address, Proof of Date of Birth, Identity proof.",
+                mr: "<strong>पासपोर्ट सेवा:</strong><br><em>अर्ज प्रक्रिया:</em> १. पासपोर्ट सेवा पोर्टलवर नोंदणी करा. २. अर्ज भरा व शुल्क भरा. ३. अपॉइंटमेंट बुक करून मूळ कागदपत्रांसह पीएसके केंद्राला भेट द्या.",
+                hi: "<strong>पासपोर्ट सेवाएं:</strong><br><em>आवेदन प्रक्रिया:</em> 1. पासपोर्ट सेवा पोर्टल पर पंजीकरण करें। 2. आवेदन भरें और शुल्क भुगतान करें। 3. अपॉइंटमेंट लें और दस्तावेजों के साथ केंद्र जाएं।"
             }
         ];
 
-        // Extended services data with updated FAQs in English, Marathi, and Hindi
         const servicesData = [
             {
                 id: 'aadhaar',
@@ -431,6 +421,13 @@
                         "Upload scanned copies of identity proof, address proof, and passport-size photographs.",
                         "Pay the applicable processing fee online and submit your application to get an acknowledgement number."
                     ],
+                    updateSteps: [
+                        "Visit the official Protean (NSDL) or UTIITSL portal and select 'Changes or Correction in PAN Data'.",
+                        "Provide your existing PAN number and choose the fields you wish to update (e.g., name, address, date of birth, or signature).",
+                        "Submit valid supporting KYC proofs corresponding to the requested modification.",
+                        "Authenticate using Aadhaar e-KYC or digital signature certificate (DSC).",
+                        "Pay the online processing fee and save the acknowledgement receipt for tracking."
+                    ],
                     documents: [
                         "Identity Proof: Aadhaar Card, Voter ID, or Passport",
                         "Address Proof: Driving License, Utility bills, or Bank Statement",
@@ -447,6 +444,12 @@
                         "ओळख आणि पत्त्याचे पुरावे स्कॅन करून अपलोड करा.",
                         "ऑनलाइन शुल्क भरा आणि पावती क्रमांक सुरक्षित ठेवा."
                     ],
+                    updateSteps: [
+                        "प्रोटियन किंवा युटीआयआयटीएसएल पोर्टलवर जाऊन 'Changes or Correction in PAN Data' निवडा.",
+                        "तुमचा सध्याचा पॅन क्रमांक प्रविष्ट करा आणि बदल करावयाचे तपशील (नाव, पत्ता, फोटो इ.) निवडा.",
+                        "योग्य कागदपत्रे अपलोड करा आणि आधार ई-केवायसी पडताळणी पूर्ण करा.",
+                        "ऑनलाइन शुल्क भरून अर्ज सबमिट करा आणि पावती सांभाळून ठेवा."
+                    ],
                     documents: [
                         "ओळख पुरावा: आधार कार्ड, मतदान ओळखपत्र किंवा पासपोर्ट",
                         "पत्ता पुरावा: वाहन परवाना, वीज बिल किंवा बँक स्टेटमेंट",
@@ -461,6 +464,12 @@
                         "Form 49A चुनें और विवरण भरें।",
                         "पहचान प्रमाण और पते का प्रमाण अपलोड करें।",
                         "ऑनलाइन शुल्क भुगतान करें और रसीद सहेजें।"
+                    ],
+                    updateSteps: [
+                        "Protean या UTIITSL पोर्टल पर जाएं और 'Changes or Correction in PAN Data' विकल्प चुनें।",
+                        "अपना पैन नंबर दर्ज करें और सुधार या अपडेट किए जाने वाले विवरण चुनें।",
+                        "संबंधित वैध दस्तावेज अपलोड करें और आधार e-KYC के माध्यम से सत्यापित करें।",
+                        "ऑनलाइन शुल्क भुगतान कर रसीद प्राप्त करें।"
                     ],
                     documents: [
                         "पहचान प्रमाण: आधार कार्ड, वोटर आईडी या पासपोर्ट",
@@ -485,7 +494,7 @@
                         { q: "१. मी पॅन कार्डसाठी ऑनलाइन अर्ज कसा करू शकतो?", a: "तुम्ही अधिकृत पॅन अर्ज सेवांद्वारे ऑनलाइन पॅनसाठी अर्ज करू शकता." },
                         { q: "२. पॅन कार्डसाठी कोणती कागदपत्रे आवश्यक आहेत?", a: "तुम्हाला साधारणपणे ओळख पुरावा, पत्ता पुरावा आणि लागू असल्यास जन्मतारीख पुरावा आवश्यक असतो." },
                         { q: "३. मी माझ्या पॅन कार्डवरील चुका सुधारू शकतो का?", a: "होय, चुकीची वैयक्तिक माहिती अद्यतनित करण्यासाठी तुम्ही पॅन दुरुस्ती विनंती सबमिट करू शकता." },
-                        { q: "४. माझे पॅन कार्ड हरवल्यास मी काय करावे?", a: "लागू असल्यास तुम्ही पुनर्मुद्रणाची विनंती करू शकता किंवा इलेक्ट्रॉनिक पॅन डाउनलोड करू शकता." },,
+                        { q: "४. माझे पॅन कार्ड हरवल्यास मी काय करावे?", a: "लागू असल्यास तुम्ही पुनर्मुद्रणाची विनंती करू शकता किंवा इलेक्ट्रॉनिक पॅन डाउनलोड करू शकता." },
                         { q: "५. माझ्याकडे एकापेक्षा जास्त पॅन कार्ड असू शकतात का?", a: "नाही. कोणत्याही व्यक्तीकडे एकापेक्षा जास्त पॅन कार्ड असू नयेत." },
                         { q: "६. मी माझ्या पॅन अर्जाची स्थिती कशी तपासू शकतो?", a: "तुम्ही पावती किंवा अर्ज तपशीलांचा वापर करून ऑनलाइन अर्जाची स्थिती तपासू शकता." },
                         { q: "७. पॅन कार्डची मुदत संपते का?", a: "नाही. रद्द् किंवा सरेंडर केल्याशिवाय पॅन कार्ड धारकाच्या संपूर्ण आयुष्यासाठी वैध राहते." },
@@ -523,6 +532,13 @@
                         "Set a 6-digit security PIN to secure your account.",
                         "Link your issuing authorities (e.g., CBSE, Ministry of Road Transport, UIDAI) to fetch your official documents."
                     ],
+                    updateSteps: [
+                        "Log in to your DigiLocker account using your mobile number or security PIN.",
+                        "Navigate to 'Profile' or 'Account Settings' to update your registered email or linked mobile number.",
+                        "Re-authenticate via Aadhaar OTP if updating core demographic links.",
+                        "Click on 'Issued Documents' and select 'Refresh' to pull newly updated government certificates.",
+                        "Use the 'Search Documents' tab to add and sync new issuing partners."
+                    ],
                     documents: [
                         "Aadhaar Card linked with active mobile number",
                         "Details of educational certificates, vehicle registration, or PAN for pulling records"
@@ -537,6 +553,11 @@
                         "OTP द्वारे पडताळणी पूर्ण करा.",
                         "६-अंकी सुरक्षा पिन सेट करा आणि तुमचे दस्तऐवज मिळवा."
                     ],
+                    updateSteps: [
+                        "तुमच्या डिजिलॉकर खात्यात लॉगिन करा.",
+                        "प्रोफाइल किंवा खाते सेटिंग्जमध्ये जाऊन तुमचा मोबाईल नंबर किंवा ईमेल अद्यतनित करा.",
+                        "नवीन कागदपत्रे जोडण्यासाठी 'Issued Documents' मध्ये जाऊन रिफ्रेश करा."
+                    ],
                     documents: [
                         "सक्रिय मोबाईल नंबरशी जोडलेले आधार कार्ड",
                         "शैक्षणिक प्रमाणपत्र किंवा वाहन नोंदणी तपशील"
@@ -550,6 +571,11 @@
                         "'Sign Up' पर क्लिक करें और आधार से जुड़ा मोबाइल नंबर दर्ज करें।",
                         "OTP सत्यापन पूरा करें और 6-अंकीय सुरक्षा पिन सेट करें।",
                         "अपने आधिकारिक दस्तावेज प्राप्त करने के लिए जारीकर्ता संस्थाओं को लिंक करें।"
+                    ],
+                    updateSteps: [
+                        "अपने DigiLocker अकाउंट में लॉगिन करें।",
+                        "प्रोफाइल या अकाउंट सेटिंग्स में जाकर अपना पंजीकृत मोबाइल नंबर या विवरण अपडेट करें।",
+                        "नए अपडेटेड दस्तावेज प्राप्त करने के लिए 'Issued Documents' में रिफ्रेश बटन का उपयोग करें।"
                     ],
                     documents: [
                         "सक्रिय मोबाइल नंबर से जुड़ा आधार कार्ड",
@@ -574,10 +600,10 @@
                         { q: "२. मी डिजिलॉकरमध्ये कसे लॉगिन करू शकतो?", a: "तुम्ही तुमचा नोंदणीकृत मोबाईल नंबर किंवा इतर समर्थित क्रेडेन्शियल्स वापरून लॉगिन करू शकता." },
                         { q: "३. मी माझा आधार डिजिलॉकरमध्ये ठेवू शकतो का?", a: "डिजिलॉकर समर्थित सेवांद्वारे आधार-संबंधित माहिती/दस्तऐवजांमध्ये प्रवेश प्रदान करू शकते." },
                         { q: "४. मी माझा ड्रायव्हिंग लायसन्स डिजिलॉकरमध्ये स्टोअर करू शकतो का?", a: "होय, तुम्ही डिजिलॉकरद्वारे जारी करणाऱ्या प्राधिकाऱ्याकडून पात्र डिजिटल ड्रायव्हिंग लायसन्स मिळवू शकता." },
-                        { q: "५. मी माझी शैक्षणिक प्रमाणपत्रे डिजिलॉकरमध्ये स्टोअर करू शकतो का?", a: "होय, सहभागी संस्थांद्वारे जारी केलेले शैक्षणिक कागदपत्रे डिजिलॉकरद्वारे उपलब्ध होऊ शकतात." },
+                        { q: "५. मी माझी शैक्षणिक प्रमाणपत्रे डिजिलॉकरमध्ये स्टोअर करू शकतो का?", a: "होय, सहभागी संस्थांद्वारे जारी केलेले कागदपत्रे डिजिलॉकरद्वारे उपलब्ध होऊ शकतात." },
                         { q: "६. माझे दस्तऐवज डिजिलॉकरमध्ये दिसत नसल्यास मी काय करावे?", a: "प्रविष्ट केलेली माहिती जारी करणाऱ्या प्राधिकाऱ्याच्या रेकॉर्डशी जुळत असल्याची खात्री करा. तरीही ते दिसत नसल्यास, संबंधित जारीकर्ता किंवा डिजिलॉकर समर्थनाशी संपर्क साधा." },
                         { q: "७. मी माझे डिजिलॉकर कागदपत्रे इतरांसोबत शेअर करू शकतो का?", a: "होय, डिजिलॉकर सुरक्षितपणे डिजिटल दस्तऐवज शेअर करण्याचे पर्याय प्रदान करते." },
-                        { q: "८. मी माझा मोबाईल नंबर बदलल्यास काय होते?", a: "तुम्ही उपलब्ध डिजिलॉकर खाते सेटिंग्ज आणि पडताळणी प्रक्रियेद्वारे तुमचे खाते तपशील अद्यतनित केले पाहिजे." },
+                        { q: "८. मी माझा मोबाईल नंबर बदलल्यास काय होते?", a: "तुम्ही उपलब्ध डिजिलॉकर खाते सेटिंग्ज आणि पडताळणी प्रक्रियेद्वारे तुमचे खाते तपशील अद्यतनित केला पाहिजे." },
                         { q: "९. भौतिक कागदपत्रांऐवजी डिजिलॉकर कागदपत्रे वापरली जाऊ शकतात का?", a: "डिजिलॉकरद्वारे जारी केलेले पात्र दस्तऐवज तिथे वापरले जाऊ शकतात जिथे संबंधित प्राधिकरण त्यांना वैध डिजिटल दस्तऐवज म्हणून स्वीकारते." },
                         { q: "१०. मी माझे डिजिलॉकर लॉगिन तपशील विसरल्यास काय करावे?", a: "पुन्हा प्रवेश मिळवण्यासाठी डिजिलॉकरद्वारे प्रदान केलेले खाते पुनर्प्राप्ती किंवा पडताळणी पर्याय वापर." }
                     ],
@@ -611,6 +637,13 @@
                         "Pay the fee online and take the online learner's license test.",
                         "After 30 days, book an appointment slot for your Permanent Driving License test at the RTO."
                     ],
+                    updateSteps: [
+                        "Visit the official Sarathi Parivahan portal (sarathi.parivahan.gov.in).",
+                        "Select 'DL Services' and enter your Driving License number and date of birth.",
+                        "Choose the required modification service (e.g., Change of Address, Renewal of DL, or Replacement).",
+                        "Submit updated supporting documents and pay the requisite online fee.",
+                        "Book an appointment if physical verification or biometrics at the RTO is required."
+                    ],
                     documents: [
                         "Age Proof: Birth Certificate, PAN Card, or Passport",
                         "Address Proof: Aadhaar Card, Voter ID, or Utility Bill",
@@ -628,6 +661,11 @@
                         "ऑनलाइन शुल्क भरा आणि ऑनलाइन चाचणी द्या.",
                         "३० दिवसानंतर पक्क्या लायसन्सच्या चाचणीसाठी आरटीओ कार्यालयात स्लॉट बुक करा."
                     ],
+                    updateSteps: [
+                        "सारथी परिवहन पोर्टलवर जा आणि 'DL Services' निवडा.",
+                        "तुमचा परवाना क्रमांक प्रविष्ट करा आणि पत्ता बदल किंवा नूतनीकरण पर्याय निवडा.",
+                        "नवीन कागदपत्रे अपलोड करा, ऑनलाइन शुल्क भरा आणि रसीद डाउनलोड करा."
+                    ],
                     documents: [
                         "वयाचा पुरावा: जन्म दाखला, पॅन कार्ड किंवा पासपोर्ट",
                         "पत्ता पुरावा: आधार कार्ड किंवा मतदान ओळखपत्र",
@@ -642,6 +680,11 @@
                         "'Apply for Learner License' पर क्लिक करें और फॉर्म भरें।",
                         "दस्तावेज़ अपलोड करें और ऑनलाइन टेस्ट पास करें।",
                         "30 दिनों के बाद स्थायी ड्राइविंग लाइसेंस के लिए आरटीओ में स्लॉट बुक करें।"
+                    ],
+                    updateSteps: [
+                        "Sarathi Parivahan पोर्टल पर जाएं और 'DL Services' चुनें।",
+                        "अपना ड्राइविंग लाइसेंस नंबर दर्ज करें तथा पता परिवर्तन या नवीनीकरण सेवा चुनें।",
+                        "दस्तावेज़ अपलोड करें, शुल्क का भुगतान करें और रसीद सहेजें।"
                     ],
                     documents: [
                         "आयु प्रमाण: जन्म प्रमाण पत्र, पैन कार्ड या पासपोर्ट",
@@ -680,12 +723,12 @@
                         { q: "2. ड्राइविंग लाइसेंस के लिए किन दस्तावेजों की आवश्यकता होती है?", a: "आवश्यक दस्तावेजों में आम तौर पर आयु/पता प्रमाण और विशेष आवेदन के लिए निर्दिष्ट अन्य दस्तावेज शामिल होते हैं।" },
                         { q: "3. मैं अपने ड्राइविंग लाइसेंस आवेदन की स्थिति कैसे जाँच सकता हूँ?", a: "आप परिवहन/सारथी पोर्टल के माध्यम से ऑनलाइन अपने आवेदन की स्थिति जाँच सकते हैं।" },
                         { q: "4. यदि मेरा ड्राइविंग लाइसेंस खो जाए तो मुझे क्या करना चाहिए?", a: "आप लागू परिवहन सेवा के माध्यम से डुप्लीकेट ड्राइविंग लाइसेंस के लिए आवेदन कर सकते हैं।" },
-                        { q: "5. क्या मैं अपने ड्राइविंग लाइसेंस पर अपना पता बदल सकता हूँ?" , a: "हाँ, आप उपयुक्त ड्राइविंग लाइसेंस सेवा के माध्यम से पता परिवर्तन के लिए आवेदन कर सकते हैं।" },
+                        { q: "5. क्या मैं अपने ड्राइविंग लाइसेंस पर अपना पता बदल सकता हूँ?", a: "हाँ, आप उपयुक्त ड्राइविंग लाइसेंस सेवा के माध्यम से पता परिवर्तन के लिए आवेदन कर सकते हैं।" },
                         { q: "6. ड्राइविंग लाइसेंस कितने समय के लिए वैध है?", a: "वैधता लाइसेंस के प्रकार, वाहन श्रेणी और लागू नियमों पर निर्भर करती है।" },
                         { q: "7. क्या मैं अपना ड्राइविंग लाइसेंस डिजिटल रूप से डाउनलोड कर सकता हूँ?", a: "हाँ, DigiLocker या mParivahan जैसे सरकारी डिजिटल प्लेटफॉर्म के माध्यम से डिजिटल ड्राइविंग लाइसेंस रिकॉर्ड एक्सेस किए जा सकते हैं।" },
                         { q: "8. क्या स्थायी लाइसेंस के लिए मुझे ड्राइविंग टेस्ट देना होगा?", a: "आम तौर पर, नए स्थायी ड्राइविंग लाइसेंस के आवेदकों को आवश्यक ड्राइविंग टेस्ट पूरा करना होगा।" },
                         { q: "9. क्या मैं बिना लर्नर लाइसेंस के ड्राइविंग लाइसेंस के लिए आवेदन कर सकता हूँ?", a: "आम तौर पर, स्थायी ड्राइविंग लाइसेंस के लिए आवेदन करने से पहले लर्नर लाइसेंस आवश्यक होता है।" },
-                        { q: "10. मैं अपना निकटतम RTO कैसे ढूंढ सकता हूँ?", a: "आप अपने स्थान के लिए प्रासंगिक क्षेत्रीय परिवहन कार्यालय (RTO) की पहचान करने के लिए परिवहन सेवाओं का उपयोग कर सकते हैं।" }
+                        { q: "10. मैं अपना निकटतम RTO कैसे ढूंढ हूँ?", a: "आप अपने स्थान के लिए प्रासंगिक क्षेत्रीय परिवहन कार्यालय (RTO) की पहचान करने के लिए परिवहन सेवाओं का उपयोग कर सकते हैं।" }
                     ]
                 }
             },
@@ -705,6 +748,12 @@
                         "Fill in personal details, land ownership details, and bank account information.",
                         "Submit the form and complete e-KYC via Aadhaar OTP."
                     ],
+                    updateSteps: [
+                        "Visit the official PM-Kisan portal (pmkisan.gov.in) and go to 'Farmers Corner'.",
+                        "Select 'Edit Aadhaar Failure Records' or 'Beneficiary Status' to check and correct discrepancy data.",
+                        "Use the 'Update Aadhaar Details' option to rectify name or mobile linking issues.",
+                        "Complete biometric or OTP e-KYC verification to validate your profile updates."
+                    ],
                     documents: [
                         "Aadhaar Card linked with active mobile number",
                         "Land ownership documents (Khatauni, Land Khata number, or 7/12 extract)",
@@ -721,6 +770,11 @@
                         "आधार क्रमांक आणि राज्य निवडून माहिती प्रविष्ट करा.",
                         "जमिनीचा तपशील आणि बँक खात्याची माहिती भरा व सबमिट करा."
                     ],
+                    updateSteps: [
+                        "पीएम किसान पोर्टलवरील 'Farmers Corner' मध्ये जा.",
+                        "'Edit Aadhaar Details' किंवा 'Beneficiary Status' द्वारे चुकीची माहिती दुरुस्त करा.",
+                        "आधार ओटीपी किंवा बायोमेट्रिकद्वारे ई-केवायसी पूर्ण करा."
+                    ],
                     documents: [
                         "आधार कार्ड",
                         "जमिनीचे कागदपत्र (७/१२ उतारा किंवा ८-अ)",
@@ -735,6 +789,11 @@
                         "'New Farmer Registration' पर क्लिक करें।",
                         "आधार नंबर दर्ज करें और भूमि का विवरण भरें।",
                         "फॉर्म सबमिट करें और e-KYC पूरा करें।"
+                    ],
+                    updateSteps: [
+                        "आधिकारिक पीएम-किसान पोर्टल पर 'Farmers Corner' में जाएं।",
+                        "'Edit Aadhaar Failure Records' या 'Aadhaar Details Update' विकल्प का चयन करें।",
+                        "सही विवरण दर्ज करें और OTP आधारित e-KYC के माध्यम से सत्यापित करें।"
                     ],
                     documents: [
                         "आधार कार्ड",
@@ -757,7 +816,7 @@
                     ],
                     mr: [
                         { q: "१. मी पीएम-किसान पेमेंटची स्थिती कशी तपासू शकतो?", a: "तुम्ही अधिकृत पीएम-किसान पोर्टलद्वारे तुमच्या पेमेंट आणि लाभार्थी तपशीलांची तपासणी करू शकता." },
-                        { q: "२. मला पीएम-किसानचा हप्ता का मिळालेला नाही?", a: "अपूर्ण पडताळणी, चुकीचे बँक तपशील किंवा पात्रता-संबंधित समस्यांमुळे पेमेंट प्रभावि झाले असू शकते." },
+                        { q: "२. मला पीएम-किसानचा हप्ता का मिळालेला नाही?", a: "अपूर्ण पडताळणी, चुकीचे बँक तपशील किंवा पात्रता-संबंधित समस्यांमुळे पेमेंट प्रभावित झाले असू शकते." },
                         { q: "३. मी पीएम-किसान मधील माझे बँक खाते तपशील कसे अपडेट करू शकतो?", a: "पात्र शेतकरी त्यांचे तपशील अपडेट करण्यासाठी उपलब्ध पीएम-किसान सेवा वापरू शकतात किंवा योग्य अधिकाऱ्यांशी संपर्क साधू शकतात." },
                         { q: "४. पीएम-किसान मध्ये ई-केवायसी (e-KYC) म्हणजे काय?", a: "ई-केवायसी ही पात्र पीएम-किसान लाभार्थ्यांची ओळख पुष्टी करण्यासाठी वापरली जाणारी ओळख पडताळणी प्रक्रिया आहे." },
                         { q: "५. मी पीएम-किसान ई-केवायसी कशी पूर्ण करू शकतो?", a: "पात्र लाभार्थी अधिकृत पीएम-किसान पोर्टलवर उपलब्ध पद्धतींचा वापर करून ई-केवायसी पूर्ण करू शकतात." },
@@ -797,6 +856,12 @@
                         "Check your family's eligibility status.",
                         "Complete e-KYC and download your Ayushman Golden Card instantly."
                     ],
+                    updateSteps: [
+                        "Visit the official Ayushman Bharat portal (beneficiary.nha.gov.in).",
+                        "Log in with your registered mobile number and authenticate via OTP.",
+                        "Access your beneficiary dashboard to update family member details or add new members with supporting ration cards.",
+                        "Re-run e-KYC to regenerate and download your updated Ayushman Golden Card."
+                    ],
                     documents: [
                         "Aadhaar Card for all family members",
                         "Ration Card or State-issued Family ID",
@@ -812,6 +877,11 @@
                         "रेशन कार्ड किंवा आधार द्वारे तुमची पात्रता तपासा.",
                         "ई-केवायसी पूर्ण करा आणि तुमचे आयुष्मान कार्ड डाउनलोड करा."
                     ],
+                    updateSteps: [
+                        "आयुष्मान भारत पोर्टलवर (beneficiary.nha.gov.in) लॉगिन करा.",
+                        "डॅशबोर्डवर जाऊन कुटुंबातील सदस्यांची माहिती अद्यतनित करा किंवा नवीन सदस्य जोडा.",
+                        "ई-केवायसी पूर्ण करून नवीन कार्ड डाउनलोड करा."
+                    ],
                     documents: [
                         "सर्व कुटुंबातील सदस्यांचे आधार कार्ड",
                         "रेशन कार्ड किंवा कुटुंब ओळखपत्र",
@@ -826,6 +896,11 @@
                         "मोबाइल नंबर और OTP से लॉगिन करें।",
                         "राशन कार्ड या आधार के माध्यम से अपनी पात्रता जांचें।",
                         "e-KYC पूरा करें और आयुष्मान कार्ड डाउनलोड करें।"
+                    ],
+                    updateSteps: [
+                        "आयुष्मान भारत पोर्टल (beneficiary.nha.gov.in) पर लॉगिन करें।",
+                        "डैशबोर्ड से परिवार के सदस्यों का विवरण अपडेट करें या नए सदस्यों को जोड़ें।",
+                        "e-KYC प्रक्रिया पूरी कर अपडेटेड कार्ड डाउनलोड करें।"
                     ],
                     documents: [
                         "सभी सदस्यों का आधार कार्ड",
@@ -973,55 +1048,72 @@
             });
         }
 
-        // Fuzzy search & auto-correction engine for assistant queries
+        // Chatbot Assistant handling user doubts and queries dynamically across knowledgeBase and servicesData
         function handleAssistantQuery(event) {
             event.preventDefault();
             const inputEl = document.getElementById("assistantInput");
-            const responseEl = document.getElementById("assistantResponse");
+            const messagesContainer = document.getElementById("govChatMessages");
             const rawQuery = inputEl.value.trim();
 
             if (!rawQuery) return;
 
-            const userWords = rawQuery.toLowerCase().split(/\s+/);
-            let matchedEntry = null;
-            let bestDistance = Infinity;
-            let isAutoCorrected = false;
-            let matchedTerm = "";
+            const userMsgDiv = document.createElement("div");
+            userMsgDiv.className = "p-2.5 rounded-lg bg-blue-900 text-white max-w-[85%] ml-auto text-xs";
+            userMsgDiv.textContent = rawQuery;
+            messagesContainer.appendChild(userMsgDiv);
+            inputEl.value = "";
 
+            const queryLower = rawQuery.toLowerCase();
+            let responseHtml = null;
+
+            // 1. Check knowledgeBase entries
             for (let entry of knowledgeBase) {
-                if (entry.keywords.some(kw => rawQuery.toLowerCase().includes(kw))) {
-                    matchedEntry = entry;
-                    matchedTerm = entry.canonicalTerm;
+                if (entry.keywords.some(kw => queryLower.includes(kw))) {
+                    responseHtml = entry[currentLang] || entry['en'];
                     break;
                 }
             }
 
-            if (!matchedEntry) {
-                for (let entry of knowledgeBase) {
-                    for (let kw of entry.keywords) {
-                        for (let word of userWords) {
-                            if (word.length < 3) continue;
-                            const dist = getLevenshteinDistance(word, kw);
-                            if (dist <= 2 && dist < bestDistance) {
-                                bestDistance = dist;
-                                matchedEntry = entry;
-                                matchedTerm = entry.canonicalTerm;
-                                isAutoCorrected = true;
+            // 2. If not found in knowledgeBase, search across all servicesData (name, desc, steps, docs, faqs)
+            if (!responseHtml) {
+                for (let service of servicesData) {
+                    const details = service[currentLang] || service['en'];
+                    const matchName = details.name && details.name.toLowerCase().includes(queryLower);
+                    const matchDesc = details.desc && details.desc.toLowerCase().includes(queryLower);
+                    
+                    // Check if query matches service ID or keywords derived from name
+                    if (matchName || matchDesc || queryLower.includes(service.id)) {
+                        let stepsHtml = details.steps ? details.steps.map((s, i) => `${i + 1}. ${s}`).join('<br>') : '';
+                        let docsHtml = details.documents ? details.documents.join(', ') : '';
+                        responseHtml = `<strong>${details.name} (india.gov.in):</strong><br><em>Description:</em> ${details.desc}<br>${stepsHtml ? '<em>Steps:</em> ' + stepsHtml + '<br>' : ''}${docsHtml ? '<em>Documents:</em> ' + docsHtml : ''}`;
+                        break;
+                    }
+
+                    // Check FAQs
+                    if (service.faqs) {
+                        const faqList = service.faqs[currentLang] || service.faqs['en'];
+                        for (let faq of faqList) {
+                            if (faq.q.toLowerCase().includes(queryLower) || faq.a.toLowerCase().includes(queryLower) || queryLower.split(' ').some(w => w.length > 3 && faq.q.toLowerCase().includes(w))) {
+                                responseHtml = `<strong>Q: ${faq.q}</strong><br>A: ${faq.a}`;
+                                break;
                             }
                         }
+                        if (responseHtml) break;
                     }
                 }
             }
 
-            responseEl.classList.remove("hidden");
-            if (matchedEntry) {
-                let badge = isAutoCorrected 
-                    ? `<div class="mb-2 text-xs font-bold text-amber-300 flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> ${translations[currentLang].correctedMsg} <u>${matchedTerm}</u></div>`
-                    : '';
-                responseEl.innerHTML = badge + matchedEntry[currentLang];
+            const botMsgDiv = document.createElement("div");
+            botMsgDiv.className = "p-2.5 rounded-lg bg-white/15 text-white max-w-[85%] text-xs leading-relaxed";
+
+            if (responseHtml) {
+                botMsgDiv.innerHTML = responseHtml;
             } else {
-                responseEl.innerHTML = translations[currentLang].assistantNotFound;
+                botMsgDiv.innerHTML = translations[currentLang].assistantNotFound;
             }
+
+            messagesContainer.appendChild(botMsgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         document.getElementById("searchInput").addEventListener("input", function () {
@@ -1053,7 +1145,9 @@
             const btnFaqs = document.getElementById("tabBtnFaqs");
 
             btnSteps.className = "pb-3 text-lg font-bold border-b-2 transition whitespace-nowrap " + (tabName === 'steps' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
-            btnUpdate.className = "pb-3 text-lg font-bold border-b-2 transition whitespace-nowrap " + (tabName === 'update' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
+            if(btnUpdate) {
+                btnUpdate.className = "pb-3 text-lg font-bold border-b-2 transition whitespace-nowrap " + (tabName === 'update' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
+            }
             btnDocs.className = "pb-3 text-lg font-bold border-b-2 transition whitespace-nowrap " + (tabName === 'docs' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
             btnFaqs.className = "pb-3 text-lg font-bold border-b-2 transition whitespace-nowrap " + (tabName === 'faqs' ? "border-blue-900 text-blue-900" : "border-transparent text-gray-500 hover:text-gray-900");
 
